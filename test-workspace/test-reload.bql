@@ -1,0 +1,391 @@
+mutation ReloadExamples {
+  # Initial navigation
+  goto(url: "https://example.com") {
+    status
+    url
+    time
+  }
+
+  # Basic reload with default settings (30 seconds, load event)
+  basicReload: reload {
+    status
+    time
+    url
+  }
+
+  # Reload with custom timeout (10 seconds)
+  timeoutReload: reload(timeout: 10000) {
+    status
+    time
+    url
+  }
+
+  # Reload waiting for DOM content loaded
+  domReload: reload(waitUntil: domContentLoaded) {
+    status
+    time
+    text
+    url
+  }
+
+  # Fast reload for quick refresh (5 seconds, commit)
+  quickReload: reload(
+    timeout: 5000
+    waitUntil: commit
+  ) {
+    status
+    time
+    url
+  }
+
+  # Complete reload with full content (45 seconds, load)
+  fullReload: reload(
+    timeout: 45000
+    waitUntil: load
+  ) {
+    status
+    time
+    text
+    url
+  }
+
+  # Network idle reload for dynamic content
+  networkReload: reload(
+    timeout: 20000
+    waitUntil: networkIdle
+  ) {
+    status
+    time
+    text
+    url
+  }
+
+  # Development reload with extended timeout
+  devReload: reload(
+    timeout: 60000
+    waitUntil: load
+  ) {
+    status
+    time
+    text
+    url
+  }
+
+  # Production reload with balanced timeout
+  prodReload: reload(
+    timeout: 15000
+    waitUntil: domContentLoaded
+  ) {
+    status
+    time
+    url
+  }
+
+  # Testing reload for automation
+  testReload: reload(
+    timeout: 8000
+    waitUntil: commit
+  ) {
+    status
+    time
+    url
+  }
+
+  # Performance reload for speed testing
+  perfReload: reload(
+    timeout: 3000
+    waitUntil: commit
+  ) {
+    status
+    time
+    url
+  }
+
+  # Monitoring reload for health checks
+  monitorReload: reload(
+    timeout: 12000
+    waitUntil: load
+  ) {
+    status
+    time
+    url
+  }
+
+  # Debug reload with full content and extended timeout
+  debugReload: reload(
+    timeout: 90000
+    waitUntil: load
+  ) {
+    status
+    time
+    text
+    url
+  }
+
+  # Navigation to different page for more reload tests
+  goto(url: "https://httpbin.org/delay/1") {
+    status
+    url
+  }
+
+  # Commit-based reload (fastest)
+  commitReload: reload(waitUntil: commit) {
+    status
+    time
+    url
+  }
+
+  # DOM content loaded reload
+  domContentReload: reload(waitUntil: domContentLoaded) {
+    status
+    time
+    url
+  }
+
+  # Load event reload (default)
+  loadEventReload: reload(waitUntil: load) {
+    status
+    time
+    text
+    url
+  }
+
+  # Network idle reload for SPA
+  spaReload: reload(
+    timeout: 25000
+    waitUntil: networkIdle
+  ) {
+    status
+    time
+    text
+    url
+  }
+
+  # Ultra-fast reload for testing
+  ultraFastReload: reload(
+    timeout: 2000
+    waitUntil: commit
+  ) {
+    status
+    time
+    url
+  }
+
+  # Slow connection reload
+  slowReload: reload(
+    timeout: 120000
+    waitUntil: load
+  ) {
+    status
+    time
+    text
+    url
+  }
+
+  # API endpoint reload test
+  goto(url: "https://httpbin.org/json") {
+    status
+    url
+  }
+
+  # JSON API reload
+  apiReload: reload(
+    timeout: 10000
+    waitUntil: domContentLoaded
+  ) {
+    status
+    time
+    text
+    url
+  }
+
+  # Navigate to form page
+  goto(url: "https://httpbin.org/forms/post") {
+    status
+    url
+  }
+
+  # Form page reload
+  formReload: reload(
+    timeout: 15000
+    waitUntil: load
+  ) {
+    status
+    time
+    text
+    url
+  }
+
+  # Navigate to redirect page
+  goto(url: "https://httpbin.org/redirect/3") {
+    status
+    url
+  }
+
+  # Redirect handling reload
+  redirectReload: reload(
+    timeout: 20000
+    waitUntil: load
+  ) {
+    status
+    time
+    url
+  }
+
+  # CI/CD pipeline reload
+  cicdReload: reload(
+    timeout: 30000
+    waitUntil: domContentLoaded
+  ) {
+    status
+    time
+    url
+  }
+
+  # Load testing reload
+  loadTestReload: reload(
+    timeout: 5000
+    waitUntil: commit
+  ) {
+    status
+    time
+    url
+  }
+
+  # Integration testing reload
+  integrationReload: reload(
+    timeout: 25000
+    waitUntil: load
+  ) {
+    status
+    time
+    text
+    url
+  }
+
+  # User acceptance testing reload
+  uatReload: reload(
+    timeout: 40000
+    waitUntil: networkIdle
+  ) {
+    status
+    time
+    text
+    url
+  }
+
+  # Regression testing reload
+  regressionReload: reload(
+    timeout: 15000
+    waitUntil: domContentLoaded
+  ) {
+    status
+    time
+    url
+  }
+
+  # Performance monitoring reload
+  perfMonitorReload: reload(
+    timeout: 8000
+    waitUntil: load
+  ) {
+    status
+    time
+    url
+  }
+
+  # Security testing reload
+  securityReload: reload(
+    timeout: 30000
+    waitUntil: load
+  ) {
+    status
+    time
+    text
+    url
+  }
+
+  # Accessibility testing reload
+  a11yReload: reload(
+    timeout: 20000
+    waitUntil: load
+  ) {
+    status
+    time
+    text
+    url
+  }
+
+  # Mobile testing reload
+  mobileReload: reload(
+    timeout: 45000
+    waitUntil: networkIdle
+  ) {
+    status
+    time
+    url
+  }
+
+  # Desktop testing reload
+  desktopReload: reload(
+    timeout: 10000
+    waitUntil: domContentLoaded
+  ) {
+    status
+    time
+    url
+  }
+
+  # Cross-browser testing reload
+  crossBrowserReload: reload(
+    timeout: 35000
+    waitUntil: load
+  ) {
+    status
+    time
+    text
+    url
+  }
+
+  # End-to-end testing reload
+  e2eReload: reload(
+    timeout: 50000
+    waitUntil: networkIdle
+  ) {
+    status
+    time
+    text
+    url
+  }
+
+  # Smoke testing reload
+  smokeReload: reload(
+    timeout: 5000
+    waitUntil: commit
+  ) {
+    status
+    time
+    url
+  }
+
+  # Sanity testing reload
+  sanityReload: reload(
+    timeout: 12000
+    waitUntil: domContentLoaded
+  ) {
+    status
+    time
+    url
+  }
+
+  # Final comprehensive reload
+  finalReload: reload(
+    timeout: 30000
+    waitUntil: load
+  ) {
+    status
+    time
+    text
+    url
+  }
+} 

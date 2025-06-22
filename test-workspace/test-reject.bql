@@ -1,0 +1,385 @@
+mutation RejectExamples {
+  # Basic media rejection (OR operator by default)
+  rejectMedia: reject(type: [image, media]) {
+    enabled
+    time
+  }
+
+  # AND condition: reject images only from Google domains
+  rejectGoogleImages: reject(
+    operator: and
+    type: [image]
+    url: ["*google.com*"]
+  ) {
+    enabled
+    time
+  }
+
+  # Reject tracking and analytics scripts
+  rejectTracking: reject(
+    url: [
+      "*google-analytics.com*",
+      "*googletagmanager.com*", 
+      "*facebook.com/tr*",
+      "*doubleclick.net*",
+      "*hotjar.com*",
+      "*mixpanel.com*",
+      "*segment.com*",
+      "*amplitude.com*"
+    ]
+    operator: or
+  ) {
+    enabled
+    time
+  }
+
+  # Reject API write operations
+  rejectAPIWrites: reject(
+    method: [POST, PUT, DELETE, PATCH]
+    url: ["*/api/*", "*/v1/*", "*/v2/*", "*/graphql*"]
+    operator: or
+  ) {
+    enabled
+    time
+  }
+
+  # Performance optimization - reject heavy assets
+  rejectHeavyAssets: reject(
+    type: [image, media, font]
+    url: ["*.jpg", "*.png", "*.gif", "*.mp4", "*.avi", "*.woff*"]
+    operator: or
+  ) {
+    enabled
+    time
+  }
+
+  # Security-focused rejections
+  rejectSecurity: reject(
+    url: [
+      "*malware*",
+      "*phishing*", 
+      "*virus*",
+      "*.exe",
+      "*.bat",
+      "*.scr",
+      "*suspicious*"
+    ]
+    operator: or
+  ) {
+    enabled
+    time
+  }
+
+  # Reject all JavaScript and CSS (for performance testing)
+  rejectAssets: reject(
+    type: [script, stylesheet]
+    operator: or
+  ) {
+    enabled
+    time
+  }
+
+  # CDN and third-party content blocking
+  rejectCDNContent: reject(
+    type: [image, media, font, stylesheet]
+    url: ["*cdn*", "*amazonaws.com*", "*cloudfront.net*", "*assets*"]
+    operator: and
+  ) {
+    enabled
+    time
+  }
+
+  # XHR and Fetch request filtering
+  rejectAjaxRequests: reject(
+    type: [xhr, fetch]
+    method: [GET, POST]
+    operator: and
+  ) {
+    enabled
+    time
+  }
+
+  # Ad blocking patterns
+  rejectAds: reject(
+    url: [
+      "*ads*",
+      "*doubleclick*",
+      "*googlesyndication*",
+      "*amazon-adsystem*",
+      "*adsystem*",
+      "*adnxs*",
+      "*advertising*"
+    ]
+    operator: or
+  ) {
+    enabled
+    time
+  }
+
+  # Social media tracking blockers
+  rejectSocialTracking: reject(
+    url: [
+      "*facebook.com/tr*",
+      "*twitter.com/i/adsct*",
+      "*linkedin.com/li*",
+      "*pinterest.com/ct*",
+      "*snapchat.com/tr*"
+    ]
+    operator: or
+  ) {
+    enabled
+    time
+  }
+
+  # WebSocket and real-time connections
+  rejectRealtime: reject(
+    type: [websocket, eventsource]
+    url: ["*socket*", "*realtime*", "*live*"]
+    operator: or
+  ) {
+    enabled
+    time
+  }
+
+  # Navigation after setting up filters
+  goto(url: "https://cnn.com", waitUntil: firstMeaningfulPaint) {
+    status
+    time
+    url
+  }
+
+  # Specific method blocking for sensitive endpoints
+  rejectSensitiveAPIs: reject(
+    method: [DELETE, POST]
+    url: [
+      "*/users/*",
+      "*/admin/*",
+      "*/settings/*",
+      "*/config/*"
+    ]
+    operator: and
+  ) {
+    enabled
+    time
+  }
+
+  # Development environment resource blocking
+  rejectDevResources: reject(
+    url: [
+      "*localhost*",
+      "*127.0.0.1*",
+      "*dev.*",
+      "*staging.*",
+      "*test.*"
+    ]
+    operator: or
+  ) {
+    enabled
+    time
+  }
+
+  # Cryptocurrency mining script blocking
+  rejectCryptoMining: reject(
+    url: [
+      "*coinhive*",
+      "*jsecoin*",
+      "*coin-hive*",
+      "*cryptoloot*",
+      "*authédmine*"
+    ]
+    operator: or
+  ) {
+    enabled
+    time
+  }
+
+  # Email tracking pixels
+  rejectEmailTracking: reject(
+    type: [image]
+    url: [
+      "*mailchimp*",
+      "*constantcontact*",
+      "*sendgrid*",
+      "*mandrill*",
+      "*track*"
+    ]
+    operator: and
+  ) {
+    enabled
+    time
+  }
+
+  # Video content blocking for bandwidth
+  rejectVideoContent: reject(
+    type: [media]
+    url: [
+      "*.mp4",
+      "*.avi", 
+      "*.mov",
+      "*.webm",
+      "*youtube*",
+      "*vimeo*"
+    ]
+    operator: or
+  ) {
+    enabled
+    time
+  }
+
+  # Font loading optimization
+  rejectExternalFonts: reject(
+    type: [font]
+    url: [
+      "*fonts.googleapis.com*",
+      "*fonts.gstatic.com*",
+      "*typekit.net*",
+      "*use.fontawesome.com*"
+    ]
+    operator: or
+  ) {
+    enabled
+    time
+  }
+
+  # Analytics and heatmap tools
+  rejectAnalytics: reject(
+    url: [
+      "*google-analytics*",
+      "*googletagmanager*",
+      "*hotjar*",
+      "*fullstory*",
+      "*logrocket*",
+      "*mouseflow*"
+    ]
+    operator: or
+  ) {
+    enabled
+    time
+  }
+
+  # Chat widgets and support tools
+  rejectChatWidgets: reject(
+    url: [
+      "*intercom*",
+      "*zendesk*",
+      "*drift*",
+      "*crisp.chat*",
+      "*tawk.to*",
+      "*livechat*"
+    ]
+    operator: or
+  ) {
+    enabled
+    time
+  }
+
+  # Payment processing scripts (for testing)
+  rejectPaymentScripts: reject(
+    url: [
+      "*stripe*",
+      "*paypal*",
+      "*square*",
+      "*braintree*",
+      "*checkout*"
+    ]
+    operator: or
+  ) {
+    enabled
+    time
+  }
+
+  # Content delivery networks blocking
+  rejectCDNs: reject(
+    url: [
+      "*cloudflare*",
+      "*fastly*",
+      "*maxcdn*",
+      "*jsdelivr*",
+      "*unpkg*"
+    ]
+    operator: or
+  ) {
+    enabled
+    time
+  }
+
+  # Error tracking services
+  rejectErrorTracking: reject(
+    url: [
+      "*sentry*",
+      "*bugsnag*",
+      "*rollbar*",
+      "*airbrake*",
+      "*honeybadger*"
+    ]
+    operator: or
+  ) {
+    enabled
+    time
+  }
+
+  # A/B testing platforms
+  rejectABTesting: reject(
+    url: [
+      "*optimizely*",
+      "*vwo*",
+      "*launchdarkly*",
+      "*split.io*",
+      "*googlex*"
+    ]
+    operator: or
+  ) {
+    enabled
+    time
+  }
+
+  # Tag management systems
+  rejectTagManagement: reject(
+    url: [
+      "*googletagmanager*",
+      "*tealium*",
+      "*ensighten*",
+      "*adobe.com/dtm*",
+      "*segment*"
+    ]
+    operator: or
+  ) {
+    enabled
+    time
+  }
+
+  # Disable all rejections for clean navigation
+  disableReject: reject(enabled: false) {
+    enabled
+    time
+  }
+
+  # Re-enable with minimal filtering
+  enableMinimalReject: reject(
+    enabled: true
+    type: [image]
+    url: ["*ads*"]
+    operator: and
+  ) {
+    enabled
+    time
+  }
+
+  # Clean navigation test
+  cleanGoto: goto(url: "https://example.com") {
+    status
+    time
+    url
+  }
+
+  # Final comprehensive blocking
+  comprehensiveBlock: reject(
+    type: [image, media, script, stylesheet]
+    url: ["*ads*", "*tracking*", "*analytics*"]
+    method: [GET, POST]
+    operator: or
+  ) {
+    enabled
+    time
+  }
+} 

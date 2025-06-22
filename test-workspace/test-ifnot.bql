@@ -1,0 +1,169 @@
+mutation ConditionalIfNotTests {
+  # Navigate to test page
+  goto(url: "https://example.com") {
+    status
+    time
+  }
+
+  # Basic ifnot - only screenshot if h2 is NOT present
+  ifnot(selector: "h2") {
+    screenshot {
+      base64
+    }
+  }
+
+  # Handle loading states - proceed when spinner is gone
+  ifnot(selector: ".loading-spinner") {
+    # Page has loaded, proceed with actions
+    click(selector: "button.primary") {
+      time
+    }
+    text(selector: ".content") {
+      text
+      time
+    }
+  }
+
+  # Fallback form handling - use simple form if advanced is not available
+  ifnot(selector: ".advanced-form") {
+    # Use simple form instead
+    type(selector: "input[name='query']", text: "search term") {
+      time
+    }
+    click(selector: "button.search") {
+      time
+    }
+  }
+
+  # Fallback navigation - use alternative menu if main menu is missing
+  ifnot(selector: ".main-navigation") {
+    # Use sidebar navigation instead
+    click(selector: ".sidebar-toggle") {
+      time
+    }
+    click(selector: ".sidebar-nav a[href='/about']") {
+      time
+    }
+  }
+
+  # Error handling - show error message if success element is not present
+  ifnot(selector: ".success-message") {
+    # Check for error messages
+    text(selector: ".error-message") {
+      text
+      time
+    }
+    screenshot {
+      base64
+    }
+  }
+
+  # Conditional content extraction - use alternative if main content missing
+  ifnot(selector: ".main-article") {
+    # Extract from alternative content areas
+    text(selector: ".sidebar-content") {
+      text
+      time
+    }
+    text(selector: ".footer-content") {
+      text
+      time
+    }
+  }
+
+  # Authentication fallback - handle when user is not logged in
+  ifnot(selector: ".user-dashboard") {
+    # Show login form instead
+    click(selector: ".login-button") {
+      time
+    }
+    type(selector: "#username", text: "testuser") {
+      time
+    }
+    type(selector: "#password", text: "testpass") {
+      time
+    }
+    click(selector: ".submit-login") {
+      time
+    }
+  }
+
+  # Modal handling - proceed if modal is not blocking the page
+  ifnot(selector: ".modal-overlay") {
+    # No modal blocking, proceed with main interaction
+    click(selector: ".main-action-button") {
+      time
+    }
+    html(selector: ".results") {
+      html
+      time
+    }
+  }
+
+  # Feature detection - use fallback if advanced feature not available
+  ifnot(selector: ".video-player") {
+    # Use image gallery instead
+    click(selector: ".image-gallery .first-image") {
+      time
+    }
+    screenshot {
+      base64
+    }
+  }
+
+  # Cookie banner handling - only interact if banner is not present
+  ifnot(selector: ".cookie-banner") {
+    # No cookie banner, proceed with normal interaction
+    click(selector: ".start-demo") {
+      time
+    }
+    type(selector: ".demo-input", text: "demo data") {
+      time
+    }
+  }
+
+  # Multi-step form fallback
+  ifnot(selector: ".step-2") {
+    # Still on step 1, complete it first
+    type(selector: ".step1-input", text: "step 1 data") {
+      time
+    }
+    click(selector: ".next-step") {
+      time
+    }
+    
+    # Take screenshot of step transition
+    screenshot {
+      base64
+    }
+  }
+
+  # Language detection fallback
+  ifnot(selector: "[lang='es']") {
+    # Page is not in Spanish, interact in English
+    click(selector: ".english-content a") {
+      time
+    }
+    text(selector: ".english-description") {
+      text
+      time
+    }
+  }
+
+  # Shopping cart fallback
+  ifnot(selector: ".cart-items") {
+    # Cart is empty, add some items
+    click(selector: ".product-1 .add-to-cart") {
+      time
+    }
+    click(selector: ".product-2 .add-to-cart") {
+      time
+    }
+    
+    # Check cart after adding items
+    html(selector: ".cart-summary") {
+      html
+      time
+    }
+  }
+} 

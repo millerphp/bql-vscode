@@ -1,0 +1,133 @@
+mutation ConditionalIfTests {
+  # Navigate to test page
+  goto(url: "https://example.com") {
+    status
+    time
+  }
+
+  # Basic if with selector check
+  if(selector: "h1") {
+    screenshot {
+      base64
+    }
+  }
+
+  # If with visibility check
+  if(selector: ".modal", visible: true) {
+    click(selector: ".close-button") {
+      x
+      y
+      time
+    }
+  }
+
+  # Complex nested operations
+  if(selector: "form") {
+    type(selector: "input[name='email']", text: "test@example.com") {
+      time
+    }
+    type(selector: "input[name='password']", text: "password123") {
+      time
+    }
+    click(selector: "button[type='submit']") {
+      selector
+      time
+    }
+  }
+
+  # If with multiple conditions and operations
+  if(selector: ".login-form") {
+    # Fill out login form
+    type(selector: "#username", text: "testuser") {
+      time
+    }
+    type(selector: "#password", text: "testpass") {
+      time
+    }
+    
+    # Take screenshot before submitting
+    screenshot {
+      base64
+    }
+    
+    # Submit form
+    click(selector: ".submit-button") {
+      time
+    }
+    
+    # Wait and check for success
+    html(selector: ".success-message") {
+      html
+      time
+    }
+  }
+
+  # Conditional navigation based on element presence
+  if(selector: ".navigation-menu") {
+    click(selector: ".nav-about") {
+      time
+    }
+    
+    # Check if we navigated successfully
+    html(selector: "title") {
+      html
+    }
+  }
+
+  # Conditional form handling
+  if(selector: ".contact-form", visible: true) {
+    type(selector: "input[name='name']", text: "Test User") {
+      time
+    }
+    type(selector: "textarea[name='message']", text: "This is a test message") {
+      time
+    }
+    click(selector: "button.send") {
+      time
+    }
+  }
+
+  # Conditional cookie acceptance
+  if(selector: ".cookie-banner") {
+    click(selector: ".accept-cookies") {
+      time
+    }
+  }
+
+  # Multiple nested screenshots based on different conditions
+  if(selector: ".gallery") {
+    screenshot {
+      base64
+    }
+    
+    click(selector: ".gallery-item:first-child") {
+      time
+    }
+    
+    screenshot {
+      base64
+    }
+  }
+
+  # Conditional text extraction
+  if(selector: ".article-content") {
+    text(selector: ".article-title") {
+      text
+      time
+    }
+    text(selector: ".article-body") {
+      text
+      time
+    }
+  }
+
+  # Conditional dropdown interaction
+  if(selector: "select.country-selector") {
+    click(selector: "select.country-selector") {
+      time
+    }
+    click(selector: "option[value='US']") {
+      time
+    }
+  }
+} 

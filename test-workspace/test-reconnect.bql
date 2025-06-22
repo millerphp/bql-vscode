@@ -1,0 +1,225 @@
+mutation ReconnectExamples {
+  # Initial navigation to establish session
+  goto(url: "https://example.com") {
+    status
+    url
+    time
+  }
+
+  # Basic reconnect with default timeout (30 seconds)
+  basicReconnect: reconnect {
+    browserQLEndpoint
+    browserWSEndpoint
+    devtoolsFrontendUrl
+    webSocketDebuggerUrl
+  }
+
+  # Quick operations reconnect (10 seconds)
+  quickReconnect: reconnect(timeout: 10000) {
+    browserQLEndpoint
+    browserWSEndpoint
+  }
+
+  # Standard workflow reconnect (1 minute)
+  standardReconnect: reconnect(timeout: 60000) {
+    browserQLEndpoint
+    browserWSEndpoint
+    devtoolsFrontendUrl
+    webSocketDebuggerUrl
+  }
+
+  # Development session reconnect (2 minutes)
+  devReconnect: reconnect(timeout: 120000) {
+    browserQLEndpoint
+    devtoolsFrontendUrl
+    webSocketDebuggerUrl
+  }
+
+  # Long-running automation reconnect (5 minutes)
+  automationReconnect: reconnect(timeout: 300000) {
+    browserQLEndpoint
+    browserWSEndpoint
+  }
+
+  # Load testing reconnect (1.5 minutes)
+  loadTestReconnect: reconnect(timeout: 90000) {
+    browserQLEndpoint
+    browserWSEndpoint
+    devtoolsFrontendUrl
+    webSocketDebuggerUrl
+  }
+
+  # Production environment reconnect (45 seconds)
+  prodReconnect: reconnect(timeout: 45000) {
+    browserQLEndpoint
+    browserWSEndpoint
+  }
+
+  # Debug session reconnect (10 minutes)
+  debugReconnect: reconnect(timeout: 600000) {
+    browserQLEndpoint
+    devtoolsFrontendUrl
+    webSocketDebuggerUrl
+  }
+
+  # CI/CD pipeline reconnect (3 minutes)
+  cicdReconnect: reconnect(timeout: 180000) {
+    browserQLEndpoint
+    browserWSEndpoint
+  }
+
+  # Interactive testing reconnect (2.5 minutes)
+  interactiveReconnect: reconnect(timeout: 150000) {
+    browserQLEndpoint
+    browserWSEndpoint
+    devtoolsFrontendUrl
+  }
+
+  # Monitoring session reconnect (30 minutes)
+  monitoringReconnect: reconnect(timeout: 1800000) {
+    browserQLEndpoint
+    browserWSEndpoint
+  }
+
+  # API testing reconnect (4 minutes)
+  apiTestReconnect: reconnect(timeout: 240000) {
+    browserQLEndpoint
+    browserWSEndpoint
+    webSocketDebuggerUrl
+  }
+
+  # Performance testing reconnect (8 minutes)
+  perfTestReconnect: reconnect(timeout: 480000) {
+    browserQLEndpoint
+    browserWSEndpoint
+    devtoolsFrontendUrl
+    webSocketDebuggerUrl
+  }
+
+  # Security testing reconnect (6 minutes)
+  securityReconnect: reconnect(timeout: 360000) {
+    browserQLEndpoint
+    devtoolsFrontendUrl
+    webSocketDebuggerUrl
+  }
+
+  # Minimal reconnect for basic session persistence (15 seconds)
+  minimalReconnect: reconnect(timeout: 15000) {
+    browserQLEndpoint
+  }
+
+  # Extended session for complex workflows (12 minutes)
+  extendedReconnect: reconnect(timeout: 720000) {
+    browserQLEndpoint
+    browserWSEndpoint
+    devtoolsFrontendUrl
+    webSocketDebuggerUrl
+  }
+
+  # Backup session for failover (20 minutes)
+  backupReconnect: reconnect(timeout: 1200000) {
+    browserQLEndpoint
+    browserWSEndpoint
+  }
+
+  # Research session reconnect (15 minutes)
+  researchReconnect: reconnect(timeout: 900000) {
+    browserQLEndpoint
+    browserWSEndpoint
+    devtoolsFrontendUrl
+  }
+
+  # Training session reconnect (25 minutes)
+  trainingReconnect: reconnect(timeout: 1500000) {
+    browserQLEndpoint
+    devtoolsFrontendUrl
+    webSocketDebuggerUrl
+  }
+
+  # Demo session reconnect (7 minutes)
+  demoReconnect: reconnect(timeout: 420000) {
+    browserQLEndpoint
+    browserWSEndpoint
+    devtoolsFrontendUrl
+    webSocketDebuggerUrl
+  }
+
+  # Batch processing reconnect (10 minutes)
+  batchReconnect: reconnect(timeout: 600000) {
+    browserQLEndpoint
+    browserWSEndpoint
+  }
+
+  # Quality assurance reconnect (5 minutes)
+  qaReconnect: reconnect(timeout: 300000) {
+    browserQLEndpoint
+    browserWSEndpoint
+    devtoolsFrontendUrl
+    webSocketDebuggerUrl
+  }
+
+  # User acceptance testing reconnect (8 minutes)
+  uatReconnect: reconnect(timeout: 480000) {
+    browserQLEndpoint
+    browserWSEndpoint
+    devtoolsFrontendUrl
+  }
+
+  # Integration testing reconnect (6 minutes)
+  integrationReconnect: reconnect(timeout: 360000) {
+    browserQLEndpoint
+    browserWSEndpoint
+    webSocketDebuggerUrl
+  }
+
+  # Regression testing reconnect (12 minutes)
+  regressionReconnect: reconnect(timeout: 720000) {
+    browserQLEndpoint
+    browserWSEndpoint
+    devtoolsFrontendUrl
+    webSocketDebuggerUrl
+  }
+
+  # End-to-end testing reconnect (15 minutes)
+  e2eReconnect: reconnect(timeout: 900000) {
+    browserQLEndpoint
+    browserWSEndpoint
+    devtoolsFrontendUrl
+    webSocketDebuggerUrl
+  }
+
+  # Stress testing reconnect (30 minutes)
+  stressReconnect: reconnect(timeout: 1800000) {
+    browserQLEndpoint
+    browserWSEndpoint
+  }
+
+  # Prototype development reconnect (20 minutes)
+  prototypeReconnect: reconnect(timeout: 1200000) {
+    browserQLEndpoint
+    devtoolsFrontendUrl
+    webSocketDebuggerUrl
+  }
+
+  # Workshop session reconnect (45 minutes)
+  workshopReconnect: reconnect(timeout: 2700000) {
+    browserQLEndpoint
+    browserWSEndpoint
+    devtoolsFrontendUrl
+    webSocketDebuggerUrl
+  }
+
+  # Documentation session reconnect (10 minutes)
+  docReconnect: reconnect(timeout: 600000) {
+    browserQLEndpoint
+    devtoolsFrontendUrl
+  }
+
+  # Conference demo reconnect (3 minutes)
+  conferenceReconnect: reconnect(timeout: 180000) {
+    browserQLEndpoint
+    browserWSEndpoint
+    devtoolsFrontendUrl
+    webSocketDebuggerUrl
+  }
+} 

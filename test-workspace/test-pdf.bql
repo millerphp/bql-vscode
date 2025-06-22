@@ -1,0 +1,294 @@
+mutation PDFGeneration {
+  # Navigate to the page first
+  goto(url: "https://example.com", waitUntil: firstMeaningfulPaint) {
+    status
+    url
+  }
+
+  # 1. Simple PDF Generation
+  # Basic PDF generation with default settings
+  simple: pdf {
+    base64
+  }
+
+  # 2. PDF with Custom Format
+  # Using A4 format (most common international size)
+  a4Document: pdf(format: a4) {
+    base64
+  }
+
+  # 3. Letter Format PDF (US Standard)
+  letterDocument: pdf(format: letter) {
+    base64
+  }
+
+  # 4. Landscape PDF
+  # Perfect for wide content like spreadsheets or charts
+  landscape: pdf(
+    format: a4
+    landscape: true
+    printBackground: true
+  ) {
+    base64
+  }
+
+  # 5. PDF with Custom Headers and Footers
+  # Professional document with branding
+  branded: pdf(
+    format: a4
+    displayHeaderFooter: true
+    headerTemplate: "<div style='font-size: 14pt; width: 100%; text-align: center; margin: 0 1cm;'><span class='title'></span> | <span class='date'></span></div>"
+    footerTemplate: "<div style='font-size: 10pt; width: 100%; text-align: center; margin: 0 1cm;'>Page <span class='pageNumber'></span> of <span class='totalPages'></span> | <span class='url'></span></div>"
+    printBackground: true
+  ) {
+    base64
+  }
+
+  # 6. PDF with Custom Margins
+  # Larger margins for formal documents
+  formalDocument: pdf(
+    format: letter
+    marginTop: "2cm"
+    marginBottom: "2cm"
+    marginLeft: "2.5cm"
+    marginRight: "2.5cm"
+    printBackground: true
+    scale: 0.9
+  ) {
+    base64
+  }
+
+  # 7. Tabloid Size PDF
+  # Large format for posters or presentations
+  poster: pdf(
+    format: tabloid
+    landscape: true
+    scale: 1.2
+    printBackground: true
+    timeout: 45000
+  ) {
+    base64
+  }
+
+  # 8. Accessible PDF with Tagged Content
+  # For compliance with accessibility standards
+  accessiblePDF: pdf(
+    format: a4
+    generateTaggedPDF: true
+    generateDocumentOutline: true
+    printBackground: true
+    timeout: 60000
+  ) {
+    base64
+  }
+
+  # 9. PDF with Page Ranges
+  # Print only specific pages (useful for long documents)
+  selectedPages: pdf(
+    format: a4
+    pageRanges: "1-3, 5, 7-10"
+    printBackground: true
+    timeout: 45000
+  ) {
+    base64
+  }
+
+  # 10. A3 Format PDF with Custom Size
+  # Large format with custom dimensions
+  a3Custom: pdf(
+    format: a3
+    width: "297mm"
+    height: "420mm"
+    preferCSSPageSize: false
+    scale: 0.85
+    printBackground: true
+  ) {
+    base64
+  }
+
+  # 11. Small Format PDF (A5)
+  # Compact document format
+  compact: pdf(
+    format: a5
+    marginTop: "1cm"
+    marginBottom: "1cm"
+    marginLeft: "1cm"
+    marginRight: "1cm"
+    scale: 0.8
+  ) {
+    base64
+  }
+
+  # 12. Legal Size Document
+  # US legal format with professional settings
+  legalDoc: pdf(
+    format: legal
+    displayHeaderFooter: true
+    headerTemplate: "<div style='font-size: 12pt; text-align: center; width: 100%; margin: 0 1cm;'>CONFIDENTIAL DOCUMENT</div>"
+    footerTemplate: "<div style='font-size: 10pt; text-align: center; width: 100%; margin: 0 1cm;'>Generated on <span class='date'></span></div>"
+    printBackground: false
+    scale: 1.0
+  ) {
+    base64
+  }
+
+  # 13. High-Quality Print PDF
+  # Best quality settings for printing
+  printQuality: pdf(
+    format: a4
+    printBackground: true
+    scale: 1.0
+    preferCSSPageSize: true
+    generateTaggedPDF: true
+    timeout: 90000
+  ) {
+    base64
+  }
+
+  # 14. Web Article PDF
+  # Optimized for web content with minimal margins
+  webArticle: pdf(
+    format: a4
+    marginTop: "0.5cm"
+    marginBottom: "0.5cm"
+    marginLeft: "1cm"
+    marginRight: "1cm"
+    printBackground: false
+    scale: 0.9
+    preferCSSPageSize: true
+  ) {
+    base64
+  }
+
+  # 15. Complete PDF with All Options
+  # Comprehensive example using most available parameters
+  comprehensive: pdf(
+    format: a4
+    landscape: false
+    displayHeaderFooter: true
+    headerTemplate: `
+      <div style="font-size: 12pt; width: 100%; text-align: center; margin: 0 1cm; border-bottom: 1px solid #ccc; padding-bottom: 5px;">
+        <strong><span class="title"></span></strong> | Generated: <span class="date"></span>
+      </div>
+    `
+    footerTemplate: `
+      <div style="font-size: 10pt; width: 100%; text-align: center; margin: 0 1cm; border-top: 1px solid #ccc; padding-top: 5px;">
+        <span class="url"></span> | Page <span class="pageNumber"></span>/<span class="totalPages"></span>
+      </div>
+    `
+    printBackground: true
+    scale: 1.0
+    width: "210mm"
+    height: "297mm"
+    marginTop: "1.5cm"
+    marginBottom: "1.5cm"
+    marginLeft: "2cm"
+    marginRight: "2cm"
+    generateTaggedPDF: true
+    generateDocumentOutline: true
+    preferCSSPageSize: false
+    timeout: 120000
+  ) {
+    base64
+  }
+}
+
+# PDF Generation Workflow Examples
+
+mutation InvoicePDFWorkflow {
+  # Navigate to invoice page
+  goto(url: "https://billing.example.com/invoice/123", waitUntil: networkIdle) {
+    status
+    url
+  }
+
+  # Wait for invoice to fully load
+  waitForSelector(selector: ".invoice-total", timeout: 10000) {
+    success
+  }
+
+  # Generate professional invoice PDF
+  invoice: pdf(
+    format: letter
+    displayHeaderFooter: true
+    headerTemplate: "<div style='font-size: 14pt; text-align: center; width: 100%; margin: 0 1cm;'>INVOICE</div>"
+    footerTemplate: "<div style='font-size: 10pt; text-align: center; width: 100%; margin: 0 1cm;'>This is a computer-generated document</div>"
+    printBackground: true
+    marginTop: "2cm"
+    marginBottom: "2cm"
+    marginLeft: "2cm"
+    marginRight: "2cm"
+    timeout: 30000
+  ) {
+    base64
+  }
+}
+
+mutation ReportPDFWorkflow {
+  # Navigate to report dashboard
+  goto(url: "https://analytics.example.com/reports/monthly", waitUntil: load) {
+    status
+  }
+
+  # Wait for charts to render
+  waitForTimeout(timeout: 5000) {
+    success
+  }
+
+  # Generate landscape report PDF
+  monthlyReport: pdf(
+    format: a4
+    landscape: true
+    displayHeaderFooter: true
+    headerTemplate: "<div style='font-size: 12pt; text-align: center; width: 100%;'>Monthly Analytics Report - <span class='date'></span></div>"
+    printBackground: true
+    scale: 0.8
+    timeout: 45000
+  ) {
+    base64
+  }
+}
+
+mutation PresentationPDFWorkflow {
+  # Navigate to presentation
+  goto(url: "https://slides.example.com/presentation/456", waitUntil: domContentLoaded) {
+    status
+  }
+
+  # Generate presentation PDF
+  slides: pdf(
+    format: tabloid
+    landscape: true
+    printBackground: true
+    scale: 1.1
+    marginTop: "0.5cm"
+    marginBottom: "0.5cm"
+    marginLeft: "0.5cm"
+    marginRight: "0.5cm"
+    timeout: 60000
+  ) {
+    base64
+  }
+}
+
+mutation AccessibleDocumentWorkflow {
+  # Navigate to content page
+  goto(url: "https://docs.example.com/user-guide", waitUntil: firstMeaningfulPaint) {
+    status
+  }
+
+  # Generate accessible PDF with full compliance
+  userGuide: pdf(
+    format: a4
+    generateTaggedPDF: true
+    generateDocumentOutline: true
+    displayHeaderFooter: true
+    headerTemplate: "<div style='font-size: 14pt; text-align: center; width: 100%;'>User Guide</div>"
+    footerTemplate: "<div style='font-size: 10pt; text-align: center; width: 100%;'>Page <span class='pageNumber'></span></div>"
+    printBackground: true
+    preferCSSPageSize: true
+    timeout: 90000
+  ) {
+    base64
+  }
+} 

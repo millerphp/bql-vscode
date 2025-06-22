@@ -1,0 +1,303 @@
+mutation QuerySelectorExamples {
+  # Navigate to test page
+  goto(url: "https://example.com") {
+    status
+    url
+  }
+
+  # Basic element selection
+  mainHeading: querySelector(selector: "h1") {
+    innerHTML
+    innerText
+    tagName
+  }
+
+  # First link with href
+  primaryLink: querySelector(selector: "a[href]") {
+    innerText
+    attributes {
+      name
+      value
+    }
+  }
+
+  # CSS class selector
+  heroSection: querySelector(selector: ".hero") {
+    innerHTML
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # ID selector
+  mainContent: querySelector(selector: "#main-content") {
+    innerHTML
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Attribute selector
+  emailInput: querySelector(selector: "input[type='email']") {
+    tagName
+    outerHTML
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Complex selector with multiple conditions
+  submitButton: querySelector(selector: "button[type='submit'].primary") {
+    innerHTML
+    innerText
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Descendant selector
+  navLink: querySelector(selector: "nav a") {
+    innerText
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Pseudo-class selector (first child)
+  firstListItem: querySelector(selector: "ul li:first-child") {
+    innerText
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Form element
+  loginForm: querySelector(selector: "form#login-form") {
+    tagName
+    outerHTML
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Image with alt text
+  heroImage: querySelector(selector: "img[alt]") {
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Data attribute selector
+  productCard: querySelector(selector: "[data-product-id]") {
+    innerHTML
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Multiple selector (comma-separated)
+  mainNav: querySelector(selector: "nav.main, nav[role='navigation']") {
+    innerHTML
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Table element
+  dataTable: querySelector(selector: "table.data") {
+    tagName
+    innerHTML
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Visible element with timeout
+  loadedContent: querySelector(
+    selector: ".dynamic-content"
+    visible: true
+    timeout: 5000
+  ) {
+    innerHTML
+    innerText
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Footer element
+  pageFooter: querySelector(selector: "footer") {
+    innerHTML
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Search input
+  searchField: querySelector(selector: "input[name='search'], input[placeholder*='search']") {
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Social media link
+  socialLink: querySelector(selector: "a[href*='twitter'], a[href*='facebook'], a[href*='linkedin']") {
+    innerText
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Call-to-action button
+  ctaButton: querySelector(selector: ".cta, .call-to-action, button.primary") {
+    innerHTML
+    innerText
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Article content
+  articleContent: querySelector(selector: "article, .article-content, main") {
+    tagName
+    innerHTML
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Breadcrumb navigation
+  breadcrumb: querySelector(selector: ".breadcrumb, nav[aria-label='breadcrumb']") {
+    innerHTML
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Modal or dialog
+  modal: querySelector(selector: ".modal, dialog, [role='dialog']") {
+    tagName
+    innerHTML
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Video element
+  videoPlayer: querySelector(selector: "video, .video-player") {
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Contact form
+  contactForm: querySelector(selector: "form[name='contact'], form.contact") {
+    tagName
+    outerHTML
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Price element
+  priceElement: querySelector(selector: ".price, .cost, [data-price]") {
+    innerText
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Rating or review
+  rating: querySelector(selector: ".rating, .stars, [data-rating]") {
+    innerHTML
+    innerText
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # User profile
+  userProfile: querySelector(selector: ".user-profile, .profile, [data-user]") {
+    innerHTML
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Skip link for accessibility
+  skipLink: querySelector(selector: "a[href='#main'], .skip-link") {
+    innerText
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Logo element
+  siteLogo: querySelector(selector: ".logo, .brand, header img") {
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Cookie banner
+  cookieBanner: querySelector(selector: ".cookie-banner, .cookie-notice, [data-cookie]") {
+    innerHTML
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Progress indicator
+  progressBar: querySelector(selector: ".progress, progress, [role='progressbar']") {
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+} 

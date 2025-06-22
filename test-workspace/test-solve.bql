@@ -1,0 +1,623 @@
+# ============================================================================
+# 🚨 EXPERIMENTAL OPERATION TEST: solve
+# ============================================================================
+# 
+# The solve operation is EXPERIMENTAL and subject to change.
+# Use with caution in production environments.
+# 
+# Purpose: Solves captcha or other challenges specified by type
+# Arguments: type (CaptchaTypes!, required), timeout (Float, optional), wait (Boolean, optional, default: true)
+# Returns: CaptchaResponse with found, solved, time fields
+# 
+# Official Documentation: https://docs.browserless.io/bql-schema/operations/mutations/solve
+# 
+# ============================================================================
+
+mutation SolveOperationTests {
+  
+  # ========================================
+  # Basic Captcha Solving Tests
+  # ========================================
+  
+  # Basic hCaptcha solving
+  basicHCaptcha: solve(type: hcaptcha) {
+    found
+    solved
+    time
+  }
+  
+  # Basic Cloudflare challenge solving
+  basicCloudflare: solve(type: cloudflare) {
+    found
+    solved
+    time
+  }
+  
+  # ========================================
+  # Timeout Configuration Tests
+  # ========================================
+  
+  # Short timeout for quick detection
+  quickTimeout: solve(
+    type: hcaptcha
+    timeout: 5000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Standard timeout
+  standardTimeout: solve(
+    type: hcaptcha
+    timeout: 15000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Long timeout for complex challenges
+  longTimeout: solve(
+    type: cloudflare
+    timeout: 30000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Extended timeout for difficult captchas
+  extendedTimeout: solve(
+    type: hcaptcha
+    timeout: 45000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Maximum timeout for persistent challenges
+  maxTimeout: solve(
+    type: cloudflare
+    timeout: 60000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # ========================================
+  # Wait Behavior Tests
+  # ========================================
+  
+  # Wait for captcha to appear
+  waitForCaptcha: solve(
+    type: hcaptcha
+    wait: true
+    timeout: 20000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Don't wait, check immediately
+  noWaitCheck: solve(
+    type: hcaptcha
+    wait: false
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Quick check without waiting
+  immediateCheck: solve(
+    type: cloudflare
+    wait: false
+    timeout: 1000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # ========================================
+  # Authentication Workflow Tests
+  # ========================================
+  
+  # Login form with captcha
+  loginFormCaptcha: solve(
+    type: hcaptcha
+    timeout: 25000
+    wait: true
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Registration captcha
+  registrationCaptcha: solve(
+    type: hcaptcha
+    timeout: 20000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Password reset captcha
+  passwordResetCaptcha: solve(
+    type: cloudflare
+    timeout: 15000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Account verification captcha
+  verificationCaptcha: solve(
+    type: hcaptcha
+    timeout: 30000
+    wait: true
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # ========================================
+  # E-commerce Workflow Tests
+  # ========================================
+  
+  # Checkout captcha
+  checkoutCaptcha: solve(
+    type: hcaptcha
+    timeout: 20000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Payment verification captcha
+  paymentCaptcha: solve(
+    type: cloudflare
+    timeout: 25000
+    wait: true
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Order confirmation captcha
+  orderCaptcha: solve(
+    type: hcaptcha
+    timeout: 15000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Shipping form captcha
+  shippingCaptcha: solve(
+    type: cloudflare
+    timeout: 18000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # ========================================
+  # API Protection Tests
+  # ========================================
+  
+  # API rate limiting captcha
+  apiRateLimitCaptcha: solve(
+    type: cloudflare
+    timeout: 30000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # API access captcha
+  apiAccessCaptcha: solve(
+    type: hcaptcha
+    timeout: 20000
+    wait: true
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # GraphQL endpoint captcha
+  graphqlCaptcha: solve(
+    type: cloudflare
+    timeout: 25000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # REST API captcha
+  restApiCaptcha: solve(
+    type: hcaptcha
+    timeout: 15000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # ========================================
+  # Bot Protection Tests
+  # ========================================
+  
+  # Basic bot detection
+  botDetectionBasic: solve(
+    type: cloudflare
+    timeout: 20000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Advanced bot protection
+  botProtectionAdvanced: solve(
+    type: cloudflare
+    timeout: 35000
+    wait: true
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # DDoS protection captcha
+  ddosProtection: solve(
+    type: cloudflare
+    timeout: 40000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Security challenge
+  securityChallenge: solve(
+    type: hcaptcha
+    timeout: 30000
+    wait: true
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # ========================================
+  # Content Access Tests
+  # ========================================
+  
+  # Premium content captcha
+  premiumContentCaptcha: solve(
+    type: hcaptcha
+    timeout: 20000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Download protection captcha
+  downloadCaptcha: solve(
+    type: cloudflare
+    timeout: 25000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Media access captcha
+  mediaAccessCaptcha: solve(
+    type: hcaptcha
+    timeout: 18000
+    wait: true
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # File sharing captcha
+  fileSharingCaptcha: solve(
+    type: cloudflare
+    timeout: 22000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # ========================================
+  # Multiple Attempt Tests
+  # ========================================
+  
+  # First attempt with short timeout
+  firstAttempt: solve(
+    type: hcaptcha
+    timeout: 10000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Retry attempt with longer timeout
+  retryAttempt: solve(
+    type: hcaptcha
+    timeout: 30000
+    wait: true
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Final attempt with maximum timeout
+  finalAttempt: solve(
+    type: hcaptcha
+    timeout: 45000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # ========================================
+  # Performance Testing
+  # ========================================
+  
+  # Fast captcha solving
+  fastSolve: solve(
+    type: hcaptcha
+    timeout: 8000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Optimized for speed
+  speedOptimized: solve(
+    type: cloudflare
+    timeout: 5000
+    wait: false
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Balanced performance
+  balancedSolve: solve(
+    type: hcaptcha
+    timeout: 20000
+    wait: true
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Accuracy focused
+  accuracyFocused: solve(
+    type: cloudflare
+    timeout: 40000
+    wait: true
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # ========================================
+  # Edge Case Tests
+  # ========================================
+  
+  # Minimal timeout
+  minimalTimeout: solve(
+    type: hcaptcha
+    timeout: 1000
+    wait: false
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # No timeout specified
+  noTimeoutSpecified: solve(
+    type: cloudflare
+    wait: true
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Wait false with timeout
+  waitFalseWithTimeout: solve(
+    type: hcaptcha
+    timeout: 5000
+    wait: false
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Wait true without timeout
+  waitTrueNoTimeout: solve(
+    type: cloudflare
+    wait: true
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # ========================================
+  # Complex Scenario Tests
+  # ========================================
+  
+  # Multi-step captcha workflow
+  multiStepCaptcha: solve(
+    type: hcaptcha
+    timeout: 35000
+    wait: true
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Nested captcha challenge
+  nestedChallenge: solve(
+    type: cloudflare
+    timeout: 40000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Sequential captcha solving
+  sequentialCaptcha: solve(
+    type: hcaptcha
+    timeout: 25000
+    wait: true
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Conditional captcha solving
+  conditionalCaptcha: solve(
+    type: cloudflare
+    timeout: 30000
+    wait: true
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # ========================================
+  # Integration Pattern Tests
+  # ========================================
+  
+  # Captcha in form workflow
+  formWorkflowCaptcha: solve(
+    type: hcaptcha
+    timeout: 20000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Captcha with navigation
+  navigationCaptcha: solve(
+    type: cloudflare
+    timeout: 25000
+    wait: true
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Captcha with evaluation
+  evaluationCaptcha: solve(
+    type: hcaptcha
+    timeout: 18000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Captcha with screenshot
+  screenshotCaptcha: solve(
+    type: cloudflare
+    timeout: 22000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # ========================================
+  # Reliability Tests
+  # ========================================
+  
+  # High reliability solve
+  highReliability: solve(
+    type: hcaptcha
+    timeout: 45000
+    wait: true
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Standard reliability
+  standardReliability: solve(
+    type: cloudflare
+    timeout: 25000
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Quick reliability check
+  quickReliability: solve(
+    type: hcaptcha
+    timeout: 10000
+    wait: true
+  ) {
+    found
+    solved
+    time
+  }
+  
+  # Robust solving approach
+  robustSolving: solve(
+    type: cloudflare
+    timeout: 50000
+    wait: true
+  ) {
+    found
+    solved
+    time
+  }
+}
+
+# ============================================================================
+# END OF EXPERIMENTAL SOLVE OPERATION TESTS
+# ============================================================================ 

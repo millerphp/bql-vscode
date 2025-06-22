@@ -1,0 +1,104 @@
+mutation WaitForTimeoutExamples {
+  # Basic timeout - wait 1 second
+  basicWait: waitForTimeout(time: 1000) {
+    time
+  }
+
+  # Short delay for animations
+  animationDelay: waitForTimeout(time: 500) {
+    time
+  }
+
+  # Longer wait for processing
+  processingDelay: waitForTimeout(time: 5000) {
+    time
+  }
+
+  # Wait after navigation
+  goto(url: "https://example.com") {
+    status
+  }
+  
+  navigationWait: waitForTimeout(time: 2000) {
+    time
+  }
+
+  # Wait between interactions
+  click(selector: "button.first") {
+    selector
+  }
+  
+  interactionDelay: waitForTimeout(time: 1500) {
+    time
+  }
+  
+  click(selector: "button.second") {
+    selector
+  }
+
+  # Wait for network settle
+  networkSettle: waitForTimeout(time: 3000) {
+    time
+  }
+
+  # Form interaction timing
+  type(selector: "input[name='email']", text: "user@example.com") {
+    time
+  }
+
+  formValidationWait: waitForTimeout(time: 1000) {
+    time
+  }
+
+  # Animation timing examples
+  hover(selector: ".tooltip-trigger") {
+    selector
+  }
+
+  tooltipAnimationWait: waitForTimeout(time: 300) {
+    time
+  }
+
+  # API call timing
+  click(selector: "button.api-call") {
+    selector
+  }
+
+  apiProcessingWait: waitForTimeout(time: 4000) {
+    time
+  }
+
+  # Modal timing
+  click(selector: "button.open-modal") {
+    selector
+  }
+
+  modalAnimationWait: waitForTimeout(time: 600) {
+    time
+  }
+
+  # Scroll timing
+  scroll(selector: "body", x: 0, y: 1000) {
+    time
+  }
+
+  scrollSettleWait: waitForTimeout(time: 800) {
+    time
+  }
+
+  # Performance timing analysis
+  timingAnalysis: evaluate(expression: `
+    return {
+      basicWaitTime: ${basicWait.time},
+      animationDelayTime: ${animationDelay.time},
+      processingDelayTime: ${processingDelay.time},
+      navigationWaitTime: ${navigationWait.time},
+      interactionDelayTime: ${interactionDelay.time},
+      totalWaitTime: ${basicWait.time} + ${animationDelay.time} + ${processingDelay.time},
+      averageWaitTime: (${basicWait.time} + ${animationDelay.time} + ${processingDelay.time}) / 3,
+      timestamp: Date.now()
+    };
+  `) {
+    value
+  }
+}

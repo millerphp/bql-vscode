@@ -1,0 +1,239 @@
+{
+    "scopeName": "source.browserql",
+    "name": "BrowserQL",
+    "fileTypes": [".bql"],
+    "patterns": [
+        {
+            "include": "#comments"
+        },
+        {
+            "include": "#keywords"
+        },
+        {
+            "include": "#operations"
+        },
+        {
+            "include": "#directives"
+        },
+        {
+            "include": "#parameters"
+        },
+        {
+            "include": "#constants"
+        },
+        {
+            "include": "#strings"
+        },
+        {
+            "include": "#numbers"
+        },
+        {
+            "include": "#variables"
+        },
+        {
+            "include": "#punctuation"
+        }
+    ],
+    "repository": {
+        "comments": {
+            "patterns": [
+                {
+                    "name": "comment.line.number-sign.browserql",
+                    "match": "#.*$"
+                }
+            ]
+        },
+        "keywords": {
+            "patterns": [
+                {
+                    "name": "keyword.control.browserql",
+                    "match": "\\b(mutation|query|fragment|on|type|interface|union|scalar|enum|input|extend|directive|schema)\\b"
+                }
+            ]
+        },
+        "operations": {
+            "patterns": [
+                {
+                    "name": "entity.name.function.browserql",
+                    "match": "\\b(goto|text|click|type|wait|select|evaluate|screenshot|pdf|verify|content|back|forward|hover|html|cookies|checkbox|if|ifnot|javaScriptEnabled|liveURL|mapSelector|preferences|proxy|querySelector|querySelectorAll|reconnect|reject|reload|request|response|scroll|setExtraHTTPHeaders|solve|title|url|userAgent|waitForNavigation|waitForRequest|waitForResponse|waitForSelector|waitForTimeout|browser|version)\\b"
+                }
+            ]
+        },
+        "directives": {
+            "patterns": [
+                {
+                    "name": "entity.name.tag.browserql",
+                    "match": "@\\w+"
+                }
+            ]
+        },
+        "parameters": {
+            "patterns": [
+                {
+                    "name": "variable.parameter.browserql",
+                    "match": "\\b(url|waitUntil|selector|visible|timeout|text|delay|expression|type|fullPage|value|html|if|cookies|name|domain|path|secure|httpOnly|sameSite|expires|checked|scroll|wait|content|request|response|enabled|interactable|quality|resizable|innerHTML|innerText|outerHTML|tagName|attributes|displayHeaderFooter|format|footerTemplate|generateDocumentOutline|generateTaggedPDF|landscape|printBackground|scale|width|headerTemplate|height|marginBottom|marginLeft|marginRight|marginTop|pageRanges|preferCSSPageSize|transferMode|base64|country|city|state|sticky|server|method|operator|headers)\\b"
+                }
+            ]
+        },
+        "constants": {
+            "patterns": [
+                {
+                    "name": "constant.language.browserql",
+                    "match": "\\b(firstMeaningfulPaint|domContentLoaded|networkidle0|networkidle2|networkIdle|load|commit|hcaptcha|cloudflare|Strict|Lax|None|true|false|null)\\b"
+                }
+            ]
+        },
+        "strings": {
+            "patterns": [
+                {
+                    "comment": "JavaScript content within evaluate operations - template literals",
+                    "name": "string.template.js.browserql",
+                    "begin": "(?<=content:\\s*)`",
+                    "end": "`",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.string.template.begin.js"
+                        }
+                    },
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.string.template.end.js"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "source.js"
+                        }
+                    ]
+                },
+                {
+                    "comment": "JavaScript content within evaluate operations - double quotes",
+                    "name": "string.quoted.double.js.browserql",
+                    "begin": "(?<=content:\\s*)\"",
+                    "end": "\"",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.string.begin.js"
+                        }
+                    },
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.string.end.js"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "source.js"
+                        },
+                        {
+                            "name": "constant.character.escape.browserql",
+                            "match": "\\\\."
+                        }
+                    ]
+                },
+                {
+                    "comment": "JavaScript content within evaluate operations - single quotes",
+                    "name": "string.quoted.single.js.browserql",
+                    "begin": "(?<=content:\\s*)'",
+                    "end": "'",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.string.begin.js"
+                        }
+                    },
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.string.end.js"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "source.js"
+                        },
+                        {
+                            "name": "constant.character.escape.browserql",
+                            "match": "\\\\."
+                        }
+                    ]
+                },
+                {
+                    "name": "string.quoted.double.browserql",
+                    "begin": "\"",
+                    "end": "\"",
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape.browserql",
+                            "match": "\\\\."
+                        }
+                    ]
+                },
+                {
+                    "name": "string.quoted.single.browserql",
+                    "begin": "'",
+                    "end": "'",
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape.browserql",
+                            "match": "\\\\."
+                        }
+                    ]
+                },
+                {
+                    "name": "string.template.browserql",
+                    "begin": "`",
+                    "end": "`",
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape.browserql",
+                            "match": "\\\\."
+                        }
+                    ]
+                }
+            ]
+        },
+        "numbers": {
+            "patterns": [
+                {
+                    "name": "constant.numeric.decimal.browserql",
+                    "match": "\\b\\d+(\\.\\d+)?\\b"
+                }
+            ]
+        },
+        "variables": {
+            "patterns": [
+                {
+                    "name": "variable.other.browserql",
+                    "match": "\\$\\w+"
+                }
+            ]
+        },
+        "punctuation": {
+            "patterns": [
+                {
+                    "name": "punctuation.definition.arguments.begin.browserql",
+                    "match": "\\("
+                },
+                {
+                    "name": "punctuation.definition.arguments.end.browserql",
+                    "match": "\\)"
+                },
+                {
+                    "name": "punctuation.definition.block.begin.browserql",
+                    "match": "\\{"
+                },
+                {
+                    "name": "punctuation.definition.block.end.browserql",
+                    "match": "\\}"
+                },
+                {
+                    "name": "punctuation.separator.key-value.browserql",
+                    "match": ":"
+                },
+                {
+                    "name": "punctuation.separator.parameters.browserql",
+                    "match": ","
+                }
+            ]
+        }
+    }
+} 

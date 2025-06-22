@@ -1,0 +1,30 @@
+mutation WaitForSelectorExamples {
+  goto(url: "https://example.com") {
+    status
+  }
+
+  basicWait: waitForSelector(selector: "h1") {
+    selector
+    visible
+    time
+  }
+
+  visibleElement: waitForSelector(
+    selector: ".dynamic-content"
+    visible: true
+  ) {
+    selector
+    visible
+    time
+  }
+
+  timeoutWait: waitForSelector(
+    selector: ".slow-loading"
+    timeout: 60000
+    visible: true
+  ) {
+    selector
+    visible
+    time
+  }
+}

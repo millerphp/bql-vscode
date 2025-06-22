@@ -1,0 +1,152 @@
+mutation JavaScriptControlTests {
+  # Check current JavaScript status
+  initialStatus: javaScriptEnabled {
+    enabled
+  }
+
+  # Disable JavaScript
+  disableJS: javaScriptEnabled(enabled: false) {
+    enabled
+  }
+
+  # Navigate to see effect of disabled JavaScript
+  noJSNavigation: goto(url: "https://example.com") {
+    status
+    time
+    text
+    url
+  }
+
+  # Take screenshot of page without JavaScript
+  noJSScreenshot: screenshot {
+    base64
+  }
+
+  # Extract HTML without JavaScript execution
+  noJSContent: html(selector: "body") {
+    html
+    time
+  }
+
+  # Re-enable JavaScript
+  enableJS: javaScriptEnabled(enabled: true) {
+    enabled
+  }
+
+  # Navigate again to see difference with JavaScript enabled
+  withJSNavigation: goto(url: "https://example.com") {
+    status
+    time
+    text
+    url
+  }
+
+  # Take screenshot with JavaScript enabled
+  withJSScreenshot: screenshot {
+    base64
+  }
+
+  # Test JavaScript execution after enabling
+  testJSExecution: evaluate(content: "document.title") {
+    value
+  }
+
+  # Complex workflow: Testing JavaScript-dependent features
+  
+  # Disable JavaScript for security-sensitive operations
+  secureMode: javaScriptEnabled(enabled: false) {
+    enabled
+  }
+
+  # Navigate to a form without JavaScript
+  secureFormNavigation: goto(url: "https://forms.example.com") {
+    status
+    time
+  }
+
+  # Fill form without JavaScript interference
+  secureFormFill: type(
+    selector: "input[name='sensitive']"
+    text: "secure data"
+  ) {
+    time
+  }
+
+  # Take screenshot of secure form state
+  secureFormScreenshot: screenshot {
+    base64
+  }
+
+  # Re-enable JavaScript for interactive features
+  interactiveMode: javaScriptEnabled(enabled: true) {
+    enabled
+  }
+
+  # Navigate to JavaScript-heavy page
+  interactivePage: goto(url: "https://app.example.com") {
+    status
+    time
+  }
+
+  # Wait for JavaScript-rendered content
+  jsRenderedContent: html(selector: ".dynamic-content") {
+    html
+    time
+  }
+
+  # Test JavaScript-enabled interactions
+  jsInteraction: click(selector: ".js-button") {
+    selector
+    x
+    y
+    time
+  }
+
+  # Verify JavaScript execution capability
+  jsVerification: evaluate(content: `
+    // Test if JavaScript is working
+    const isWorking = typeof window !== 'undefined' && 
+                     typeof document !== 'undefined';
+    
+    return {
+      javascriptWorking: isWorking,
+      userAgent: navigator.userAgent,
+      timestamp: Date.now(),
+      location: window.location.href
+    };
+  `) {
+    value
+  }
+
+  # Test conditional JavaScript enabling based on page content
+  conditionalJSTest: if(selector: ".requires-javascript") {
+    # Only enable JavaScript if specific content requires it
+    conditionalEnable: javaScriptEnabled(enabled: true) {
+      enabled
+    }
+    
+    # Execute JavaScript-dependent operations
+    jsOnlyFeature: evaluate(content: "window.myApp.initialize()") {
+      value
+    }
+  }
+
+  # Test fallback when JavaScript is disabled
+  fallbackTest: ifnot(selector: ".js-enabled-indicator") {
+    # JavaScript might be disabled, use fallback approach
+    fallbackDisable: javaScriptEnabled(enabled: false) {
+      enabled
+    }
+    
+    # Use non-JavaScript methods
+    staticContent: html {
+      html
+      time
+    }
+  }
+
+  # Final status check
+  finalStatus: javaScriptEnabled {
+    enabled
+  }
+} 

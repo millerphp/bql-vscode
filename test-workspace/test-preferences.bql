@@ -1,0 +1,394 @@
+mutation BasicPreferences {
+  # 1. Get current session preferences
+  # Shows the default timeout (30000ms)
+  currentConfig: preferences {
+    timeout
+  }
+
+  # 2. Set fast timeout for simple operations
+  # Useful for lightweight pages and quick interactions
+  fastConfig: preferences(timeout: 10000) {
+    timeout
+  }
+
+  # Test with the new fast timeout
+  quickNavigation: goto(url: "https://httpbin.org/delay/1") {
+    status
+    time
+    url
+  }
+
+  # Quick form interaction
+  quickType: type(selector: "input[name='test']", text: "fast input") {
+    text
+    time
+  }
+}
+
+mutation SlowPreferences {
+  # Set longer timeout for complex operations
+  # Ideal for SPA applications, media-heavy sites, or slow networks
+  slowConfig: preferences(timeout: 60000) {
+    timeout
+  }
+
+  # Navigate to potentially slow page
+  complexNavigation: goto(url: "https://example.com/heavy-spa") {
+    status
+    time
+    url
+  }
+
+  # Wait for dynamic content with new default timeout
+  waitForDynamic: waitForSelector(selector: ".dynamic-content") {
+    success
+  }
+
+  # Complex form operations
+  complexInteraction: type(selector: "#complex-form input", text: "complex data entry") {
+    text
+    time
+  }
+}
+
+mutation AdaptiveTimeoutWorkflow {
+  # Start with fast configuration for initial setup
+  initialSetup: preferences(timeout: 5000) {
+    timeout
+  }
+
+  # Quick page load
+  homePage: goto(url: "https://fast-site.example.com") {
+    status
+    time
+  }
+
+  # Fast login form
+  loginUsername: type(selector: "#username", text: "testuser") {
+    text
+    time
+  }
+
+  loginPassword: type(selector: "#password", text: "password123") {
+    text
+    time
+  }
+
+  submitLogin: click(selector: "#login-button") {
+    selector
+    time
+  }
+
+  # Switch to slower configuration for dashboard operations
+  dashboardSetup: preferences(timeout: 45000) {
+    timeout
+  }
+
+  # Navigate to complex dashboard
+  dashboard: goto(url: "https://dashboard.example.com") {
+    status
+    time
+    url
+  }
+
+  # Wait for dashboard widgets to load
+  waitForDashboard: waitForSelector(selector: ".dashboard-ready") {
+    success
+  }
+
+  # Complex dashboard interactions
+  selectReport: click(selector: ".report-selector") {
+    selector
+    time
+  }
+
+  # Wait for report to generate
+  waitForReport: waitForSelector(selector: ".report-generated") {
+    success
+  }
+}
+
+mutation EnvironmentBasedPreferences {
+  # Configure timeout based on environment needs
+
+  # Development environment - faster timeouts for quick iteration
+  devConfig: preferences(timeout: 15000) {
+    timeout
+  }
+
+  # Test development page
+  devPage: goto(url: "https://dev.example.com") {
+    status
+    time
+  }
+
+  # Production environment - longer timeouts for reliability
+  prodConfig: preferences(timeout: 90000) {
+    timeout
+  }
+
+  # Navigate to production application
+  prodPage: goto(url: "https://app.example.com") {
+    status
+    time
+    url
+  }
+
+  # Production-level operations with higher reliability
+  criticalOperation: click(selector: ".critical-action") {
+    selector
+    time
+  }
+
+  # Wait for critical process to complete
+  waitForCompletion: waitForSelector(selector: ".process-complete") {
+    success
+  }
+}
+
+mutation TestingWorkflow {
+  # Performance testing with minimal timeouts
+  performanceTest: preferences(timeout: 3000) {
+    timeout
+  }
+
+  # Test fast page load
+  fastLoad: goto(url: "https://httpbin.org/get") {
+    status
+    time
+  }
+
+  # Reliability testing with extended timeouts
+  reliabilityTest: preferences(timeout: 120000) {
+    timeout
+  }
+
+  # Test with slow/unreliable connection simulation
+  slowLoad: goto(url: "https://httpbin.org/delay/5") {
+    status
+    time
+    url
+  }
+
+  # Test complex page interactions
+  complexTest: waitForSelector(selector: ".complex-element") {
+    success
+  }
+}
+
+mutation ErrorHandlingWithTimeouts {
+  # Set short timeout to test timeout behavior
+  shortTimeout: preferences(timeout: 2000) {
+    timeout
+  }
+
+  # This might timeout on slow networks (intended for testing)
+  quickTest: goto(url: "https://httpbin.org/delay/1") {
+    status
+    time
+  }
+
+  # Reset to reasonable timeout for recovery
+  reasonableTimeout: preferences(timeout: 30000) {
+    timeout
+  }
+
+  # Reliable recovery operation
+  recovery: goto(url: "https://httpbin.org/get") {
+    status
+    time
+    url
+  }
+}
+
+mutation MixedOperationTimeouts {
+  # Set moderate default timeout
+  moderateConfig: preferences(timeout: 20000) {
+    timeout
+  }
+
+  # Most operations use the default
+  standardNavigation: goto(url: "https://example.com") {
+    status
+    time
+  }
+
+  standardClick: click(selector: "button") {
+    selector
+    time
+  }
+
+  # Override default for specific slow operation
+  slowOperation: click(selector: ".slow-button", timeout: 90000) {
+    selector
+    time
+  }
+
+  # Override default for specific fast operation
+  fastOperation: type(selector: "#quick-input", text: "fast", timeout: 5000) {
+    text
+    time
+  }
+
+  # Back to using default timeout
+  standardOperation: waitForSelector(selector: ".standard-element") {
+    success
+  }
+}
+
+mutation SessionConfigurationPatterns {
+  # Mobile device simulation - longer timeouts for slower processing
+  mobileConfig: preferences(timeout: 45000) {
+    timeout
+  }
+
+  mobileNavigation: goto(url: "https://m.example.com") {
+    status
+    time
+  }
+
+  # Desktop optimization - faster timeouts for powerful devices
+  desktopConfig: preferences(timeout: 15000) {
+    timeout
+  }
+
+  desktopNavigation: goto(url: "https://desktop.example.com") {
+    status
+    time
+    url
+  }
+
+  # Network-aware configuration
+  # Slow network simulation
+  slowNetworkConfig: preferences(timeout: 180000) {
+    timeout
+  }
+
+  slowNetworkTest: goto(url: "https://large-page.example.com") {
+    status
+    time
+  }
+
+  # Fast network optimization
+  fastNetworkConfig: preferences(timeout: 8000) {
+    timeout
+  }
+
+  fastNetworkTest: goto(url: "https://cdn-optimized.example.com") {
+    status
+    time
+  }
+}
+
+mutation BatchOperationsWithPreferences {
+  # Configure for batch processing
+  batchConfig: preferences(timeout: 30000) {
+    timeout
+  }
+
+  # Process multiple pages with consistent timeout
+  page1: goto(url: "https://site1.example.com") {
+    status
+    time
+  }
+
+  page1Data: html(selector: "main") {
+    html
+    time
+  }
+
+  page2: goto(url: "https://site2.example.com") {
+    status
+    time
+  }
+
+  page2Data: html(selector: "main") {
+    html
+    time
+  }
+
+  page3: goto(url: "https://site3.example.com") {
+    status
+    time
+  }
+
+  page3Data: html(selector: "main") {
+    html
+    time
+  }
+}
+
+mutation ConditionalPreferences {
+  # Set initial configuration
+  initialConfig: preferences(timeout: 20000) {
+    timeout
+  }
+
+  # Navigate to test page
+  testPage: goto(url: "https://test.example.com") {
+    status
+    time
+  }
+
+  # Conditionally adjust timeout based on page content
+  if(selector: ".slow-loading-indicator") {
+    slowPageConfig: preferences(timeout: 90000) {
+      timeout
+    }
+
+    # Operations for slow-loading content
+    slowContentWait: waitForSelector(selector: ".slow-content") {
+      success
+    }
+  }
+
+  ifnot(selector: ".slow-loading-indicator") {
+    fastPageConfig: preferences(timeout: 10000) {
+      timeout
+    }
+
+    # Operations for fast-loading content
+    fastContentInteraction: click(selector: ".fast-action") {
+      selector
+      time
+    }
+  }
+}
+
+mutation LoadTestingWithPreferences {
+  # Stress testing configuration
+  stressTestConfig: preferences(timeout: 300000) {
+    timeout
+  }
+
+  # Load test multiple heavy operations
+  heavyPage1: goto(url: "https://heavy1.example.com") {
+    status
+    time
+  }
+
+  heavyWait1: waitForSelector(selector: ".heavy-content") {
+    success
+  }
+
+  heavyPage2: goto(url: "https://heavy2.example.com") {
+    status
+    time
+  }
+
+  heavyWait2: waitForSelector(selector: ".heavy-processing") {
+    success
+  }
+
+  # Reset to normal configuration
+  normalConfig: preferences(timeout: 30000) {
+    timeout
+  }
+
+  # Verify normal operations still work
+  normalPage: goto(url: "https://normal.example.com") {
+    status
+    time
+    url
+  }
+} 

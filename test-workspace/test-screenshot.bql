@@ -1,0 +1,640 @@
+# BrowserQL Screenshot Operation Test File
+# Testing comprehensive screenshot capture with advanced options and formats
+
+mutation ScreenshotOperationTests {
+  # Navigate to test page
+  goto(url: "https://example.com", waitUntil: load) {
+    status
+    url
+  }
+
+  # ========================================
+  # BASIC SCREENSHOT OPERATIONS
+  # ========================================
+
+  # Basic viewport screenshot (default settings)
+  basicScreenshot: screenshot {
+    base64
+  }
+
+  # Full page screenshot
+  fullPageScreenshot: screenshot(fullPage: true) {
+    base64
+  }
+
+  # Element-specific screenshot
+  headerScreenshot: screenshot(selector: "header") {
+    base64
+  }
+
+  # Main content screenshot
+  contentScreenshot: screenshot(selector: "main, .content, article") {
+    base64
+  }
+
+  # Navigation screenshot
+  navScreenshot: screenshot(selector: "nav, .navigation") {
+    base64
+  }
+
+  # Footer screenshot
+  footerScreenshot: screenshot(selector: "footer") {
+    base64
+  }
+
+  # ========================================
+  # IMAGE FORMAT AND QUALITY CONTROL
+  # ========================================
+
+  # PNG screenshot (default quality)
+  pngScreenshot: screenshot(type: png) {
+    base64
+  }
+
+  # JPEG screenshot with high quality
+  jpegHighQuality: screenshot(
+    type: jpeg
+    quality: 95
+  ) {
+    base64
+  }
+
+  # JPEG screenshot with medium quality
+  jpegMediumQuality: screenshot(
+    type: jpeg
+    quality: 75
+  ) {
+    base64
+  }
+
+  # JPEG screenshot with low quality (faster)
+  jpegLowQuality: screenshot(
+    type: jpeg
+    quality: 50
+  ) {
+    base64
+  }
+
+  # High quality full page JPEG
+  fullPageJPEG: screenshot(
+    fullPage: true
+    type: jpeg
+    quality: 90
+  ) {
+    base64
+  }
+
+  # PNG with transparency (omit background)
+  transparentPNG: screenshot(
+    type: png
+    omitBackground: true
+  ) {
+    base64
+  }
+
+  # ========================================
+  # ELEMENT-SPECIFIC SCREENSHOTS
+  # ========================================
+
+  # Form screenshot
+  formScreenshot: screenshot(selector: "form") {
+    base64
+  }
+
+  # Button screenshot
+  buttonScreenshot: screenshot(selector: "button, .btn") {
+    base64
+  }
+
+  # Image screenshot
+  imageScreenshot: screenshot(selector: "img") {
+    base64
+  }
+
+  # Table screenshot
+  tableScreenshot: screenshot(selector: "table") {
+    base64
+  }
+
+  # Modal screenshot with transparency
+  modalScreenshot: screenshot(
+    selector: ".modal, .popup, .overlay"
+    type: png
+    omitBackground: true
+  ) {
+    base64
+  }
+
+  # Card component screenshot
+  cardScreenshot: screenshot(selector: ".card, .panel") {
+    base64
+  }
+
+  # Hero section screenshot
+  heroScreenshot: screenshot(
+    selector: ".hero, .banner, .jumbotron"
+    type: jpeg
+    quality: 85
+  ) {
+    base64
+  }
+
+  # Sidebar screenshot
+  sidebarScreenshot: screenshot(selector: ".sidebar, aside") {
+    base64
+  }
+
+  # ========================================
+  # CLIPPED REGION SCREENSHOTS
+  # ========================================
+
+  # Small clipped region
+  smallClip: screenshot(
+    clip: {
+      x: 50
+      y: 50
+      width: 300
+      height: 200
+    }
+    type: png
+  ) {
+    base64
+  }
+
+  # Medium clipped region
+  mediumClip: screenshot(
+    clip: {
+      x: 100
+      y: 100
+      width: 500
+      height: 400
+    }
+    type: jpeg
+    quality: 80
+  ) {
+    base64
+  }
+
+  # Large clipped region
+  largeClip: screenshot(
+    clip: {
+      x: 0
+      y: 0
+      width: 800
+      height: 600
+    }
+    type: png
+  ) {
+    base64
+  }
+
+  # Header area clip
+  headerClip: screenshot(
+    clip: {
+      x: 0
+      y: 0
+      width: 1200
+      height: 150
+    }
+    type: jpeg
+    quality: 85
+  ) {
+    base64
+  }
+
+  # Center content clip
+  centerClip: screenshot(
+    clip: {
+      x: 200
+      y: 150
+      width: 600
+      height: 500
+    }
+    type: png
+  ) {
+    base64
+  }
+
+  # ========================================
+  # PERFORMANCE OPTIMIZATION
+  # ========================================
+
+  # Speed optimized screenshot
+  speedOptimized: screenshot(
+    optimizeForSpeed: true
+    type: jpeg
+    quality: 60
+  ) {
+    base64
+  }
+
+  # Speed optimized full page
+  speedOptimizedFullPage: screenshot(
+    optimizeForSpeed: true
+    fullPage: true
+    type: jpeg
+    quality: 70
+  ) {
+    base64
+  }
+
+  # Quality optimized screenshot
+  qualityOptimized: screenshot(
+    optimizeForSpeed: false
+    type: png
+  ) {
+    base64
+  }
+
+  # Fast element capture
+  fastElementCapture: screenshot(
+    selector: ".quick-capture"
+    optimizeForSpeed: true
+    type: jpeg
+    quality: 65
+  ) {
+    base64
+  }
+
+  # ========================================
+  # VIEWPORT AND SURFACE OPTIONS
+  # ========================================
+
+  # Viewport only (no beyond viewport)
+  viewportOnly: screenshot(
+    captureBeyondViewport: false
+    fromSurface: false
+  ) {
+    base64
+  }
+
+  # Beyond viewport capture
+  beyondViewport: screenshot(
+    captureBeyondViewport: true
+    fullPage: true
+  ) {
+    base64
+  }
+
+  # Surface capture
+  surfaceCapture: screenshot(
+    fromSurface: true
+    captureBeyondViewport: true
+  ) {
+    base64
+  }
+
+  # View capture
+  viewCapture: screenshot(
+    fromSurface: false
+    captureBeyondViewport: false
+  ) {
+    base64
+  }
+
+  # ========================================
+  # TIMEOUT SCENARIOS
+  # ========================================
+
+  # Quick timeout screenshot
+  quickTimeout: screenshot(
+    timeout: 5000
+    selector: ".fast-element"
+  ) {
+    base64
+  }
+
+  # Standard timeout screenshot
+  standardTimeout: screenshot(
+    timeout: 15000
+    selector: ".standard-element"
+    type: png
+  ) {
+    base64
+  }
+
+  # Extended timeout screenshot
+  extendedTimeout: screenshot(
+    timeout: 45000
+    selector: ".slow-loading-element"
+    type: jpeg
+    quality: 80
+  ) {
+    base64
+  }
+
+  # Mobile element with timeout
+  mobileTimeout: screenshot(
+    selector: ".mobile-menu"
+    timeout: 10000
+    type: png
+  ) {
+    base64
+  }
+
+  # ========================================
+  # TRANSPARENCY AND BACKGROUND OPTIONS
+  # ========================================
+
+  # Transparent background PNG
+  transparentBackground: screenshot(
+    type: png
+    omitBackground: true
+  ) {
+    base64
+  }
+
+  # Transparent element capture
+  transparentElement: screenshot(
+    selector: ".transparent-overlay"
+    type: png
+    omitBackground: true
+  ) {
+    base64
+  }
+
+  # White background screenshot
+  whiteBackground: screenshot(
+    type: png
+    omitBackground: false
+  ) {
+    base64
+  }
+
+  # Modal with transparent background
+  transparentModal: screenshot(
+    selector: ".modal-content"
+    type: png
+    omitBackground: true
+    timeout: 8000
+  ) {
+    base64
+  }
+
+  # ========================================
+  # RESPONSIVE AND MOBILE SCENARIOS
+  # ========================================
+
+  # Mobile navigation screenshot
+  mobileNav: screenshot(
+    selector: ".mobile-nav, .hamburger-menu"
+    type: png
+    timeout: 10000
+  ) {
+    base64
+  }
+
+  # Mobile form screenshot
+  mobileForm: screenshot(
+    selector: ".mobile-form"
+    type: jpeg
+    quality: 80
+    timeout: 8000
+  ) {
+    base64
+  }
+
+  # Responsive card screenshot
+  responsiveCard: screenshot(
+    selector: ".responsive-card"
+    type: png
+    omitBackground: true
+  ) {
+    base64
+  }
+
+  # Touch interface screenshot
+  touchInterface: screenshot(
+    selector: ".touch-interface"
+    type: png
+    timeout: 12000
+  ) {
+    base64
+  }
+
+  # ========================================
+  # COMPLEX COMBINATIONS
+  # ========================================
+
+  # High quality element with clip
+  highQualityClipped: screenshot(
+    selector: ".main-content"
+    clip: {
+      x: 0
+      y: 0
+      width: 600
+      height: 400
+    }
+    type: jpeg
+    quality: 95
+    timeout: 20000
+  ) {
+    base64
+  }
+
+  # Transparent element with timeout
+  transparentWithTimeout: screenshot(
+    selector: ".floating-element"
+    type: png
+    omitBackground: true
+    timeout: 15000
+    captureBeyondViewport: true
+  ) {
+    base64
+  }
+
+  # Speed optimized with element selection
+  speedOptimizedElement: screenshot(
+    selector: ".performance-critical"
+    optimizeForSpeed: true
+    type: jpeg
+    quality: 65
+    timeout: 5000
+  ) {
+    base64
+  }
+
+  # Full page with transparency
+  fullPageTransparent: screenshot(
+    fullPage: true
+    type: png
+    omitBackground: true
+    timeout: 30000
+  ) {
+    base64
+  }
+
+  # ========================================
+  # WEB COMPONENT SCREENSHOTS
+  # ========================================
+
+  # Custom web component
+  webComponent: screenshot(
+    selector: "custom-element, web-component"
+    type: png
+    timeout: 10000
+  ) {
+    base64
+  }
+
+  # Shadow DOM element
+  shadowDOMElement: screenshot(
+    selector: "[data-shadow]"
+    type: png
+    omitBackground: true
+  ) {
+    base64
+  }
+
+  # Dynamic component
+  dynamicComponent: screenshot(
+    selector: ".dynamic-component"
+    timeout: 20000
+    type: jpeg
+    quality: 85
+  ) {
+    base64
+  }
+
+  # ========================================
+  # ACCESSIBILITY AND UI STATES
+  # ========================================
+
+  # Focus state screenshot
+  focusState: screenshot(
+    selector: ":focus, .focused"
+    type: png
+    timeout: 5000
+  ) {
+    base64
+  }
+
+  # Hover state screenshot
+  hoverState: screenshot(
+    selector: ":hover, .hovered"
+    type: png
+    timeout: 3000
+  ) {
+    base64
+  }
+
+  # Active state screenshot
+  activeState: screenshot(
+    selector: ":active, .active"
+    type: png
+    timeout: 2000
+  ) {
+    base64
+  }
+
+  # Error state screenshot
+  errorState: screenshot(
+    selector: ".error, .invalid"
+    type: png
+    omitBackground: true
+  ) {
+    base64
+  }
+
+  # Success state screenshot
+  successState: screenshot(
+    selector: ".success, .valid"
+    type: png
+    timeout: 8000
+  ) {
+    base64
+  }
+
+  # ========================================
+  # CONTENT-SPECIFIC SCREENSHOTS
+  # ========================================
+
+  # Article content screenshot
+  articleContent: screenshot(
+    selector: "article, .article-content"
+    type: jpeg
+    quality: 90
+    timeout: 15000
+  ) {
+    base64
+  }
+
+  # Code block screenshot
+  codeBlock: screenshot(
+    selector: "pre, code, .code-block"
+    type: png
+    timeout: 8000
+  ) {
+    base64
+  }
+
+  # Data visualization screenshot
+  dataVisualization: screenshot(
+    selector: ".chart, .graph, svg"
+    type: png
+    timeout: 12000
+  ) {
+    base64
+  }
+
+  # Media gallery screenshot
+  mediaGallery: screenshot(
+    selector: ".gallery, .carousel"
+    type: jpeg
+    quality: 85
+    timeout: 10000
+  ) {
+    base64
+  }
+
+  # ========================================
+  # COMPREHENSIVE CAPTURE SCENARIOS
+  # ========================================
+
+  # Complete page capture with all options
+  completeCapture: screenshot(
+    fullPage: true
+    type: png
+    omitBackground: false
+    optimizeForSpeed: false
+    captureBeyondViewport: true
+    fromSurface: true
+    timeout: 45000
+  ) {
+    base64
+  }
+
+  # Balanced quality and performance
+  balancedCapture: screenshot(
+    selector: ".main-section"
+    type: jpeg
+    quality: 80
+    optimizeForSpeed: false
+    timeout: 20000
+    captureBeyondViewport: true
+  ) {
+    base64
+  }
+
+  # Minimal size optimized capture
+  minimalCapture: screenshot(
+    type: jpeg
+    quality: 50
+    optimizeForSpeed: true
+    captureBeyondViewport: false
+    timeout: 10000
+  ) {
+    base64
+  }
+
+  # Professional documentation capture
+  documentationCapture: screenshot(
+    selector: ".documentation, .docs"
+    type: png
+    omitBackground: false
+    timeout: 25000
+    captureBeyondViewport: true
+  ) {
+    base64
+  }
+} 

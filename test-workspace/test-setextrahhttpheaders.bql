@@ -1,0 +1,486 @@
+# BrowserQL setExtraHTTPHeaders Operation Test File
+# Testing comprehensive HTTP headers configuration for various scenarios
+
+mutation SetExtraHTTPHeadersTests {
+  # ========================================
+  # BASIC HEADER CONFIGURATIONS
+  # ========================================
+
+  # Basic authentication header
+  basicAuthHeaders: setExtraHTTPHeaders(headers: [
+    {name: "Authorization", value: "Bearer token123"}
+  ]) {
+    time
+  }
+
+  # Basic content type header
+  basicContentHeaders: setExtraHTTPHeaders(headers: [
+    {name: "Content-Type", value: "application/json"}
+  ]) {
+    time
+  }
+
+  # Basic user agent header
+  basicUserAgentHeaders: setExtraHTTPHeaders(headers: [
+    {name: "User-Agent", value: "Custom-Bot/1.0"}
+  ]) {
+    time
+  }
+
+  # Basic accept header
+  basicAcceptHeaders: setExtraHTTPHeaders(headers: [
+    {name: "Accept", value: "application/json, text/plain, */*"}
+  ]) {
+    time
+  }
+
+  # ========================================
+  # AUTHENTICATION HEADERS
+  # ========================================
+
+  # JWT Bearer token authentication
+  jwtAuthHeaders: setExtraHTTPHeaders(headers: [
+    {name: "Authorization", value: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"}
+    {name: "X-API-Key", value: "api-key-12345"}
+    {name: "X-Client-Version", value: "1.0.0"}
+  ]) {
+    time
+  }
+
+  # OAuth authentication headers
+  oauthHeaders: setExtraHTTPHeaders(headers: [
+    {name: "Authorization", value: "OAuth oauth_consumer_key=abc123"}
+    {name: "X-OAuth-Version", value: "1.0"}
+    {name: "X-OAuth-Signature-Method", value: "HMAC-SHA1"}
+  ]) {
+    time
+  }
+
+  # API key authentication
+  apiKeyHeaders: setExtraHTTPHeaders(headers: [
+    {name: "X-API-Key", value: "sk_test_12345abcdef"}
+    {name: "X-API-Version", value: "2023-01-01"}
+    {name: "X-Client-ID", value: "client-abc123"}
+  ]) {
+    time
+  }
+
+  # Basic authentication
+  basicAuthHeader: setExtraHTTPHeaders(headers: [
+    {name: "Authorization", value: "Basic dXNlcm5hbWU6cGFzc3dvcmQ="}
+    {name: "WWW-Authenticate", value: "Basic realm=\"Access\""}
+  ]) {
+    time
+  }
+
+  # Session-based authentication
+  sessionHeaders: setExtraHTTPHeaders(headers: [
+    {name: "X-Session-Token", value: "session-token-xyz789"}
+    {name: "X-Session-ID", value: "session-abc123"}
+    {name: "X-User-ID", value: "user-456789"}
+  ]) {
+    time
+  }
+
+  # ========================================
+  # SECURITY HEADERS
+  # ========================================
+
+  # CSRF protection headers
+  csrfHeaders: setExtraHTTPHeaders(headers: [
+    {name: "X-CSRF-Token", value: "csrf-token-xyz123"}
+    {name: "X-Requested-With", value: "XMLHttpRequest"}
+    {name: "X-CSRF-Protection", value: "1"}
+  ]) {
+    time
+  }
+
+  # Frame protection headers
+  frameProtectionHeaders: setExtraHTTPHeaders(headers: [
+    {name: "X-Frame-Options", value: "DENY"}
+    {name: "X-Content-Type-Options", value: "nosniff"}
+    {name: "X-XSS-Protection", value: "1; mode=block"}
+  ]) {
+    time
+  }
+
+  # Content security headers
+  contentSecurityHeaders: setExtraHTTPHeaders(headers: [
+    {name: "Content-Security-Policy", value: "default-src 'self'"}
+    {name: "Strict-Transport-Security", value: "max-age=31536000"}
+    {name: "Referrer-Policy", value: "strict-origin-when-cross-origin"}
+  ]) {
+    time
+  }
+
+  # Privacy headers
+  privacyHeaders: setExtraHTTPHeaders(headers: [
+    {name: "DNT", value: "1"}
+    {name: "X-Do-Not-Track", value: "1"}
+    {name: "Privacy-Policy", value: "https://example.com/privacy"}
+  ]) {
+    time
+  }
+
+  # ========================================
+  # API INTEGRATION HEADERS
+  # ========================================
+
+  # REST API headers
+  restAPIHeaders: setExtraHTTPHeaders(headers: [
+    {name: "Accept", value: "application/json"}
+    {name: "Content-Type", value: "application/json"}
+    {name: "X-HTTP-Method-Override", value: "PUT"}
+    {name: "X-API-Version", value: "v1"}
+  ]) {
+    time
+  }
+
+  # GraphQL API headers
+  graphqlHeaders: setExtraHTTPHeaders(headers: [
+    {name: "Content-Type", value: "application/graphql"}
+    {name: "Accept", value: "application/json"}
+    {name: "X-GraphQL-Operation-Name", value: "GetUser"}
+  ]) {
+    time
+  }
+
+  # SOAP API headers
+  soapHeaders: setExtraHTTPHeaders(headers: [
+    {name: "Content-Type", value: "text/xml; charset=utf-8"}
+    {name: "SOAPAction", value: "http://example.com/GetData"}
+    {name: "Accept", value: "text/xml"}
+  ]) {
+    time
+  }
+
+  # Microservices headers
+  microservicesHeaders: setExtraHTTPHeaders(headers: [
+    {name: "X-Service-Name", value: "user-service"}
+    {name: "X-Service-Version", value: "v2.1.0"}
+    {name: "X-Correlation-ID", value: "corr-abc123"}
+    {name: "X-Request-ID", value: "req-xyz789"}
+  ]) {
+    time
+  }
+
+  # ========================================
+  # LOCALIZATION AND ENCODING HEADERS
+  # ========================================
+
+  # Language and locale headers
+  localeHeaders: setExtraHTTPHeaders(headers: [
+    {name: "Accept-Language", value: "en-US,en;q=0.9,es;q=0.8"}
+    {name: "Accept-Charset", value: "utf-8, iso-8859-1;q=0.8"}
+    {name: "X-Locale", value: "en_US"}
+    {name: "X-Timezone", value: "America/New_York"}
+  ]) {
+    time
+  }
+
+  # Encoding headers
+  encodingHeaders: setExtraHTTPHeaders(headers: [
+    {name: "Accept-Encoding", value: "gzip, deflate, br"}
+    {name: "Content-Encoding", value: "gzip"}
+    {name: "Transfer-Encoding", value: "chunked"}
+  ]) {
+    time
+  }
+
+  # Character set headers
+  charsetHeaders: setExtraHTTPHeaders(headers: [
+    {name: "Accept-Charset", value: "utf-8, iso-8859-1;q=0.5"}
+    {name: "Content-Type", value: "text/html; charset=utf-8"}
+  ]) {
+    time
+  }
+
+  # ========================================
+  # CACHING HEADERS
+  # ========================================
+
+  # No cache headers
+  noCacheHeaders: setExtraHTTPHeaders(headers: [
+    {name: "Cache-Control", value: "no-cache, no-store, must-revalidate"}
+    {name: "Pragma", value: "no-cache"}
+    {name: "Expires", value: "0"}
+  ]) {
+    time
+  }
+
+  # Cache control headers
+  cacheControlHeaders: setExtraHTTPHeaders(headers: [
+    {name: "Cache-Control", value: "public, max-age=3600"}
+    {name: "ETag", value: "\"abc123-def456\""}
+    {name: "Last-Modified", value: "Wed, 21 Oct 2015 07:28:00 GMT"}
+  ]) {
+    time
+  }
+
+  # Conditional request headers
+  conditionalHeaders: setExtraHTTPHeaders(headers: [
+    {name: "If-None-Match", value: "\"abc123-def456\""}
+    {name: "If-Modified-Since", value: "Wed, 21 Oct 2015 07:28:00 GMT"}
+    {name: "If-Unmodified-Since", value: "Thu, 22 Oct 2015 07:28:00 GMT"}
+  ]) {
+    time
+  }
+
+  # ========================================
+  # CORS (Cross-Origin Resource Sharing) HEADERS
+  # ========================================
+
+  # Basic CORS headers
+  corsHeaders: setExtraHTTPHeaders(headers: [
+    {name: "Access-Control-Allow-Origin", value: "*"}
+    {name: "Access-Control-Allow-Methods", value: "GET, POST, PUT, DELETE, OPTIONS"}
+    {name: "Access-Control-Allow-Headers", value: "Content-Type, Authorization"}
+  ]) {
+    time
+  }
+
+  # Advanced CORS headers
+  advancedCorsHeaders: setExtraHTTPHeaders(headers: [
+    {name: "Access-Control-Allow-Origin", value: "https://trusted-domain.com"}
+    {name: "Access-Control-Allow-Credentials", value: "true"}
+    {name: "Access-Control-Expose-Headers", value: "X-Custom-Header"}
+    {name: "Access-Control-Max-Age", value: "86400"}
+  ]) {
+    time
+  }
+
+  # Preflight CORS headers
+  preflightCorsHeaders: setExtraHTTPHeaders(headers: [
+    {name: "Access-Control-Request-Method", value: "POST"}
+    {name: "Access-Control-Request-Headers", value: "X-Custom-Header, Content-Type"}
+    {name: "Origin", value: "https://example.com"}
+  ]) {
+    time
+  }
+
+  # ========================================
+  # TRACKING AND ANALYTICS HEADERS
+  # ========================================
+
+  # User tracking headers
+  userTrackingHeaders: setExtraHTTPHeaders(headers: [
+    {name: "X-User-ID", value: "user-123456"}
+    {name: "X-Session-ID", value: "session-abc123"}
+    {name: "X-Request-ID", value: "req-xyz789"}
+    {name: "X-Trace-ID", value: "trace-def456"}
+  ]) {
+    time
+  }
+
+  # Analytics headers
+  analyticsHeaders: setExtraHTTPHeaders(headers: [
+    {name: "X-Analytics-ID", value: "analytics-abc123"}
+    {name: "X-Analytics-Session", value: "session-xyz789"}
+    {name: "X-Referrer", value: "https://search.google.com"}
+    {name: "X-Campaign", value: "summer-sale-2024"}
+  ]) {
+    time
+  }
+
+  # Marketing headers
+  marketingHeaders: setExtraHTTPHeaders(headers: [
+    {name: "X-UTM-Source", value: "google"}
+    {name: "X-UTM-Medium", value: "cpc"}
+    {name: "X-UTM-Campaign", value: "brand-awareness"}
+    {name: "X-UTM-Content", value: "ad-variant-a"}
+  ]) {
+    time
+  }
+
+  # ========================================
+  # E-COMMERCE HEADERS
+  # ========================================
+
+  # Shopping cart headers
+  shoppingHeaders: setExtraHTTPHeaders(headers: [
+    {name: "X-Shop-Domain", value: "example-shop.com"}
+    {name: "X-Customer-Group", value: "premium"}
+    {name: "X-Cart-ID", value: "cart-abc123"}
+    {name: "X-Currency", value: "USD"}
+  ]) {
+    time
+  }
+
+  # Payment headers
+  paymentHeaders: setExtraHTTPHeaders(headers: [
+    {name: "X-Payment-Method", value: "credit_card"}
+    {name: "X-Payment-Provider", value: "stripe"}
+    {name: "X-Transaction-ID", value: "txn-xyz789"}
+  ]) {
+    time
+  }
+
+  # Inventory headers
+  inventoryHeaders: setExtraHTTPHeaders(headers: [
+    {name: "X-Warehouse-ID", value: "warehouse-001"}
+    {name: "X-Stock-Location", value: "US-EAST"}
+    {name: "X-Inventory-Check", value: "realtime"}
+  ]) {
+    time
+  }
+
+  # ========================================
+  # TESTING AND DEBUGGING HEADERS
+  # ========================================
+
+  # Test environment headers
+  testHeaders: setExtraHTTPHeaders(headers: [
+    {name: "X-Test-Mode", value: "true"}
+    {name: "X-Test-Suite", value: "integration"}
+    {name: "X-Test-Run-ID", value: "run-12345"}
+    {name: "X-Environment", value: "staging"}
+  ]) {
+    time
+  }
+
+  # Debug headers
+  debugHeaders: setExtraHTTPHeaders(headers: [
+    {name: "X-Debug-Mode", value: "verbose"}
+    {name: "X-Debug-Level", value: "3"}
+    {name: "X-Debug-Trace", value: "enabled"}
+  ]) {
+    time
+  }
+
+  # Performance monitoring headers
+  performanceHeaders: setExtraHTTPHeaders(headers: [
+    {name: "X-Performance-Monitor", value: "enabled"}
+    {name: "X-Timing-Allow-Origin", value: "*"}
+    {name: "X-Response-Time-Limit", value: "5000"}
+  ]) {
+    time
+  }
+
+  # ========================================
+  # MOBILE AND DEVICE HEADERS
+  # ========================================
+
+  # Mobile device headers
+  mobileHeaders: setExtraHTTPHeaders(headers: [
+    {name: "User-Agent", value: "Mozilla/5.0 (iPhone; CPU iPhone OS 14_7_1 like Mac OS X)"}
+    {name: "X-Device-Type", value: "mobile"}
+    {name: "X-Screen-Resolution", value: "375x812"}
+    {name: "X-Platform", value: "iOS"}
+  ]) {
+    time
+  }
+
+  # Tablet headers
+  tabletHeaders: setExtraHTTPHeaders(headers: [
+    {name: "User-Agent", value: "Mozilla/5.0 (iPad; CPU OS 14_7_1 like Mac OS X)"}
+    {name: "X-Device-Type", value: "tablet"}
+    {name: "X-Screen-Resolution", value: "768x1024"}
+    {name: "X-Orientation", value: "portrait"}
+  ]) {
+    time
+  }
+
+  # Desktop headers
+  desktopHeaders: setExtraHTTPHeaders(headers: [
+    {name: "User-Agent", value: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
+    {name: "X-Device-Type", value: "desktop"}
+    {name: "X-Screen-Resolution", value: "1920x1080"}
+    {name: "X-Browser", value: "Chrome"}
+  ]) {
+    time
+  }
+
+  # ========================================
+  # CUSTOM APPLICATION HEADERS
+  # ========================================
+
+  # Application metadata headers
+  appMetadataHeaders: setExtraHTTPHeaders(headers: [
+    {name: "X-App-Name", value: "MyWebApp"}
+    {name: "X-App-Version", value: "2.1.0"}
+    {name: "X-App-Build", value: "20240115.1"}
+    {name: "X-App-Environment", value: "production"}
+  ]) {
+    time
+  }
+
+  # Feature flag headers
+  featureFlagHeaders: setExtraHTTPHeaders(headers: [
+    {name: "X-Feature-Beta", value: "enabled"}
+    {name: "X-Feature-NewUI", value: "disabled"}
+    {name: "X-Feature-Analytics", value: "enabled"}
+  ]) {
+    time
+  }
+
+  # Regional headers
+  regionalHeaders: setExtraHTTPHeaders(headers: [
+    {name: "X-Region", value: "us-east-1"}
+    {name: "X-Country", value: "US"}
+    {name: "X-State", value: "NY"}
+    {name: "X-City", value: "New York"}
+  ]) {
+    time
+  }
+
+  # ========================================
+  # WORKFLOW AND INTEGRATION SCENARIOS
+  # ========================================
+
+  # API authentication workflow
+  apiAuthWorkflow: setExtraHTTPHeaders(headers: [
+    {name: "Authorization", value: "Bearer jwt-token-abc123"}
+    {name: "X-API-Key", value: "api-key-xyz789"}
+    {name: "Content-Type", value: "application/json"}
+    {name: "Accept", value: "application/json"}
+  ]) {
+    time
+  }
+
+  # Microservices communication
+  microservicesCommunication: setExtraHTTPHeaders(headers: [
+    {name: "X-Service-Name", value: "payment-service"}
+    {name: "X-Service-Version", value: "v1.2.3"}
+    {name: "X-Correlation-ID", value: "corr-payment-123"}
+    {name: "X-Request-ID", value: "req-payment-456"}
+    {name: "X-Trace-ID", value: "trace-payment-789"}
+  ]) {
+    time
+  }
+
+  # Third-party integration
+  thirdPartyIntegration: setExtraHTTPHeaders(headers: [
+    {name: "X-Partner-ID", value: "partner-abc123"}
+    {name: "X-Integration-Version", value: "2.0"}
+    {name: "X-Webhook-Secret", value: "webhook-secret-xyz"}
+  ]) {
+    time
+  }
+
+  # ========================================
+  # COMPLEX SCENARIOS
+  # ========================================
+
+  # Complete web application headers
+  completeWebAppHeaders: setExtraHTTPHeaders(headers: [
+    {name: "Authorization", value: "Bearer eyJhbGciOiJIUzI1NiJ9"}
+    {name: "Content-Type", value: "application/json"}
+    {name: "Accept", value: "application/json, text/plain, */*"}
+    {name: "Accept-Language", value: "en-US,en;q=0.9"}
+    {name: "Accept-Encoding", value: "gzip, deflate, br"}
+    {name: "User-Agent", value: "Custom-WebApp/2.1.0"}
+    {name: "X-Requested-With", value: "XMLHttpRequest"}
+    {name: "X-CSRF-Token", value: "csrf-token-xyz123"}
+    {name: "X-API-Version", value: "v2"}
+    {name: "X-Client-Version", value: "2.1.0"}
+    {name: "X-Session-ID", value: "session-abc123"}
+    {name: "X-Request-ID", value: "req-xyz789"}
+  ]) {
+    time
+  }
+
+  # Navigate to test with custom headers
+  goto(url: "https://httpbin.org/headers") {
+    status
+  }
+} 

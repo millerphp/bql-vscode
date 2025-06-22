@@ -1,0 +1,627 @@
+# BrowserQL Response Operation Test File
+# Testing comprehensive response monitoring with filtering capabilities
+
+mutation ResponseOperationTests {
+  # Navigate to trigger responses
+  goto(url: "https://httpbin.org/html", waitUntil: load) {
+    status
+    url
+  }
+
+  # ========================================
+  # BASIC RESPONSE MONITORING
+  # ========================================
+
+  # Basic response monitoring - get all responses
+  allResponses: response {
+    url
+    type
+    method
+    status
+  }
+
+  # Get only document responses
+  documentResponses: response(type: [document]) {
+    url
+    type
+    method
+    status
+    body
+    headers {
+      name
+      value
+    }
+  }
+
+  # Get responses by status code
+  successfulResponses: response(status: [200]) {
+    url
+    type
+    method
+    status
+    body
+  }
+
+  # Get responses by HTTP method
+  getResponses: response(method: [GET]) {
+    url
+    type
+    method
+    status
+    headers {
+      name
+      value
+    }
+  }
+
+  # ========================================
+  # STATUS CODE FILTERING
+  # ========================================
+
+  # Multiple success status codes
+  successStatuses: response(status: [200, 201, 202, 204]) {
+    url
+    type
+    method
+    status
+    body
+  }
+
+  # Error status codes
+  errorResponses: response(status: [400, 401, 403, 404, 500, 502, 503]) {
+    url
+    type
+    method
+    status
+    body
+    headers {
+      name
+      value
+    }
+  }
+
+  # Client error responses
+  clientErrors: response(status: [400, 401, 403, 404, 409, 422]) {
+    url
+    type
+    method
+    status
+    body
+  }
+
+  # Server error responses
+  serverErrors: response(status: [500, 501, 502, 503, 504]) {
+    url
+    type
+    method
+    status
+    body
+  }
+
+  # Redirect responses
+  redirectResponses: response(status: [301, 302, 303, 307, 308]) {
+    url
+    type
+    method
+    status
+    headers {
+      name
+      value
+    }
+  }
+
+  # ========================================
+  # RESOURCE TYPE FILTERING
+  # ========================================
+
+  # XHR/AJAX responses
+  ajaxResponses: response(type: [xhr]) {
+    url
+    type
+    method
+    status
+    body
+    headers {
+      name
+      value
+    }
+  }
+
+  # Fetch API responses
+  fetchResponses: response(type: [fetch]) {
+    url
+    type
+    method
+    status
+    body
+    headers {
+      name
+      value
+    }
+  }
+
+  # Script responses
+  scriptResponses: response(type: [script]) {
+    url
+    type
+    method
+    status
+    body
+  }
+
+  # Stylesheet responses
+  cssResponses: response(type: [stylesheet]) {
+    url
+    type
+    method
+    status
+    body
+  }
+
+  # Image responses
+  imageResponses: response(type: [image]) {
+    url
+    type
+    method
+    status
+  }
+
+  # Font responses
+  fontResponses: response(type: [font]) {
+    url
+    type
+    method
+    status
+  }
+
+  # Media responses
+  mediaResponses: response(type: [media]) {
+    url
+    type
+    method
+    status
+  }
+
+  # WebSocket responses
+  websocketResponses: response(type: [websocket]) {
+    url
+    type
+    method
+    status
+    headers {
+      name
+      value
+    }
+  }
+
+  # ========================================
+  # URL PATTERN FILTERING
+  # ========================================
+
+  # API endpoint responses
+  apiResponses: response(url: ["*/api/*", "*/v1/*", "*/v2/*"]) {
+    url
+    type
+    method
+    status
+    body
+    headers {
+      name
+      value
+    }
+  }
+
+  # GraphQL responses
+  graphqlResponses: response(url: ["*/graphql*", "*/gql*"]) {
+    url
+    type
+    method
+    status
+    body
+    headers {
+      name
+      value
+    }
+  }
+
+  # CDN responses
+  cdnResponses: response(url: ["*cdn*", "*static*", "*assets*"]) {
+    url
+    type
+    method
+    status
+  }
+
+  # Analytics responses
+  analyticsResponses: response(url: [
+    "*google-analytics*",
+    "*googletagmanager*",
+    "*facebook.com/tr*",
+    "*analytics*"
+  ]) {
+    url
+    type
+    method
+    status
+    body
+  }
+
+  # Authentication responses
+  authResponses: response(url: ["*/auth/*", "*/login*", "*/token*", "*/oauth*"]) {
+    url
+    type
+    method
+    status
+    body
+    headers {
+      name
+      value
+    }
+  }
+
+  # ========================================
+  # COMBINED FILTERING WITH OPERATORS
+  # ========================================
+
+  # AND operator - successful GET responses
+  successfulGets: response(
+    status: [200, 201, 204]
+    method: [GET]
+    operator: and
+  ) {
+    url
+    type
+    method
+    status
+    body
+    headers {
+      name
+      value
+    }
+  }
+
+  # AND operator - API POST responses
+  apiPostResponses: response(
+    url: ["*/api/*"]
+    method: [POST]
+    type: [xhr, fetch]
+    operator: and
+  ) {
+    url
+    type
+    method
+    status
+    body
+    headers {
+      name
+      value
+    }
+  }
+
+  # OR operator - multiple resource types
+  staticResources: response(
+    type: [image, stylesheet, script, font]
+    operator: or
+  ) {
+    url
+    type
+    method
+    status
+  }
+
+  # OR operator - error or redirect responses
+  problemResponses: response(
+    status: [400, 404, 500, 301, 302]
+    operator: or
+  ) {
+    url
+    type
+    method
+    status
+    body
+    headers {
+      name
+      value
+    }
+  }
+
+  # Complex AND condition - successful API JSON responses
+  successfulJsonAPIs: response(
+    url: ["*/api/*", "*/json*"]
+    status: [200, 201]
+    method: [GET, POST]
+    type: [xhr, fetch]
+    operator: and
+  ) {
+    url
+    type
+    method
+    status
+    body
+    headers {
+      name
+      value
+    }
+  }
+
+  # ========================================
+  # TIMEOUT AND WAITING OPTIONS
+  # ========================================
+
+  # Quick timeout for existing responses
+  quickCheck: response(
+    timeout: 1000
+    wait: false
+  ) {
+    url
+    type
+    method
+    status
+  }
+
+  # Extended timeout for slow responses
+  slowResponses: response(
+    timeout: 60000
+    type: [document]
+  ) {
+    url
+    type
+    method
+    status
+    body
+    headers {
+      name
+      value
+    }
+  }
+
+  # No wait - get existing responses only
+  existingResponses: response(
+    wait: false
+    timeout: 500
+  ) {
+    url
+    type
+    method
+    status
+  }
+
+  # ========================================
+  # ADVANCED FILTERING SCENARIOS
+  # ========================================
+
+  # Monitor specific HTTP methods
+  mutatingMethods: response(method: [POST, PUT, DELETE, PATCH]) {
+    url
+    type
+    method
+    status
+    body
+    headers {
+      name
+      value
+    }
+  }
+
+  # Monitor third-party integrations
+  thirdPartyAPIs: response(
+    url: [
+      "*stripe.com*",
+      "*paypal.com*",
+      "*amazonaws.com*",
+      "*googleapis.com*"
+    ]
+    operator: or
+  ) {
+    url
+    type
+    method
+    status
+    headers {
+      name
+      value
+    }
+  }
+
+  # Monitor security-related responses
+  securityResponses: response(
+    url: [
+      "*/2fa/*",
+      "*/verify/*",
+      "*/captcha/*",
+      "*/security/*"
+    ]
+    status: [200, 401, 403]
+    operator: and
+  ) {
+    url
+    type
+    method
+    status
+    body
+    headers {
+      name
+      value
+    }
+  }
+
+  # Monitor file download responses
+  downloadResponses: response(
+    url: ["*.pdf", "*.zip", "*.csv", "*.xlsx", "*.doc*"]
+    operator: or
+  ) {
+    url
+    type
+    method
+    status
+    headers {
+      name
+      value
+    }
+  }
+
+  # Monitor real-time communication responses
+  realtimeResponses: response(
+    type: [websocket, eventsource]
+    operator: or
+  ) {
+    url
+    type
+    method
+    status
+    headers {
+      name
+      value
+    }
+  }
+
+  # ========================================
+  # ERROR HANDLING AND DEBUGGING
+  # ========================================
+
+  # Monitor failed requests by status
+  httpErrors: response(
+    status: [400, 401, 403, 404, 422, 429, 500, 502, 503, 504]
+    operator: or
+  ) {
+    url
+    type
+    method
+    status
+    body
+    headers {
+      name
+      value
+    }
+  }
+
+  # Monitor timeout responses
+  timeoutResponses: response(
+    status: [408, 504]
+    operator: or
+  ) {
+    url
+    type
+    method
+    status
+    body
+  }
+
+  # Monitor rate limiting responses
+  rateLimitResponses: response(status: [429]) {
+    url
+    type
+    method
+    status
+    body
+    headers {
+      name
+      value
+    }
+  }
+
+  # ========================================
+  # PERFORMANCE MONITORING
+  # ========================================
+
+  # Monitor large responses (by checking common large file types)
+  largeContentResponses: response(
+    url: ["*.mp4", "*.avi", "*.zip", "*.tar.gz"]
+    operator: or
+  ) {
+    url
+    type
+    method
+    status
+  }
+
+  # Monitor compression responses
+  compressedResponses: response(
+    url: ["*.gz", "*.br", "*.zip"]
+    operator: or
+  ) {
+    url
+    type
+    method
+    status
+    headers {
+      name
+      value
+    }
+  }
+
+  # ========================================
+  # CONTENT TYPE MONITORING
+  # ========================================
+
+  # Monitor API content responses
+  jsonResponses: response(
+    url: ["*.json", "*/api/*"]
+    type: [xhr, fetch, document]
+    operator: and
+  ) {
+    url
+    type
+    method
+    status
+    body
+    headers {
+      name
+      value
+    }
+  }
+
+  # Monitor XML responses
+  xmlResponses: response(
+    url: ["*.xml", "*.rss", "*.atom"]
+    operator: or
+  ) {
+    url
+    type
+    method
+    status
+    body
+  }
+
+  # Monitor plain text responses
+  textResponses: response(
+    url: ["*.txt", "*.log"]
+    operator: or
+  ) {
+    url
+    type
+    method
+    status
+    body
+  }
+
+  # ========================================
+  # COMPREHENSIVE MONITORING
+  # ========================================
+
+  # Complete response monitoring with all options
+  completeMonitoring: response(
+    status: [200, 201, 400, 404, 500]
+    method: [GET, POST, PUT, DELETE]
+    type: [document, xhr, fetch, script, stylesheet]
+    url: ["*"]
+    timeout: 30000
+    wait: true
+    operator: or
+  ) {
+    # Response identification
+    url
+    type
+    method
+    status
+
+    # Response content
+    body
+
+    # Response headers for debugging
+    headers {
+      name
+      value
+    }
+  }
+} 

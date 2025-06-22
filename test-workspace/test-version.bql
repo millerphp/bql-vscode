@@ -1,0 +1,81 @@
+query VersionExamples {
+  # Basic version query
+  version
+
+  # Version with alias
+  serverVersion: version
+
+  # Version in system info context
+  systemInfo: {
+    version
+  }
+
+  # Version compatibility check
+  versionInfo: version
+}
+
+# Version compatibility checking
+query VersionCompatibility {
+  # Get server version
+  serverVersion: version
+
+  # Version compatibility check
+  compatibilityCheck: evaluate(expression: `
+    const version = "${serverVersion}";
+    const [major, minor, patch] = version.split('.').map(Number);
+    
+    return {
+      version,
+      major,
+      minor,
+      patch,
+      supportsNewFeatures: major >= 2 && minor >= 15,
+      isStable: major >= 2,
+      requiresUpdate: major < 2 || (major === 2 && minor < 10)
+    };
+  `) {
+    value
+  }
+}
+
+# Environment information checking
+query EnvironmentCheck {
+  # Get server version
+  serverVersion: version
+
+  # Environment validation
+  envValidation: evaluate(expression: `
+    const server = "${serverVersion}";
+    
+    return {
+      server,
+      isCompatible: true,
+      environment: 'testing',
+      checkedAt: new Date().toISOString(),
+      recommendations: []
+    };
+  `) {
+    value
+  }
+}
+
+# System information gathering
+query SystemInfo {
+  # Get server version
+  version
+
+  # System analysis
+  systemAnalysis: evaluate(expression: `
+    return {
+      serverVersion: "${version}",
+      timestamp: Date.now(),
+      environment: 'production',
+      session: {
+        id: Math.random().toString(36).substr(2, 9),
+        startTime: Date.now()
+      }
+    };
+  `) {
+    value
+  }
+}

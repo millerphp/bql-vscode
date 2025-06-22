@@ -1,0 +1,305 @@
+mutation MapSelectorDataExtractionTests {
+  # Navigate to Hacker News for basic testing
+  goto(url: "https://news.ycombinator.com") {
+    status
+    time
+  }
+
+  # Basic mapSelector - extract all story elements
+  stories: mapSelector(selector: ".athing") {
+    innerHTML
+    innerText
+    tagName
+  }
+
+  # Simple data extraction with aliases
+  basicPosts: mapSelector(selector: ".titleline") {
+    title: innerText
+    content: innerHTML
+    tag: tagName
+  }
+
+  # Advanced nested mapping - posts with metadata
+  postsWithMetadata: mapSelector(selector: ".athing") {
+    postTitle: innerText
+    
+    # Get nested authors
+    authors: mapSelector(selector: ".hnuser") {
+      authorName: innerText
+      authorHTML: innerHTML
+    }
+    
+    # Get nested scores
+    scores: mapSelector(selector: ".score") {
+      scoreValue: innerText
+      scoreHTML: innerHTML
+    }
+    
+    # Get all attributes
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Navigate to e-commerce site for product testing
+  goto(url: "https://example-shop.com") {
+    status
+  }
+
+  # Product listing extraction
+  products: mapSelector(selector: ".product-item", timeout: 15000) {
+    productTitle: innerText
+    productHTML: innerHTML
+    fullElement: outerHTML
+    elementTag: tagName
+    
+    # Get pricing information
+    pricing: mapSelector(selector: ".price") {
+      priceText: innerText
+      priceHTML: innerHTML
+      attributes {
+        name
+        value
+      }
+    }
+    
+    # Get product images
+    images: mapSelector(selector: "img") {
+      imageHTML: outerHTML
+      attributes {
+        name
+        value
+      }
+    }
+    
+    # Get product links
+    links: mapSelector(selector: "a") {
+      linkText: innerText
+      linkHTML: innerHTML
+      attributes {
+        name
+        value
+      }
+    }
+  }
+
+  # Navigate to search results page
+  goto(url: "https://search.example.com/results") {
+    status
+  }
+
+  # Search results mapping with custom timeout
+  searchResults: mapSelector(
+    selector: ".search-result"
+    timeout: 10000
+    wait: true
+  ) {
+    title: innerText
+    snippet: innerHTML
+    fullHTML: outerHTML
+    tag: tagName
+    
+    # Get nested result links
+    resultLinks: mapSelector(selector: "a") {
+      linkText: innerText
+      linkAttributes: attributes {
+        name
+        value
+      }
+    }
+    
+    # Get result metadata
+    metadata: mapSelector(selector: ".meta") {
+      metaText: innerText
+      metaHTML: innerHTML
+    }
+  }
+
+  # Navigate to news site for article extraction
+  goto(url: "https://news.example.com") {
+    status
+  }
+
+  # News article extraction with complex nesting
+  articles: mapSelector(selector: ".article", wait: true) {
+    headline: innerText
+    articleContent: innerHTML
+    fullArticle: outerHTML
+    
+    # Get article authors
+    authors: mapSelector(selector: ".author") {
+      authorName: innerText
+      authorBio: innerHTML
+      authorAttribs: attributes {
+        name
+        value
+      }
+    }
+    
+    # Get article tags
+    tags: mapSelector(selector: ".tag") {
+      tagName: innerText
+      tagHTML: innerHTML
+    }
+    
+    # Get article comments
+    comments: mapSelector(selector: ".comment") {
+      commentText: innerText
+      commentHTML: innerHTML
+      
+      # Get comment authors (nested in comments)
+      commentAuthors: mapSelector(selector: ".comment-author") {
+        commentAuthorName: innerText
+        attributes {
+          name
+          value
+        }
+      }
+    }
+    
+    # Get all article attributes
+    attributes {
+      name
+      value
+    }
+  }
+
+  # Navigate to social media feed
+  goto(url: "https://social.example.com") {
+    status
+  }
+
+  # Social media posts extraction
+  socialPosts: mapSelector(selector: ".post", timeout: 20000) {
+    postContent: innerText
+    postHTML: innerHTML
+    postElement: outerHTML
+    
+    # Get post reactions
+    reactions: mapSelector(selector: ".reaction") {
+      reactionType: innerText
+      reactionCount: innerHTML
+      attributes {
+        name
+        value
+      }
+    }
+    
+    # Get post media
+    media: mapSelector(selector: ".media") {
+      mediaHTML: innerHTML
+      mediaType: tagName
+      
+      # Get media attributes (src, alt, etc.)
+      mediaAttributes: attributes {
+        name
+        value
+      }
+    }
+    
+    # Get post user info
+    userInfo: mapSelector(selector: ".user-info") {
+      userName: innerText
+      userHTML: innerHTML
+      
+      # Get nested user links
+      userLinks: mapSelector(selector: "a") {
+        linkText: innerText
+        attributes {
+          name
+          value
+        }
+      }
+    }
+  }
+
+  # Navigate to table data page
+  goto(url: "https://data.example.com/table") {
+    status
+  }
+
+  # Table data extraction
+  tableRows: mapSelector(selector: "tr", wait: true) {
+    rowContent: innerText
+    rowHTML: innerHTML
+    
+    # Get table cells
+    cells: mapSelector(selector: "td") {
+      cellText: innerText
+      cellHTML: innerHTML
+      cellTag: tagName
+      attributes {
+        name
+        value
+      }
+    }
+    
+    # Get table headers if present
+    headers: mapSelector(selector: "th") {
+      headerText: innerText
+      headerHTML: innerHTML
+      attributes {
+        name
+        value
+      }
+    }
+  }
+
+  # JavaScript-based selector testing
+  dynamicElements: mapSelector(
+    selector: "document.querySelectorAll('.dynamic-element')"
+    timeout: 30000
+    wait: true
+  ) {
+    dynamicContent: innerText
+    dynamicHTML: innerHTML
+    elementType: tagName
+    
+    # Get dynamic attributes
+    dynamicAttributes: attributes {
+      name
+      value
+    }
+    
+    # Get nested dynamic elements
+    nestedDynamic: mapSelector(selector: ".nested-dynamic") {
+      nestedContent: innerText
+      nestedHTML: innerHTML
+    }
+  }
+
+  # Final test - complex hierarchical data
+  complexHierarchy: mapSelector(selector: ".complex-container") {
+    containerText: innerText
+    containerHTML: innerHTML
+    
+    # Level 1 nesting
+    level1: mapSelector(selector: ".level-1") {
+      level1Text: innerText
+      level1HTML: innerHTML
+      
+      # Level 2 nesting
+      level2: mapSelector(selector: ".level-2") {
+        level2Text: innerText
+        level2HTML: innerHTML
+        
+        # Level 3 nesting
+        level3: mapSelector(selector: ".level-3") {
+          level3Text: innerText
+          level3HTML: innerHTML
+          deepAttributes: attributes {
+            name
+            value
+          }
+        }
+      }
+    }
+    
+    # Container attributes
+    containerAttributes: attributes {
+      name
+      value
+    }
+  }
+} 

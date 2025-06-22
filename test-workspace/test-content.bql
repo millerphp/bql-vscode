@@ -1,0 +1,211 @@
+mutation ContentExample {
+  # Basic content setting - HTTPResponse object
+  content(html: "<h1>Hello, World!</h1>") {
+    status
+    time
+    text
+    url
+  }
+  
+  # Content with waitUntil parameter (WaitUntilHistory enum)
+  content(
+    html: "<div><p>This is a test page</p><button>Click me</button></div>"
+    waitUntil: domContentLoaded
+  ) {
+    status
+    time
+    url
+  }
+  
+  # Content with networkIdle waitUntil
+  content(
+    html: "<h2>Loading complete</h2>"
+    waitUntil: networkIdle
+  ) {
+    status
+  }
+  
+  # Content with load waitUntil
+  content(
+    html: "<img src='https://example.com/image.jpg' alt='Test' />"
+    waitUntil: load
+  ) {
+    status
+  }
+  
+  # Complex HTML content
+  content(html: "<!DOCTYPE html><html><head><title>Test Page</title></head><body><h1>Welcome</h1><form><input type='text' placeholder='Enter text' /><button type='submit'>Submit</button></form></body></html>") {
+    status
+  }
+  
+  # Content setting followed by interaction
+  content(html: "<div><input type='checkbox' id='agree' /><input type='text' id='test-input' /></div>") {
+    status
+  }
+  
+  # Test checkbox operation with ClickResponse
+  checkbox(checked: true, selector: "#agree") {
+    selector
+    x
+    y
+    time
+  }
+  
+  type(selector: "#test-input", text: "Hello from content mutation!") {
+    time
+  }
+  
+  text(selector: "#test-input") {
+    text
+  }
+  
+  # Example: Set content, navigate, then go back
+  content(html: "<a href='https://example.com'>Visit Example</a>") {
+    status
+    time
+    url
+  }
+  
+  click(selector: "a") {
+    selector
+    x
+    y
+    time
+  }
+  
+  # Go back using the corrected back mutation
+  back(waitUntil: load) {
+    status
+    time @include(if: true)
+    text @skip(if: true)
+    url @skip(if: false)
+  }
+  
+  # Example with both @include and @skip directives
+  text(selector: "body") {
+    text @include(if: true)
+    time @skip(if: false)
+  }
+  
+  # Complex directive combinations
+  content(html: "<p>Advanced example</p>") {
+    status @include(if: true)
+    time @skip(if: true)
+    text @include(if: false)
+    url @skip(if: false)
+  }
+  
+  # Cookie management examples
+  # Get existing cookies
+  getCurrentCookies: cookies {
+    cookies {
+      name
+      value
+      domain
+      path
+      secure
+      httpOnly
+      sameSite
+      expires
+    }
+    time
+  }
+  
+  # Set authentication cookie
+  setAuthCookie: cookies(cookies: [
+    {
+      name: "auth_token"
+      value: "jwt_token_here"
+      url: "https://example.com"
+      secure: true
+      httpOnly: true
+      sameSite: Strict
+    }
+  ]) {
+    cookies {
+      name
+      value
+      secure
+      httpOnly
+    }
+    time
+  }
+  
+  # Set multiple cookies with different attributes
+  setMultipleCookies: cookies(cookies: [
+    {
+      name: "user_preferences"
+      value: "theme=dark;lang=en"
+      domain: ".example.com"
+      path: "/"
+      secure: false
+      httpOnly: false
+      sameSite: Lax
+    },
+    {
+      name: "session_data"
+      value: "encrypted_session_info"
+      secure: true
+      httpOnly: true
+      sameSite: None
+    }
+  ]) {
+    cookies {
+      name
+      value
+      domain
+      path
+    }
+    time
+  }
+  
+  # Navigation history examples
+  # Navigate to first page
+  firstPage: goto(url: "https://example.com", waitUntil: load) {
+    status
+    time
+    url
+  }
+  
+  # Navigate to second page
+  secondPage: goto(url: "https://browserless.io", waitUntil: domContentLoaded) {
+    status
+    time
+    url
+  }
+  
+  # Go back to first page (returns HTTPResponse)
+  goBack: back(waitUntil: domContentLoaded) {
+    status
+    time
+    text
+    url
+  }
+  
+  # Go forward to second page again (returns HTTPResponse or null)
+  goForward: forward(waitUntil: load) {
+    status
+    time
+    text
+    url
+  }
+  
+  # Test forward with timeout
+  forwardWithTimeout: forward(
+    waitUntil: networkIdle
+    timeout: 15000
+  ) {
+    status
+    time
+    text
+    url
+  }
+  
+  # Forward with directives
+  forwardConditional: forward(waitUntil: commit) {
+    status @include(if: true)
+    time @skip(if: false)
+    text @include(if: true)
+    url @skip(if: true)
+  }
+} 

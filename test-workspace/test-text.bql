@@ -1,0 +1,596 @@
+# ============================================================================
+# TEXT OPERATION TEST: text
+# ============================================================================
+# 
+# Purpose: Returns the text content on the given page or by selector when specified
+# Arguments: timeout (Float, optional, default: 30000), selector (String, optional), 
+#           visible (Boolean, optional, default: false), clean (CleanInput, optional)
+# Returns: TextResponse with text content
+# 
+# Official Documentation: https://docs.browserless.io/bql-schema/operations/mutations/text
+# 
+# ============================================================================
+
+mutation TextOperationTests {
+  
+  # ========================================
+  # Basic Text Extraction Tests
+  # ========================================
+  
+  # Full page text content
+  fullPageText: text {
+    text
+  }
+  
+  # Specific element text
+  headingText: text(selector: "h1") {
+    text
+  }
+  
+  # Multiple headings
+  allHeadings: text(selector: "h1, h2, h3") {
+    text
+  }
+  
+  # Paragraph content
+  paragraphText: text(selector: "p") {
+    text
+  }
+  
+  # Article content
+  articleText: text(selector: "article") {
+    text
+  }
+  
+  # ========================================
+  # Timeout Configuration Tests
+  # ========================================
+  
+  # Short timeout
+  quickText: text(
+    selector: ".quick-content"
+    timeout: 5000
+  ) {
+    text
+  }
+  
+  # Standard timeout
+  standardText: text(
+    selector: ".standard-content"
+    timeout: 15000
+  ) {
+    text
+  }
+  
+  # Long timeout for slow elements
+  slowText: text(
+    selector: ".slow-loading"
+    timeout: 30000
+  ) {
+    text
+  }
+  
+  # Extended timeout for dynamic content
+  dynamicText: text(
+    selector: ".dynamic-content"
+    timeout: 45000
+  ) {
+    text
+  }
+  
+  # ========================================
+  # Visibility Tests
+  # ========================================
+  
+  # Visible elements only
+  visibleText: text(
+    selector: ".content"
+    visible: true
+  ) {
+    text
+  }
+  
+  # All elements regardless of visibility
+  allText: text(
+    selector: ".content"
+    visible: false
+  ) {
+    text
+  }
+  
+  # Visible navigation text
+  visibleNav: text(
+    selector: "nav a"
+    visible: true
+    timeout: 10000
+  ) {
+    text
+  }
+  
+  # Visible form labels
+  visibleLabels: text(
+    selector: "label"
+    visible: true
+  ) {
+    text
+  }
+  
+  # ========================================
+  # Text Cleaning Tests
+  # ========================================
+  
+  # Basic text cleaning
+  cleanedBasic: text(
+    selector: "article"
+    clean: {
+      removeNonTextNodes: true
+    }
+  ) {
+    text
+  }
+  
+  # Clean whitespace
+  cleanedWhitespace: text(
+    selector: ".content"
+    clean: {
+      removeExtraWhitespace: true
+    }
+  ) {
+    text
+  }
+  
+  # Limit text length
+  limitedText: text(
+    selector: "article"
+    clean: {
+      maxLength: 500
+    }
+  ) {
+    text
+  }
+  
+  # Comprehensive cleaning for LLM
+  llmText: text(
+    selector: "article"
+    clean: {
+      removeNonTextNodes: true
+      removeExtraWhitespace: true
+      maxLength: 1000
+    }
+  ) {
+    text
+  }
+  
+  # Clean content for summarization
+  summaryText: text(
+    selector: ".main-content"
+    clean: {
+      removeNonTextNodes: true
+      removeExtraWhitespace: true
+      maxLength: 2000
+    }
+  ) {
+    text
+  }
+  
+  # ========================================
+  # Content-Specific Tests
+  # ========================================
+  
+  # Navigation text
+  navigationText: text(selector: "nav") {
+    text
+  }
+  
+  # Menu items
+  menuText: text(selector: ".menu, .nav-menu") {
+    text
+  }
+  
+  # Footer content
+  footerText: text(selector: "footer") {
+    text
+  }
+  
+  # Sidebar content
+  sidebarText: text(selector: ".sidebar, aside") {
+    text
+  }
+  
+  # Header content
+  headerText: text(selector: "header") {
+    text
+  }
+  
+  # Main content area
+  mainContent: text(selector: "main, .main, .content") {
+    text
+  }
+  
+  # ========================================
+  # Element Type Tests
+  # ========================================
+  
+  # Link text
+  linkText: text(selector: "a") {
+    text
+  }
+  
+  # Button text
+  buttonText: text(selector: "button") {
+    text
+  }
+  
+  # Input placeholder text
+  inputText: text(selector: "input[placeholder]") {
+    text
+  }
+  
+  # Label text
+  labelText: text(selector: "label") {
+    text
+  }
+  
+  # Span content
+  spanText: text(selector: "span") {
+    text
+  }
+  
+  # Div content
+  divContent: text(selector: "div.text-content") {
+    text
+  }
+  
+  # ========================================
+  # Table Content Tests
+  # ========================================
+  
+  # Table headers
+  tableHeaders: text(selector: "th") {
+    text
+  }
+  
+  # Table cells
+  tableCells: text(selector: "td") {
+    text
+  }
+  
+  # Entire table content
+  tableContent: text(selector: "table") {
+    text
+  }
+  
+  # Specific table data
+  priceData: text(selector: "td.price") {
+    text
+  }
+  
+  # ========================================
+  # List Content Tests
+  # ========================================
+  
+  # Unordered list items
+  listItems: text(selector: "ul li") {
+    text
+  }
+  
+  # Ordered list items
+  orderedItems: text(selector: "ol li") {
+    text
+  }
+  
+  # Definition lists
+  definitionList: text(selector: "dl dt, dl dd") {
+    text
+  }
+  
+  # Navigation lists
+  navList: text(selector: "nav ul li") {
+    text
+  }
+  
+  # ========================================
+  # Form Content Tests
+  # ========================================
+  
+  # Form labels
+  formLabels: text(selector: "form label") {
+    text
+  }
+  
+  # Error messages
+  errorMessages: text(
+    selector: ".error, .alert-error"
+    visible: true
+  ) {
+    text
+  }
+  
+  # Success messages
+  successMessages: text(
+    selector: ".success, .alert-success"
+    visible: true
+  ) {
+    text
+  }
+  
+  # Help text
+  helpText: text(selector: ".help-text, .hint") {
+    text
+  }
+  
+  # ========================================
+  # Dynamic Content Tests
+  # ========================================
+  
+  # AJAX loaded content
+  ajaxContent: text(
+    selector: ".ajax-content"
+    timeout: 20000
+    visible: true
+  ) {
+    text
+  }
+  
+  # JavaScript generated content
+  jsContent: text(
+    selector: ".js-generated"
+    timeout: 15000
+  ) {
+    text
+  }
+  
+  # Modal content
+  modalContent: text(
+    selector: ".modal-body"
+    visible: true
+    timeout: 10000
+  ) {
+    text
+  }
+  
+  # Tooltip text
+  tooltipText: text(
+    selector: ".tooltip"
+    visible: true
+    timeout: 5000
+  ) {
+    text
+  }
+  
+  # ========================================
+  # Data Extraction Tests
+  # ========================================
+  
+  # Price information
+  priceInfo: text(selector: ".price") {
+    text
+  }
+  
+  # Date information
+  dateInfo: text(selector: ".date, time") {
+    text
+  }
+  
+  # Author information
+  authorInfo: text(selector: ".author, .by-author") {
+    text
+  }
+  
+  # Title information
+  titleInfo: text(selector: ".title, h1") {
+    text
+  }
+  
+  # Description text
+  descriptionText: text(selector: ".description, .summary") {
+    text
+  }
+  
+  # ========================================
+  # SEO and Meta Content
+  # ========================================
+  
+  # Page title
+  pageTitle: text(selector: "title") {
+    text
+  }
+  
+  # Meta description (if rendered)
+  metaDescription: text(selector: "meta[name='description']") {
+    text
+  }
+  
+  # Breadcrumb navigation
+  breadcrumbs: text(selector: ".breadcrumb") {
+    text
+  }
+  
+  # Schema markup text
+  schemaText: text(selector: "[itemtype]") {
+    text
+  }
+  
+  # ========================================
+  # Error Handling Tests
+  # ========================================
+  
+  # Non-existent selector
+  nonExistentText: text(
+    selector: ".does-not-exist"
+    timeout: 2000
+  ) {
+    text
+  }
+  
+  # Hidden element
+  hiddenElementText: text(
+    selector: ".hidden"
+    visible: false
+  ) {
+    text
+  }
+  
+  # Empty element
+  emptyElementText: text(selector: ".empty") {
+    text
+  }
+  
+  # ========================================
+  # Complex Selector Tests
+  # ========================================
+  
+  # CSS selector combinations
+  complexSelector: text(selector: "article p:first-child") {
+    text
+  }
+  
+  # Multiple class selector
+  multiClassText: text(selector: ".primary.highlighted") {
+    text
+  }
+  
+  # Attribute selector
+  attributeText: text(selector: "div[data-content]") {
+    text
+  }
+  
+  # Pseudo-class selector
+  pseudoClassText: text(selector: "li:nth-child(odd)") {
+    text
+  }
+  
+  # ========================================
+  # Performance Tests
+  # ========================================
+  
+  # Fast text extraction
+  fastText: text(
+    selector: ".fast-content"
+    timeout: 3000
+  ) {
+    text
+  }
+  
+  # Large content extraction
+  largeContent: text(
+    selector: ".large-content"
+    timeout: 25000
+    clean: {
+      maxLength: 5000
+    }
+  ) {
+    text
+  }
+  
+  # Multiple element text
+  multipleElements: text(
+    selector: "p, div, span"
+    timeout: 20000
+  ) {
+    text
+  }
+  
+  # ========================================
+  # Accessibility Content Tests
+  # ========================================
+  
+  # ARIA labels
+  ariaLabels: text(selector: "[aria-label]") {
+    text
+  }
+  
+  # Screen reader text
+  screenReaderText: text(selector: ".sr-only") {
+    text
+  }
+  
+  # Alt text (if rendered)
+  altText: text(selector: "img[alt]") {
+    text
+  }
+  
+  # ========================================
+  # Advanced Cleaning Tests
+  # ========================================
+  
+  # Clean for search indexing
+  searchIndexText: text(
+    selector: "article"
+    clean: {
+      removeNonTextNodes: true
+      removeExtraWhitespace: true
+      maxLength: 3000
+    }
+  ) {
+    text
+  }
+  
+  # Clean for AI processing
+  aiProcessingText: text(
+    selector: ".content"
+    clean: {
+      removeNonTextNodes: true
+      removeExtraWhitespace: true
+      maxLength: 1500
+    }
+  ) {
+    text
+  }
+  
+  # Clean for mobile display
+  mobileText: text(
+    selector: ".mobile-content"
+    clean: {
+      removeExtraWhitespace: true
+      maxLength: 800
+    }
+  ) {
+    text
+  }
+  
+  # ========================================
+  # Workflow Integration Tests
+  # ========================================
+  
+  # Text extraction workflow
+  workflowText: text(
+    selector: ".workflow-content"
+    timeout: 15000
+    visible: true
+    clean: {
+      removeNonTextNodes: true
+      removeExtraWhitespace: true
+      maxLength: 2000
+    }
+  ) {
+    text
+  }
+  
+  # Content analysis text
+  analysisText: text(
+    selector: ".analysis-content"
+    clean: {
+      removeNonTextNodes: true
+      maxLength: 1000
+    }
+  ) {
+    text
+  }
+  
+  # Report generation text
+  reportText: text(
+    selector: ".report-section"
+    visible: true
+    clean: {
+      removeExtraWhitespace: true
+      maxLength: 2500
+    }
+  ) {
+    text
+  }
+}
+
+# ============================================================================
+# END OF TEXT OPERATION TESTS
+# ============================================================================ 

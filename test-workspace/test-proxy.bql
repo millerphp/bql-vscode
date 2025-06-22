@@ -1,0 +1,505 @@
+mutation BasicProxyConfiguration {
+  # 1. Simple proxy configuration for all requests through Brazil
+  # Uses Browserless residential proxy network
+  brazilProxy: proxy(
+    url: ["*"]
+    country: BR
+  ) {
+    time
+  }
+
+  # Navigate using the Brazil proxy
+  goto(url: "https://httpbin.org/ip") {
+    status
+    url
+  }
+
+  # Get IP information to verify proxy location
+  ipInfo: text(selector: "body") {
+    text
+    time
+  }
+}
+
+mutation ExternalProxyConfiguration {
+  # 2. External proxy server configuration
+  # Route all requests through custom proxy server
+  externalProxy: proxy(
+    url: ["*"]
+    server: "http://username:password@my-proxy.com:12321"
+  ) {
+    time
+  }
+
+  # Test external proxy with navigation
+  goto(url: "https://httpbin.org/headers") {
+    status
+    time
+  }
+
+  # Check headers to verify proxy usage
+  headers: text(selector: "body") {
+    text
+    time
+  }
+}
+
+mutation AdvancedLocationTargeting {
+  # 3. Advanced geographic targeting
+  # Specific city and state targeting with sticky sessions
+  geoProxy: proxy(
+    url: ["*"]
+    country: US
+    state: "california"
+    city: "losangeles"
+    sticky: true
+  ) {
+    time
+  }
+
+  # Navigate to geo-sensitive site
+  goto(url: "https://httpbin.org/json") {
+    status
+    url
+    time
+  }
+
+  # Verify location-specific content
+  content: html(selector: "body") {
+    html
+    time
+  }
+}
+
+mutation ResourceTypeFiltering {
+  # 4. Filter by resource type
+  # Only proxy document requests through France
+  documentProxy: proxy(
+    url: ["*"]
+    type: [document]
+    country: FR
+  ) {
+    time
+  }
+
+  # Only proxy API calls through Germany
+  apiProxy: proxy(
+    url: ["https://api.example.com/*"]
+    type: [xhr, fetch]
+    country: DE
+  ) {
+    time
+  }
+
+  # Only proxy images through UK
+  imageProxy: proxy(
+    url: ["*.jpg", "*.png", "*.gif"]
+    type: [image]
+    country: GB
+  ) {
+    time
+  }
+
+  # Test navigation with resource filtering
+  goto(url: "https://httpbin.org/html") {
+    status
+    time
+  }
+}
+
+mutation HTTPMethodFiltering {
+  # 5. Filter by HTTP methods
+  # Proxy only POST requests through Canada
+  postProxy: proxy(
+    url: ["*"]
+    method: [POST]
+    country: CA
+  ) {
+    time
+  }
+
+  # Proxy GET and PUT requests through Australia
+  readWriteProxy: proxy(
+    url: ["https://api.example.com/*"]
+    method: [GET, PUT]
+    country: AU
+  ) {
+    time
+  }
+
+  # Proxy sensitive operations through secure external proxy
+  secureProxy: proxy(
+    url: ["https://secure-api.example.com/*"]
+    method: [POST, PUT, DELETE, PATCH]
+    server: "https://secure-user:secure-pass@enterprise-proxy.com:8080"
+  ) {
+    time
+  }
+
+  # Test navigation
+  goto(url: "https://httpbin.org/get") {
+    status
+    time
+  }
+}
+
+mutation OperatorLogicTesting {
+  # 6. AND operator - all conditions must match
+  strictProxy: proxy(
+    url: ["https://api.example.com/*"]
+    method: [POST, PUT]
+    type: [xhr, fetch]
+    country: US
+    operator: and
+  ) {
+    time
+  }
+
+  # OR operator - any condition matching will be proxied
+  flexibleProxy: proxy(
+    url: ["https://cdn.example.com/*", "*.js", "*.css"]
+    method: [GET]
+    type: [script, stylesheet, image]
+    country: GB
+    operator: or
+  ) {
+    time
+  }
+
+  # Test with API navigation
+  goto(url: "https://httpbin.org/anything") {
+    status
+    time
+  }
+}
+
+mutation MultipleProxyConfigurations {
+  # 7. Configure different proxies for different purposes
+  
+  # Main site proxy through US
+  mainSiteProxy: proxy(
+    url: ["https://example.com/*"]
+    type: [document]
+    country: US
+    state: "newyork"
+    sticky: true
+  ) {
+    time
+  }
+
+  # API proxy through EU for GDPR compliance
+  apiProxy: proxy(
+    url: ["https://api.example.com/*", "https://data.example.com/*"]
+    method: [GET, POST, PUT, DELETE]
+    type: [xhr, fetch]
+    country: DE
+    operator: and
+  ) {
+    time
+  }
+
+  # CDN proxy through Asia for performance
+  cdnProxy: proxy(
+    url: ["https://cdn.example.com/*", "*.cloudfront.net/*"]
+    type: [image, stylesheet, script, font]
+    country: JP
+    city: "tokyo"
+  ) {
+    time
+  }
+
+  # Test navigation
+  goto(url: "https://httpbin.org/delay/1") {
+    status
+    time
+    url
+  }
+}
+
+mutation StickySessionTesting {
+  # 8. Sticky session configuration
+  # Same IP for subsequent matching requests
+  stickyProxy: proxy(
+    url: ["https://session.example.com/*"]
+    country: US
+    sticky: true
+  ) {
+    time
+  }
+
+  # First request establishes session
+  firstRequest: goto(url: "https://httpbin.org/cookies/set/session/abc123") {
+    status
+    time
+  }
+
+  # Second request should use same IP
+  secondRequest: goto(url: "https://httpbin.org/cookies") {
+    status
+    time
+  }
+
+  # Check session consistency
+  sessionData: text(selector: "body") {
+    text
+    time
+  }
+}
+
+mutation SecurityAndAuthentication {
+  # 9. Security-focused proxy configurations
+  
+  # High-security external proxy with authentication
+  secureProxy: proxy(
+    url: ["https://secure-api.example.com/*", "https://banking.example.com/*"]
+    method: [POST, PUT, DELETE]
+    server: "https://security-user:complex-password-123@secure-proxy.enterprise.com:8443"
+    operator: and
+  ) {
+    time
+  }
+
+  # Residential proxy for sensitive operations
+  residentialSecure: proxy(
+    url: ["https://sensitive.example.com/*"]
+    country: CH  # Switzerland for privacy
+    sticky: true
+    operator: and
+  ) {
+    time
+  }
+
+  # Test secure navigation
+  goto(url: "https://httpbin.org/basic-auth/user/pass") {
+    status
+    time
+  }
+}
+
+mutation PerformanceOptimization {
+  # 10. Performance-optimized proxy configurations
+  
+  # Fast proxy for static assets
+  staticAssetsProxy: proxy(
+    url: ["*.css", "*.js", "*.png", "*.jpg", "*.gif", "*.woff", "*.woff2"]
+    type: [stylesheet, script, image, font]
+    country: US
+    city: "ashburn"  # Close to major CDNs
+  ) {
+    time
+  }
+
+  # API proxy optimized for low latency
+  lowLatencyProxy: proxy(
+    url: ["https://api.example.com/*"]
+    method: [GET, POST]
+    type: [xhr, fetch]
+    country: US
+    state: "california"
+    city: "sanfrancisco"
+    sticky: true
+  ) {
+    time
+  }
+
+  # Test performance navigation
+  goto(url: "https://httpbin.org/delay/0.5") {
+    status
+    time
+  }
+}
+
+mutation ConditionalProxySetup {
+  # 11. Conditional proxy configuration
+  # Set up different proxies based on conditions
+
+  # Navigate to test what type of site we're dealing with
+  goto(url: "https://httpbin.org/response-headers?Content-Type=application/json") {
+    status
+  }
+
+  # API-focused proxy if we detect API endpoints
+  if(selector: "[content-type*='json']") {
+    apiSpecificProxy: proxy(
+      url: ["*"]
+      type: [xhr, fetch]
+      method: [GET, POST, PUT]
+      country: US
+      operator: and
+    ) {
+      time
+    }
+  }
+
+  # General proxy for non-API content
+  ifnot(selector: "[content-type*='json']") {
+    generalProxy: proxy(
+      url: ["*"]
+      type: [document, stylesheet, script, image]
+      country: GB
+    ) {
+      time
+    }
+  }
+}
+
+mutation LoadTestingWithProxy {
+  # 12. Load testing different proxy configurations
+  
+  # High-throughput proxy configuration
+  loadTestProxy: proxy(
+    url: ["*"]
+    country: US
+    state: "virginia"
+    city: "ashburn"
+    sticky: false  # Don't stick to same IP for load distribution
+  ) {
+    time
+  }
+
+  # Test multiple rapid requests
+  page1: goto(url: "https://httpbin.org/delay/0.1") {
+    status
+    time
+  }
+
+  page2: goto(url: "https://httpbin.org/delay/0.2") {
+    status
+    time
+  }
+
+  page3: goto(url: "https://httpbin.org/delay/0.3") {
+    status
+    time
+  }
+
+  # Verify load distribution
+  ipCheck: text(selector: "body") {
+    text
+    time
+  }
+}
+
+mutation InternationalTestingWorkflow {
+  # 13. International content testing
+  
+  # European proxy for GDPR testing
+  europeProxy: proxy(
+    url: ["https://eu.example.com/*"]
+    country: DE
+    state: "bavaria"
+    city: "munich"
+  ) {
+    time
+  }
+
+  # Asian proxy for regional content
+  asiaProxy: proxy(
+    url: ["https://asia.example.com/*"]
+    country: JP
+    city: "tokyo"
+  ) {
+    time
+  }
+
+  # North American proxy for regional testing
+  naProxy: proxy(
+    url: ["https://na.example.com/*"]
+    country: CA
+    state: "ontario"
+    city: "toronto"
+  ) {
+    time
+  }
+
+  # Test international navigation
+  goto(url: "https://httpbin.org/json") {
+    status
+    time
+    url
+  }
+}
+
+mutation AdvancedFiltering {
+  # 14. Complex filtering scenarios
+  
+  # E-commerce site proxy with complex filtering
+  ecommerceProxy: proxy(
+    url: [
+      "https://shop.example.com/*",
+      "https://checkout.example.com/*",
+      "https://payment.example.com/*"
+    ]
+    method: [GET, POST, PUT]
+    type: [document, xhr, fetch]
+    country: US
+    state: "california"
+    sticky: true
+    operator: and
+  ) {
+    time
+  }
+
+  # Social media proxy with media focus
+  socialMediaProxy: proxy(
+    url: [
+      "https://social.example.com/*",
+      "https://feed.example.com/*",
+      "*.social-cdn.com/*"
+    ]
+    type: [image, media, xhr, fetch, websocket]
+    country: GB
+    operator: or
+  ) {
+    time
+  }
+
+  # Test complex filtering
+  goto(url: "https://httpbin.org/anything/complex-test") {
+    status
+    time
+  }
+}
+
+mutation ProxyChaining {
+  # 15. Proxy chaining and fallback scenarios
+  
+  # Primary proxy configuration
+  primaryProxy: proxy(
+    url: ["https://primary.example.com/*"]
+    server: "http://user1:pass1@primary-proxy.com:8080"
+  ) {
+    time
+  }
+
+  # Secondary proxy for different endpoints
+  secondaryProxy: proxy(
+    url: ["https://secondary.example.com/*"]
+    country: US
+    state: "texas"
+    city: "dallas"
+  ) {
+    time
+  }
+
+  # Fallback proxy for everything else
+  fallbackProxy: proxy(
+    url: ["*"]
+    country: CA
+  ) {
+    time
+  }
+
+  # Test proxy chaining
+  goto(url: "https://httpbin.org/anything/proxy-test") {
+    status
+    time
+    url
+  }
+
+  # Verify proxy effectiveness
+  proxyTest: html(selector: "body") {
+    html
+    time
+  }
+} 

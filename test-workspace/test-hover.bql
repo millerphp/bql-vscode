@@ -1,0 +1,227 @@
+mutation HoverOperationTest {
+  # Navigate to test page first
+  goto(url: "https://example.com") {
+    status
+    time
+    url
+  }
+
+  # Basic hover with selector (uses all defaults)
+  basicHover: hover(selector: "a") {
+    time
+  }
+  
+  # Hover with complete HoverResponse
+  detailedHover: hover(selector: ".menu-item") {
+    selector
+    x
+    y
+    time
+  }
+  
+  # Hover with coordinates (no selector)
+  coordinateHover: hover(x: 100, y: 200) {
+    x
+    y
+    time
+  }
+  
+  # Hover with coordinates and full response
+  fullCoordinateHover: hover(x: 300, y: 150) {
+    selector
+    x
+    y
+    time
+  }
+  
+  # Hover with custom scroll behavior
+  noScrollHover: hover(
+    selector: "button"
+    scroll: false
+  ) {
+    selector
+    x
+    y
+    time
+  }
+  
+  # Hover with visibility requirement
+  visibleOnlyHover: hover(
+    selector: ".tooltip-trigger"
+    visible: true
+  ) {
+    selector
+    time
+  }
+  
+  # Hover without waiting for DOM
+  noWaitHover: hover(
+    selector: "#instant-element"
+    wait: false
+  ) {
+    selector
+    time
+  }
+  
+  # Hover with custom timeout
+  timeoutHover: hover(
+    selector: ".slow-loading-element"
+    timeout: 10000
+  ) {
+    selector
+    x
+    y
+    time
+  }
+  
+  # Hover with all options specified
+  completeHover: hover(
+    selector: ".complex-element"
+    scroll: true
+    visible: true
+    wait: true
+    timeout: 15000
+  ) {
+    selector
+    x
+    y
+    time
+  }
+  
+  # Multiple hovers in sequence
+  firstHover: hover(selector: "nav a:first-child") {
+    selector
+    time
+  }
+  
+  secondHover: hover(selector: "nav a:nth-child(2)") {
+    selector
+    time
+  }
+  
+  thirdHover: hover(selector: "nav a:last-child") {
+    selector
+    time
+  }
+  
+  # Hover on different element types
+  linkHover: hover(selector: "a[href]") {
+    selector
+    x
+    y
+    time
+  }
+  
+  buttonHover: hover(selector: "button[type='submit']") {
+    selector
+    time
+  }
+  
+  inputHover: hover(selector: "input[type='text']") {
+    selector
+    x
+    y
+    time
+  }
+  
+  imageHover: hover(selector: "img[alt]") {
+    selector
+    time
+  }
+  
+  divHover: hover(selector: "div.card") {
+    selector
+    x
+    y
+    time
+  }
+  
+  # Hover with complex selectors
+  deepSelectorHover: hover(selector: ".container .sidebar .menu-item:nth-child(3)") {
+    selector
+    x
+    y
+    time
+  }
+  
+  attributeSelectorHover: hover(selector: "a[data-toggle='dropdown']") {
+    selector
+    time
+  }
+  
+  pseudoSelectorHover: hover(selector: "li:hover") {
+    selector
+    time
+  }
+  
+  # Hover on different coordinate positions
+  topLeftHover: hover(x: 10, y: 10) {
+    x
+    y
+    time
+  }
+  
+  centerHover: hover(x: 400, y: 300) {
+    x
+    y
+    time
+  }
+  
+  bottomRightHover: hover(x: 800, y: 600) {
+    x
+    y
+    time
+  }
+  
+  # Hover with conditional directives
+  conditionalHover: hover(
+    selector: ".interactive-element"
+    scroll: true
+    visible: true
+  ) {
+    selector @include(if: true)
+    x @include(if: true)
+    y @skip(if: false)
+    time @skip(if: true)
+  }
+  
+  # Test hover response fields with directives
+  selectiveResponse: hover(selector: ".test-element") {
+    selector @include(if: true)
+    x @include(if: false)
+    y @skip(if: true)
+    time @skip(if: false)
+  }
+  
+  # Combined hover with other operations
+  hoverAndClick: hover(selector: ".dropdown-trigger") {
+    selector
+    time
+  }
+  
+  afterHoverClick: click(selector: ".dropdown-item") {
+    selector
+    x
+    y
+    time
+  }
+  
+  # Hover for tooltip activation
+  tooltipHover: hover(
+    selector: "[data-tooltip]"
+    visible: true
+    timeout: 5000
+  ) {
+    selector
+    x
+    y
+    time
+  }
+  
+  # Precision hover with exact coordinates
+  precisionHover: hover(x: 123.5, y: 456.7) {
+    x
+    y
+    time
+  }
+} 

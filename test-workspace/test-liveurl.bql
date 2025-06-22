@@ -1,0 +1,185 @@
+mutation LiveURLStreamingTests {
+  # Navigate to page before creating stream
+  goto(url: "https://example.com") {
+    status
+    time
+    url
+  }
+
+  # Basic live URL with default settings (interactive, resizable, jpeg 100%)
+  basicStream: liveURL {
+    liveURL
+  }
+
+  # View-only stream (non-interactive)
+  viewOnlyStream: liveURL(interactable: false) {
+    liveURL
+  }
+
+  # Fixed viewport stream (non-resizable)
+  fixedViewportStream: liveURL(resizable: false) {
+    liveURL
+  }
+
+  # Low quality stream for bandwidth optimization
+  lowQualityStream: liveURL(quality: 20, type: jpeg) {
+    liveURL
+  }
+
+  # High quality PNG stream (more bandwidth)
+  highQualityStream: liveURL(type: png) {
+    liveURL
+  }
+
+  # Timed session with 30 second timeout
+  timedSession: liveURL(timeout: 30000) {
+    liveURL
+  }
+
+  # Complete custom configuration
+  customStream: liveURL(
+    timeout: 60000
+    interactable: true
+    type: jpeg
+    quality: 80
+    resizable: false
+  ) {
+    liveURL
+  }
+
+  # Navigate to different page for varied streaming
+  navigateToApp: goto(url: "https://app.example.com") {
+    status
+    time
+  }
+
+  # Create app streaming session
+  appStream: liveURL(
+    timeout: 120000
+    interactable: true
+    type: jpeg
+    quality: 60
+    resizable: true
+  ) {
+    liveURL
+  }
+
+  # Performance-optimized stream
+  performanceStream: liveURL(
+    quality: 30
+    type: jpeg
+    resizable: false
+    interactable: false
+  ) {
+    liveURL
+  }
+
+  # Interactive demo stream
+  demoStream: liveURL(
+    timeout: 300000  # 5 minutes
+    interactable: true
+    type: jpeg
+    quality: 70
+    resizable: true
+  ) {
+    liveURL
+  }
+
+  # Navigate to mobile-responsive page
+  mobileNavigation: goto(url: "https://mobile.example.com") {
+    status
+  }
+
+  # Mobile-optimized stream
+  mobileStream: liveURL(
+    quality: 50
+    type: jpeg
+    resizable: true
+    interactable: true
+    timeout: 180000
+  ) {
+    liveURL
+  }
+
+  # Screenshot for comparison
+  mobileScreenshot: screenshot {
+    base64
+  }
+
+  # Navigate to complex dashboard
+  dashboardNavigation: goto(url: "https://dashboard.example.com") {
+    status
+  }
+
+  # Dashboard monitoring stream (view-only, high quality)
+  monitoringStream: liveURL(
+    interactable: false
+    type: png
+    resizable: false
+    timeout: 3600000  # 1 hour
+  ) {
+    liveURL
+  }
+
+  # Navigate to interactive form
+  formNavigation: goto(url: "https://forms.example.com") {
+    status
+  }
+
+  # Interactive form stream
+  formStream: liveURL(
+    interactable: true
+    type: jpeg
+    quality: 90
+    resizable: true
+    timeout: 900000  # 15 minutes
+  ) {
+    liveURL
+  }
+
+  # Test conditional streaming based on page content
+  conditionalStreaming: if(selector: ".streaming-required") {
+    conditionalStream: liveURL(
+      interactable: true
+      type: jpeg
+      quality: 85
+    ) {
+      liveURL
+    }
+  }
+
+  # Fallback streaming for pages without special requirements
+  fallbackStreaming: ifnot(selector: ".no-streaming") {
+    fallbackStream: liveURL(
+      quality: 40
+      type: jpeg
+      interactable: false
+    ) {
+      liveURL
+    }
+  }
+
+  # Final page state capture
+  finalScreenshot: screenshot {
+    base64
+  }
+
+  # Final navigation state
+  finalNavigation: goto(url: "https://summary.example.com") {
+    status
+    time
+    text
+    url
+  }
+
+  # Summary stream
+  summaryStream: liveURL(
+    timeout: 60000
+    interactable: false
+    type: jpeg
+    quality: 75
+    resizable: false
+  ) {
+    liveURL
+  }
+} 

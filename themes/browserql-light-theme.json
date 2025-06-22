@@ -1,0 +1,109 @@
+{
+    "name": "BrowserQL Light Theme",
+    "type": "light",
+    "colors": {
+        "editor.background": "#FFFFFF",
+        "editor.foreground": "#333333"
+    },
+    "tokenColors": [
+        {
+            "name": "BrowserQL Functions",
+            "scope": "entity.name.function.browserql",
+            "settings": {
+                "foreground": "#795E26",
+                "fontStyle": "bold"
+            }
+        },
+        {
+            "name": "BrowserQL Keywords",
+            "scope": "keyword.control.browserql",
+            "settings": {
+                "foreground": "#0000FF",
+                "fontStyle": "bold"
+            }
+        },
+        {
+            "name": "BrowserQL Parameters",
+            "scope": "variable.parameter.browserql",
+            "settings": {
+                "foreground": "#001080"
+            }
+        },
+        {
+            "name": "BrowserQL Variables",
+            "scope": "variable.other.browserql",
+            "settings": {
+                "foreground": "#0070C1"
+            }
+        },
+        {
+            "name": "BrowserQL Constants",
+            "scope": "constant.language.browserql",
+            "settings": {
+                "foreground": "#0451A5"
+            }
+        },
+        {
+            "name": "BrowserQL Strings",
+            "scope": [
+                "string.quoted.double.browserql",
+                "string.quoted.single.browserql"
+            ],
+            "settings": {
+                "foreground": "#A31515"
+            }
+        },
+        {
+            "name": "BrowserQL String Escapes",
+            "scope": "constant.character.escape.browserql",
+            "settings": {
+                "foreground": "#EE0000"
+            }
+        },
+        {
+            "name": "BrowserQL Numbers",
+            "scope": "constant.numeric.decimal.browserql",
+            "settings": {
+                "foreground": "#098658"
+            }
+        },
+        {
+            "name": "BrowserQL Comments",
+            "scope": "comment.line.number-sign.browserql",
+            "settings": {
+                "foreground": "#008000",
+                "fontStyle": "italic"
+            }
+        },
+        {
+            "name": "BrowserQL Punctuation - Brackets",
+            "scope": [
+                "punctuation.definition.arguments.begin.browserql",
+                "punctuation.definition.arguments.end.browserql"
+            ],
+            "settings": {
+                "foreground": "#E8A317"
+            }
+        },
+        {
+            "name": "BrowserQL Punctuation - Braces",
+            "scope": [
+                "punctuation.definition.block.begin.browserql",
+                "punctuation.definition.block.end.browserql"
+            ],
+            "settings": {
+                "foreground": "#AF00DB"
+            }
+        },
+        {
+            "name": "BrowserQL Punctuation - Other",
+            "scope": [
+                "punctuation.separator.key-value.browserql",
+                "punctuation.separator.parameters.browserql"
+            ],
+            "settings": {
+                "foreground": "#333333"
+            }
+        }
+    ]
+}

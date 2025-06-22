@@ -1,0 +1,116 @@
+mutation ForwardNavigationTest {
+  # Create a navigation sequence to test forward functionality
+  
+  # Start with initial navigation
+  initial: goto(url: "https://example.com", waitUntil: load) {
+    status
+    time
+    url
+  }
+  
+  # Navigate to second page
+  second: goto(url: "https://browserless.io", waitUntil: domContentLoaded) {
+    status
+    time
+    url
+  }
+  
+  # Navigate to third page
+  third: goto(url: "https://github.com", waitUntil: load) {
+    status
+    time
+    url
+  }
+  
+  # Go back one step (to browserless.io)
+  backOne: back(waitUntil: domContentLoaded) {
+    status
+    time
+    text
+    url
+  }
+  
+  # Go back another step (to example.com)
+  backTwo: back(waitUntil: load) {
+    status
+    time
+    text
+    url
+  }
+  
+  # Forward one step (back to browserless.io)
+  forwardOne: forward(waitUntil: domContentLoaded) {
+    status
+    time
+    text
+    url
+  }
+  
+  # Forward another step (back to github.com)
+  forwardTwo: forward(waitUntil: load) {
+    status
+    time
+    text
+    url
+  }
+  
+  # Test forward with different waitUntil options
+  forwardCommit: forward(waitUntil: commit) {
+    status
+    time
+    url
+  }
+  
+  forwardNetworkIdle: forward(waitUntil: networkIdle) {
+    status
+    time
+    text
+    url
+  }
+  
+  # Test forward with custom timeout
+  forwardTimeout: forward(
+    waitUntil: load
+    timeout: 45000
+  ) {
+    status
+    time
+    text
+    url
+  }
+  
+  # Test forward when no forward is possible (should return null)
+  # This might not work if there's no forward history
+  noForwardAvailable: forward(waitUntil: load) {
+    status
+    time
+    text
+    url
+  }
+  
+  # Forward with conditional directives
+  forwardWithDirectives: forward(waitUntil: domContentLoaded) {
+    status @include(if: true)
+    time @include(if: true)
+    text @skip(if: false)
+    url @skip(if: true)
+  }
+  
+  # Complex navigation sequence demonstration
+  complexNavigation: goto(url: "https://docs.browserless.io", waitUntil: load) {
+    status
+    url
+  }
+  
+  # After complex navigation, test going back and forward
+  complexBack: back(waitUntil: domContentLoaded) {
+    status
+    time
+  }
+  
+  complexForward: forward(waitUntil: load) {
+    status
+    time
+    url
+  }
+} 

@@ -1,0 +1,6556 @@
+{
+  "Mutation Block": {
+    "prefix": ["mutation", "mut"],
+    "body": [
+      "mutation ${1:QueryName} {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Creates a BrowserQL mutation block"
+  },
+  "Query Block": {
+    "prefix": ["query"],
+    "body": [
+      "query ${1:QueryName} {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Creates a BrowserQL query block"
+  },
+  "Back Operation": {
+    "prefix": ["back"],
+    "body": [
+      "back(${1:waitUntil: ${2|load,commit,domContentLoaded,networkIdle|}}) {",
+      "\t${3|status,time,text,url|}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Go back in browser history"
+  },
+  "Checkbox Operation": {
+    "prefix": ["checkbox"],
+    "body": [
+      "checkbox(checked: ${1|true,false|}, selector: \"${2:input[type='checkbox']}\") {",
+      "\t${3|selector,x,y,time|}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Check or uncheck a checkbox element"
+  },
+  "Goto Simple": {
+    "prefix": ["goto"],
+    "body": [
+      "goto(url: \"${1:https://example.com}\") {",
+      "\tstatus",
+      "\t$0",
+      "}"
+    ],
+    "description": "Navigate to a URL (basic)"
+  },
+  "Goto with WaitUntil": {
+    "prefix": ["goto-wait"],
+    "body": [
+      "goto(",
+      "\turl: \"${1:https://example.com}\"",
+      "\twaitUntil: ${2|load,firstMeaningfulPaint,domContentLoaded,networkidle0,networkidle2,commit|}",
+      ") {",
+      "\t${3|status,time,text,url|}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Navigate to a URL with waitUntil parameter"
+  },
+  "Goto with Timeout": {
+    "prefix": ["goto-timeout"],
+    "body": [
+      "goto(",
+      "\turl: \"${1:https://example.com}\"",
+      "\ttimeout: ${2:30000}",
+      "\twaitUntil: ${3|load,firstMeaningfulPaint,domContentLoaded,networkidle0,networkidle2,commit|}",
+      ") {",
+      "\t${4|status,time,text,url|}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Navigate to a URL with timeout and waitUntil parameters"
+  },
+  "Click Operation": {
+    "prefix": ["click"],
+    "body": [
+      "click(selector: \"${1:#button}\") {",
+      "\t${2|selector,x,y,time|}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Click on an element"
+  },
+  "Content Operation": {
+    "prefix": ["content"],
+    "body": [
+      "content(html: \"${1:<h1>Hello, World!</h1>}\"${2:, waitUntil: ${3|commit,domContentLoaded,load,networkIdle|}}) {",
+      "\t${4|status,time,text,url|}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Set HTML content on the page"
+  },
+  "Text Basic": {
+    "prefix": ["text"],
+    "body": [
+      "text(selector: \"${1:h1}\") {",
+      "\ttext",
+      "}"
+    ],
+    "description": "Get text content from an element"
+  },
+  "Text Full Page": {
+    "prefix": ["text-page", "text-full"],
+    "body": [
+      "text {",
+      "\ttext",
+      "}"
+    ],
+    "description": "Get full page text content"
+  },
+  "Text with Timeout": {
+    "prefix": ["text-timeout"],
+    "body": [
+      "text(",
+      "\tselector: \"${1:h1}\"",
+      "\ttimeout: ${2:10000}",
+      ") {",
+      "\ttext",
+      "}"
+    ],
+    "description": "Get text with timeout configuration"
+  },
+  "Text Visible Only": {
+    "prefix": ["text-visible"],
+    "body": [
+      "text(",
+      "\tselector: \"${1:.content}\"",
+      "\tvisible: ${2|true,false|}",
+      ") {",
+      "\ttext",
+      "}"
+    ],
+    "description": "Get text from visible elements only"
+  },
+  "Text Cleaned": {
+    "prefix": ["text-clean", "text-cleaned"],
+    "body": [
+      "text(",
+      "\tselector: \"${1:article}\"",
+      "\tclean: {",
+      "\t\tremoveNonTextNodes: ${2|true,false|}",
+      "\t\tremoveExtraWhitespace: ${3|true,false|}",
+      "\t\tmaxLength: ${4:1000}",
+      "\t}",
+      ") {",
+      "\ttext",
+      "}"
+    ],
+    "description": "Get cleaned text for LLM processing"
+  },
+  "Text Headings": {
+    "prefix": ["text-headings", "text-h1"],
+    "body": [
+      "text(selector: \"${1|h1,h2,h3,h4,h5,h6|}\") {",
+      "\ttext",
+      "}"
+    ],
+    "description": "Get text from headings"
+  },
+  "Text Paragraphs": {
+    "prefix": ["text-paragraphs", "text-p"],
+    "body": [
+      "text(selector: \"${1:p}\") {",
+      "\ttext",
+      "}"
+    ],
+    "description": "Get text from paragraphs"
+  },
+  "Text Links": {
+    "prefix": ["text-links", "text-a"],
+    "body": [
+      "text(selector: \"${1:a}\") {",
+      "\ttext",
+      "}"
+    ],
+    "description": "Get text from links"
+  },
+  "Text Content Area": {
+    "prefix": ["text-content"],
+    "body": [
+      "text(",
+      "\tselector: \"${1:.content, .main, article}\"",
+      "\tvisible: ${2|true,false|}",
+      "\ttimeout: ${3:15000}",
+      ") {",
+      "\ttext",
+      "}"
+    ],
+    "description": "Get text from main content area"
+  },
+  "Text Table Data": {
+    "prefix": ["text-table", "text-td"],
+    "body": [
+      "text(",
+      "\tselector: \"${1:table td, table th}\"",
+      "\tvisible: ${2|true,false|}",
+      ") {",
+      "\ttext",
+      "}"
+    ],
+    "description": "Get text from table cells"
+  },
+  "Text Lists": {
+    "prefix": ["text-list", "text-li"],
+    "body": [
+      "text(",
+      "\tselector: \"${1:ul li, ol li}\"",
+      "\tvisible: ${2|true,false|}",
+      ") {",
+      "\ttext",
+      "}"
+    ],
+    "description": "Get text from list items"
+  },
+  "Text Error Messages": {
+    "prefix": ["text-error"],
+    "body": [
+      "text(",
+      "\tselector: \"${1:.error, .alert, .warning}\"",
+      "\tvisible: true",
+      "\ttimeout: ${2:5000}",
+      ") {",
+      "\ttext",
+      "}"
+    ],
+    "description": "Get error message text"
+  },
+  "Text Complete": {
+    "prefix": ["text-full", "text-complete"],
+    "body": [
+      "${1:textContent}: text(",
+      "\tselector: \"${2:selector}\"",
+      "\ttimeout: ${3:30000}",
+      "\tvisible: ${4|false,true|}",
+      "\t${5:clean: {",
+      "\t\tremoveNonTextNodes: ${6|true,false|}",
+      "\t\tremoveExtraWhitespace: ${7|true,false|}",
+      "\t\tmaxLength: ${8:1000}",
+      "\t}}",
+      ") {",
+      "\t# Text content",
+      "\ttext",
+      "\t$0",
+      "}"
+    ],
+    "description": "Complete text extraction with all options"
+  },
+  "Text Workflow": {
+    "prefix": ["text-workflow"],
+    "body": [
+      "# Navigate to page",
+      "goto(url: \"${1:https://example.com}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "# Get page title",
+      "${2:pageTitle}: text(selector: \"${3:h1, title}\") {",
+      "\ttext",
+      "}",
+      "",
+      "# Get main content",
+      "${4:mainContent}: text(",
+      "\tselector: \"${5:.content, main, article}\"",
+      "\tvisible: ${6|true,false|}",
+      "\ttimeout: ${7:15000}",
+      ") {",
+      "\ttext",
+      "}",
+      "",
+      "# Get cleaned content for processing",
+      "${8:cleanedContent}: text(",
+      "\tselector: \"${9:article}\"",
+      "\tclean: {",
+      "\t\tremoveNonTextNodes: ${10|true,false|}",
+      "\t\tremoveExtraWhitespace: ${11|true,false|}",
+      "\t\tmaxLength: ${12:2000}",
+      "\t}",
+      ") {",
+      "\ttext",
+      "}",
+      "",
+      "# Get specific data",
+      "${13:specificData}: text(",
+      "\tselector: \"${14:.price, .date, .author}\"",
+      "\tvisible: true",
+      ") {",
+      "\ttext",
+      "}",
+      "$0"
+    ],
+    "description": "Complete text extraction workflow"
+  },
+  "Type Basic": {
+    "prefix": ["type"],
+    "body": [
+      "type(selector: \"${1:input}\", text: \"${2:Hello World}\") {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Basic text typing into an input field"
+  },
+  "Type Simple": {
+    "prefix": ["type-basic"],
+    "body": [
+      "# Type text into input",
+      "type(selector: \"${1:input[type='text']}\", text: \"${2:Hello, World!}\") {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Simple text typing with comment"
+  },
+  "Type Form Field": {
+    "prefix": ["type-form"],
+    "body": [
+      "type(",
+      "\tselector: \"${1:input[name='field']}\"",
+      "\ttext: \"${2:field value}\"",
+      ") {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Type into form input field"
+  },
+  "Type Email": {
+    "prefix": ["type-email"],
+    "body": [
+      "type(",
+      "\tselector: \"${1:input[type='email'], input[name='email']}\"",
+      "\ttext: \"${2:user@example.com}\"",
+      ") {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Type email address into email field"
+  },
+  "Type Password": {
+    "prefix": ["type-password"],
+    "body": [
+      "type(",
+      "\tselector: \"${1:input[type='password'], input[name='password']}\"",
+      "\ttext: \"${2:SecurePass123!}\"",
+      ") {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Type password into password field"
+  },
+  "Type Search": {
+    "prefix": ["type-search"],
+    "body": [
+      "type(",
+      "\tselector: \"${1:input[type='search'], input[name='search'], .search-input}\"",
+      "\ttext: \"${2:search query}\"",
+      "\tdelay: [${3:50}, ${4:150}]",
+      ") {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Type search query with natural delay"
+  },
+  "Type Textarea": {
+    "prefix": ["type-textarea"],
+    "body": [
+      "type(",
+      "\tselector: \"${1:textarea}\"",
+      "\ttext: \"${2:This is a longer text that might be typed into a textarea field.}\"",
+      "\tdelay: [${3:40}, ${4:120}]",
+      ") {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Type multi-line text into textarea"
+  },
+  "Type Custom Delay": {
+    "prefix": ["type-delay"],
+    "body": [
+      "type(",
+      "\tselector: \"${1:input}\"",
+      "\ttext: \"${2:text with custom timing}\"",
+      "\tdelay: [${3:25}, ${4:200}]",
+      ") {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Type with custom keystroke delay range"
+  },
+  "Type Fast": {
+    "prefix": ["type-fast"],
+    "body": [
+      "type(",
+      "\tselector: \"${1:input}\"",
+      "\ttext: \"${2:fast typing}\"",
+      "\tdelay: [${3:10}, ${4:30}]",
+      ") {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Fast typing with minimal delay"
+  },
+  "Type Slow": {
+    "prefix": ["type-slow"],
+    "body": [
+      "type(",
+      "\tselector: \"${1:input}\"",
+      "\ttext: \"${2:slow deliberate typing}\"",
+      "\tdelay: [${3:100}, ${4:300}]",
+      ") {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Slow, deliberate typing with longer delays"
+  },
+  "Type Visible": {
+    "prefix": ["type-visible"],
+    "body": [
+      "type(",
+      "\tselector: \"${1:input}\"",
+      "\ttext: \"${2:visible field text}\"",
+      "\tvisible: ${3|true,false|}",
+      "\ttimeout: ${4:10000}",
+      ") {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Type only if element is visible"
+  },
+  "Type No Scroll": {
+    "prefix": ["type-noscroll"],
+    "body": [
+      "type(",
+      "\tselector: \"${1:input}\"",
+      "\ttext: \"${2:text without scrolling}\"",
+      "\tscroll: false",
+      ") {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Type without scrolling to element"
+  },
+  "Type No Wait": {
+    "prefix": ["type-nowait"],
+    "body": [
+      "type(",
+      "\tselector: \"${1:input}\"",
+      "\ttext: \"${2:immediate typing}\"",
+      "\twait: false",
+      ") {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Type immediately without waiting for element"
+  },
+  "Type Not Interactable": {
+    "prefix": ["type-no-interact"],
+    "body": [
+      "type(",
+      "\tselector: \"${1:input}\"",
+      "\ttext: \"${2:force typing}\"",
+      "\tinteractable: false",
+      ") {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Type without checking element interactability"
+  },
+  "Type Timeout": {
+    "prefix": ["type-timeout"],
+    "body": [
+      "type(",
+      "\tselector: \"${1:input}\"",
+      "\ttext: \"${2:text with timeout}\"",
+      "\ttimeout: ${3:15000}",
+      ") {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Type with custom timeout"
+  },
+  "Type Login Form": {
+    "prefix": ["type-login"],
+    "body": [
+      "# Username input",
+      "type(",
+      "\tselector: \"${1:input[name='username'], input[name='email']}\"",
+      "\ttext: \"${2:username}\"",
+      ") {",
+      "\ttime",
+      "}",
+      "",
+      "# Password input",
+      "type(",
+      "\tselector: \"${3:input[name='password']}\"",
+      "\ttext: \"${4:password}\"",
+      ") {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Type username and password for login"
+  },
+  "Type Registration Form": {
+    "prefix": ["type-register"],
+    "body": [
+      "# First name",
+      "type(selector: \"${1:input[name='firstname']}\", text: \"${2:John}\") {",
+      "\ttime",
+      "}",
+      "",
+      "# Last name", 
+      "type(selector: \"${3:input[name='lastname']}\", text: \"${4:Doe}\") {",
+      "\ttime",
+      "}",
+      "",
+      "# Email",
+      "type(selector: \"${5:input[name='email']}\", text: \"${6:john.doe@example.com}\") {",
+      "\ttime",
+      "}",
+      "",
+      "# Password",
+      "type(selector: \"${7:input[name='password']}\", text: \"${8:SecurePass123!}\") {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Complete registration form typing"
+  },
+  "Type Contact Form": {
+    "prefix": ["type-contact"],
+    "body": [
+      "# Name field",
+      "type(selector: \"${1:input[name='name']}\", text: \"${2:Contact Name}\") {",
+      "\ttime",
+      "}",
+      "",
+      "# Email field",
+      "type(selector: \"${3:input[name='email']}\", text: \"${4:contact@example.com}\") {",
+      "\ttime",
+      "}",
+      "",
+      "# Subject field",
+      "type(selector: \"${5:input[name='subject']}\", text: \"${6:Inquiry Subject}\") {",
+      "\ttime",
+      "}",
+      "",
+      "# Message field",
+      "type(",
+      "\tselector: \"${7:textarea[name='message']}\"",
+      "\ttext: \"${8:This is my inquiry message with more details about what I need help with.}\"",
+      "\tdelay: [${9:30}, ${10:100}]",
+      ") {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Complete contact form typing workflow"
+  },
+  "Type Search Workflow": {
+    "prefix": ["type-search-workflow"],
+    "body": [
+      "# Clear existing search",
+      "click(selector: \"${1:.search-clear, .clear-button}\") {",
+      "\tclicked",
+      "}",
+      "",
+      "# Type search query",
+      "type(",
+      "\tselector: \"${2:input[type='search'], .search-input}\"",
+      "\ttext: \"${3:search query}\"",
+      "\tdelay: [${4:50}, ${5:150}]",
+      "\tvisible: ${6|true,false|}",
+      ") {",
+      "\ttime",
+      "}",
+      "",
+      "# Wait and submit search",
+      "click(selector: \"${7:button[type='submit'], .search-button}\") {",
+      "\tclicked",
+      "}$0"
+    ],
+    "description": "Complete search workflow with clear, type, and submit"
+  },
+  "Type Complete": {
+    "prefix": ["type-full", "type-complete"],
+    "body": [
+      "${1:textInput}: type(",
+      "\tselector: \"${2:input[name='field']}\"",
+      "\ttext: \"${3:input text}\"",
+      "\t${4:delay: [${5:50}, ${6:200}]}",
+      "\t${7:timeout: ${8:30000}}",
+      "\t${9:visible: ${10|false,true|}}",
+      "\t${11:scroll: ${12|true,false|}}",
+      "\t${13:wait: ${14|true,false|}}",
+      "\t${15:interactable: ${16|true,false|}}",
+      ") {",
+      "\t# Typing timing",
+      "\ttime",
+      "\t$0",
+      "}"
+    ],
+    "description": "Complete type operation with all options"
+  },
+  "Type Workflow": {
+    "prefix": ["type-workflow"],
+    "body": [
+      "# Navigate to form page",
+      "goto(url: \"${1:https://example.com/form}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "# Fill form fields with realistic delays",
+      "${2:nameInput}: type(",
+      "\tselector: \"${3:input[name='name']}\"",
+      "\ttext: \"${4:John Doe}\"",
+      "\tdelay: [${5:60}, ${6:180}]",
+      ") {",
+      "\ttime",
+      "}",
+      "",
+      "${7:emailInput}: type(",
+      "\tselector: \"${8:input[name='email']}\"",
+      "\ttext: \"${9:john.doe@example.com}\"",
+      "\tdelay: [${10:40}, ${11:120}]",
+      "\tvisible: ${12|true,false|}",
+      ") {",
+      "\ttime",
+      "}",
+      "",
+      "${13:messageInput}: type(",
+      "\tselector: \"${14:textarea[name='message']}\"",
+      "\ttext: \"${15:This is a longer message that requires more typing time and natural delays between characters.}\"",
+      "\tdelay: [${16:30}, ${17:100}]",
+      "\ttimeout: ${18:20000}",
+      ") {",
+      "\ttime",
+      "}",
+      "",
+      "# Submit form",
+      "click(selector: \"${19:button[type='submit']}\") {",
+      "\tclicked",
+      "}$0"
+    ],
+    "description": "Complete typing workflow with form filling and submission"
+  },
+  "Wait Operation": {
+    "prefix": ["wait"],
+    "body": [
+      "wait(${1|selector,timeout,delay|}: ${2:\"element\"}) {",
+      "\t${3|status,element|}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Wait for an element or time"
+  },
+  "Select Basic": {
+    "prefix": ["select"],
+    "body": [
+      "select(selector: \"${1:select[name='field']}\", value: \"${2:option}\") {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Basic dropdown option selection"
+  },
+  "Select Multiple": {
+    "prefix": ["select-multi", "select-multiple"],
+    "body": [
+      "select(",
+      "\tselector: \"${1:select[multiple]}\"",
+      "\tvalue: [\"${2:option1}\", \"${3:option2}\", \"${4:option3}\"]",
+      ") {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Multiple option selection from dropdown"
+  },
+  "Select Visible": {
+    "prefix": ["select-visible"],
+    "body": [
+      "select(",
+      "\tselector: \"${1:select.visible}\"",
+      "\tvalue: \"${2:option}\"",
+      "\tvisible: ${3|true,false|}",
+      "\ttimeout: ${4:10000}",
+      ") {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Select visible dropdown option with timeout"
+  },
+  "Select No Scroll": {
+    "prefix": ["select-noscroll"],
+    "body": [
+      "select(",
+      "\tselector: \"${1:select}\"",
+      "\tvalue: \"${2:option}\"",
+      "\tscroll: false",
+      ") {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Select without scrolling to element"
+  },
+  "Select No Wait": {
+    "prefix": ["select-nowait"],
+    "body": [
+      "select(",
+      "\tselector: \"${1:select}\"",
+      "\tvalue: \"${2:option}\"",
+      "\twait: false",
+      ") {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Select without waiting for element"
+  },
+  "Select Form": {
+    "prefix": ["select-form"],
+    "body": [
+      "select(",
+      "\tselector: \"form select[name='${1:field}']\"",
+      "\tvalue: \"${2:value}\"",
+      ") {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Select form dropdown option"
+  },
+  "Select Country": {
+    "prefix": ["select-country"],
+    "body": [
+      "select(",
+      "\tselector: \"select[name='country']\"",
+      "\tvalue: \"${1:US}\"",
+      ") {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Country selection dropdown"
+  },
+  "Select Language": {
+    "prefix": ["select-language", "select-lang"],
+    "body": [
+      "select(",
+      "\tselector: \"select#language, select[name='language']\"",
+      "\tvalue: \"${1:en}\"",
+      "\tvisible: ${2|true,false|}",
+      ") {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Language selection dropdown"
+  },
+  "Select Category": {
+    "prefix": ["select-category"],
+    "body": [
+      "select(",
+      "\tselector: \"select[name='category']\"",
+      "\tvalue: \"${1:technology}\"",
+      "\ttimeout: ${2:8000}",
+      ") {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Category selection dropdown"
+  },
+  "Select Priority": {
+    "prefix": ["select-priority"],
+    "body": [
+      "select(",
+      "\tselector: \"select.priority, select[name='priority']\"",
+      "\tvalue: \"${1:high}\"",
+      "\tvisible: ${2|true,false|}",
+      ") {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Priority level selection"
+  },
+  "Select Status": {
+    "prefix": ["select-status"],
+    "body": [
+      "select(",
+      "\tselector: \"select[name='status']\"",
+      "\tvalue: \"${1:active}\"",
+      "\tscroll: ${2|true,false|}",
+      ") {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Status selection dropdown"
+  },
+  "Select Currency": {
+    "prefix": ["select-currency"],
+    "body": [
+      "select(",
+      "\tselector: \"select[name='currency']\"",
+      "\tvalue: \"${1:USD}\"",
+      "\ttimeout: ${2:10000}",
+      ") {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Currency selection dropdown"
+  },
+  "Select Complete": {
+    "prefix": ["select-full", "select-complete"],
+    "body": [
+      "${1:dropdownSelect}: select(",
+      "\tselector: \"${2:select[name='field']}\"",
+      "\tvalue: ${3:\"${4:option}\"}",
+      "\t${5:timeout: ${6:30000}}",
+      "\t${7:scroll: ${8|true,false|}}",
+      "\t${9:visible: ${10|false,true|}}",
+      "\t${11:wait: ${12|true,false|}}",
+      ") {",
+      "\t# Selection timing",
+      "\ttime",
+      "\t$0",
+      "}"
+    ],
+    "description": "Complete select with all options"
+  },
+  "Select Workflow": {
+    "prefix": ["select-workflow"],
+    "body": [
+      "# Navigate to form page",
+      "goto(url: \"${1:https://example.com/form}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "# Select country",
+      "${2:countrySelect}: select(",
+      "\tselector: \"select[name='country']\"",
+      "\tvalue: \"${3:US}\"",
+      ") {",
+      "\ttime",
+      "}",
+      "",
+      "# Select language",
+      "${4:languageSelect}: select(",
+      "\tselector: \"select[name='language']\"",
+      "\tvalue: \"${5:en}\"",
+      "\tvisible: ${6|true,false|}",
+      ") {",
+      "\ttime",
+      "}",
+      "",
+      "# Select multiple skills",
+      "${7:skillsSelect}: select(",
+      "\tselector: \"select[multiple][name='skills']\"",
+      "\tvalue: [\"${8:javascript}\", \"${9:typescript}\", \"${10:react}\"]",
+      ") {",
+      "\ttime",
+      "}",
+      "",
+      "# Select category with timeout",
+      "${11:categorySelect}: select(",
+      "\tselector: \"select[name='category']\"",
+      "\tvalue: \"${12:technology}\"",
+      "\ttimeout: ${13:15000}",
+      ") {",
+      "\ttime",
+      "}",
+      "$0"
+    ],
+    "description": "Complete select workflow with multiple dropdown selections"
+  },
+  "Set HTTP Headers Basic": {
+    "prefix": ["setExtraHTTPHeaders", "set-headers"],
+    "body": [
+      "setExtraHTTPHeaders(headers: [",
+      "\t{name: \"${1:Authorization}\", value: \"${2:Bearer token123}\"}",
+      "\t{name: \"${3:Content-Type}\", value: \"${4:application/json}\"}",
+      "]) {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Basic HTTP headers configuration"
+  },
+  "Set Auth Headers": {
+    "prefix": ["set-auth-headers", "auth-headers"],
+    "body": [
+      "setExtraHTTPHeaders(headers: [",
+      "\t{name: \"Authorization\", value: \"${1:Bearer eyJhbGciOiJIUzI1NiJ9}\"}",
+      "\t{name: \"X-API-Key\", value: \"${2:api-key-12345}\"}",
+      "\t{name: \"X-Client-Version\", value: \"${3:1.0.0}\"}",
+      "]) {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Authentication headers setup"
+  },
+  "Set Security Headers": {
+    "prefix": ["set-security-headers", "security-headers"],
+    "body": [
+      "setExtraHTTPHeaders(headers: [",
+      "\t{name: \"X-Requested-With\", value: \"XMLHttpRequest\"}",
+      "\t{name: \"X-CSRF-Token\", value: \"${1:csrf-token-xyz}\"}",
+      "\t{name: \"X-Frame-Options\", value: \"${2:DENY}\"}",
+      "]) {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Security headers configuration"
+  },
+  "Set API Headers": {
+    "prefix": ["set-api-headers", "api-headers"],
+    "body": [
+      "setExtraHTTPHeaders(headers: [",
+      "\t{name: \"Accept\", value: \"application/json, text/plain, */*\"}",
+      "\t{name: \"Content-Type\", value: \"application/json\"}",
+      "\t{name: \"User-Agent\", value: \"${1:Custom-Bot/1.0}\"}",
+      "\t{name: \"X-Forwarded-For\", value: \"${2:203.0.113.0}\"}",
+      "]) {",
+      "\ttime",
+      "}"
+    ],
+    "description": "API integration headers"
+  },
+  "Set Locale Headers": {
+    "prefix": ["set-locale-headers", "locale-headers"],
+    "body": [
+      "setExtraHTTPHeaders(headers: [",
+      "\t{name: \"Accept-Language\", value: \"${1:en-US,en;q=0.9}\"}",
+      "\t{name: \"Accept-Encoding\", value: \"gzip, deflate, br\"}",
+      "\t{name: \"X-Timezone\", value: \"${2:America/New_York}\"}",
+      "]) {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Language and locale headers"
+  },
+  "Set Tracking Headers": {
+    "prefix": ["set-tracking-headers", "tracking-headers"],
+    "body": [
+      "setExtraHTTPHeaders(headers: [",
+      "\t{name: \"X-Session-ID\", value: \"${1:session-abc123}\"}",
+      "\t{name: \"X-User-ID\", value: \"${2:user-456789}\"}",
+      "\t{name: \"X-Request-ID\", value: \"${3:req-xyz789}\"}",
+      "]) {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Custom tracking headers"
+  },
+  "Set Cache Headers": {
+    "prefix": ["set-cache-headers", "cache-headers"],
+    "body": [
+      "setExtraHTTPHeaders(headers: [",
+      "\t{name: \"Cache-Control\", value: \"${1:no-cache, no-store, must-revalidate}\"}",
+      "\t{name: \"Pragma\", value: \"no-cache\"}",
+      "\t{name: \"Expires\", value: \"0\"}",
+      "]) {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Cache control headers"
+  },
+  "Set CORS Headers": {
+    "prefix": ["set-cors-headers", "cors-headers"],
+    "body": [
+      "setExtraHTTPHeaders(headers: [",
+      "\t{name: \"Access-Control-Allow-Origin\", value: \"${1:*}\"}",
+      "\t{name: \"Access-Control-Allow-Methods\", value: \"${2:GET, POST, PUT, DELETE}\"}",
+      "\t{name: \"Access-Control-Allow-Headers\", value: \"${3:Content-Type, Authorization}\"}",
+      "]) {",
+      "\ttime",
+      "}"
+    ],
+    "description": "CORS (Cross-Origin Resource Sharing) headers"
+  },
+  "Set Custom Headers": {
+    "prefix": ["set-custom-headers", "custom-headers"],
+    "body": [
+      "setExtraHTTPHeaders(headers: [",
+      "\t{name: \"${1:X-Custom-Header}\", value: \"${2:custom-value}\"}",
+      "\t{name: \"${3:X-App-Version}\", value: \"${4:2.1.0}\"}",
+      "\t{name: \"${5:X-Environment}\", value: \"${6:production}\"}",
+      "]) {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Custom application headers"
+  },
+  "Set Testing Headers": {
+    "prefix": ["set-testing-headers", "testing-headers"],
+    "body": [
+      "setExtraHTTPHeaders(headers: [",
+      "\t{name: \"X-Test-Mode\", value: \"${1:true}\"}",
+      "\t{name: \"X-Test-Suite\", value: \"${2:integration}\"}",
+      "\t{name: \"X-Test-Run-ID\", value: \"${3:run-12345}\"}",
+      "]) {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Testing environment headers"
+  },
+  "Set Analytics Headers": {
+    "prefix": ["set-analytics-headers", "analytics-headers"],
+    "body": [
+      "setExtraHTTPHeaders(headers: [",
+      "\t{name: \"X-Analytics-ID\", value: \"${1:analytics-abc123}\"}",
+      "\t{name: \"X-Referrer\", value: \"${2:https://external-site.com}\"}",
+      "\t{name: \"X-Campaign\", value: \"${3:summer-sale-2024}\"}",
+      "]) {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Analytics tracking headers"
+  },
+  "Set E-commerce Headers": {
+    "prefix": ["set-ecommerce-headers", "ecommerce-headers"],
+    "body": [
+      "setExtraHTTPHeaders(headers: [",
+      "\t{name: \"X-Shop-Domain\", value: \"${1:example-shop.com}\"}",
+      "\t{name: \"X-Customer-Group\", value: \"${2:premium}\"}",
+      "\t{name: \"X-Currency\", value: \"${3:USD}\"}",
+      "]) {",
+      "\ttime",
+      "}"
+    ],
+    "description": "E-commerce specific headers"
+  },
+  "Set Complete Headers": {
+    "prefix": ["set-headers-complete", "headers-complete"],
+    "body": [
+      "${1:customHeaders}: setExtraHTTPHeaders(headers: [",
+      "\t{name: \"${2:Authorization}\", value: \"${3:Bearer token123}\"}",
+      "\t{name: \"${4:Content-Type}\", value: \"${5:application/json}\"}",
+      "\t{name: \"${6:X-API-Key}\", value: \"${7:api-key-xyz}\"}",
+      "\t{name: \"${8:X-Client-Version}\", value: \"${9:1.0.0}\"}",
+      "\t{name: \"${10:Accept}\", value: \"${11:application/json}\"}",
+      "\t{name: \"${12:User-Agent}\", value: \"${13:Custom-Agent/1.0}\"}",
+      "]) {",
+      "\t# Headers configuration timing",
+      "\ttime",
+      "\t$0",
+      "}"
+    ],
+    "description": "Complete headers configuration with all options"
+  },
+  "Set Headers Workflow": {
+    "prefix": ["headers-workflow", "set-headers-workflow"],
+    "body": [
+      "# Set authentication headers",
+      "${1:authHeaders}: setExtraHTTPHeaders(headers: [",
+      "\t{name: \"Authorization\", value: \"${2:Bearer token123}\"}",
+      "\t{name: \"X-API-Key\", value: \"${3:api-key-12345}\"}",
+      "]) {",
+      "\ttime",
+      "}",
+      "",
+      "# Set request headers",
+      "${4:requestHeaders}: setExtraHTTPHeaders(headers: [",
+      "\t{name: \"Content-Type\", value: \"${5:application/json}\"}",
+      "\t{name: \"Accept\", value: \"${6:application/json}\"}",
+      "\t{name: \"User-Agent\", value: \"${7:Custom-Bot/1.0}\"}",
+      "]) {",
+      "\ttime",
+      "}",
+      "",
+      "# Set tracking headers",
+      "${8:trackingHeaders}: setExtraHTTPHeaders(headers: [",
+      "\t{name: \"X-Session-ID\", value: \"${9:session-abc123}\"}",
+      "\t{name: \"X-Request-ID\", value: \"${10:req-xyz789}\"}",
+      "]) {",
+      "\ttime",
+      "}",
+      "",
+      "# Navigate with custom headers",
+      "goto(url: \"${11:https://api.example.com}\") {",
+      "\tstatus",
+      "}",
+      "$0"
+    ],
+    "description": "Complete headers workflow with multiple header configurations"
+  },
+  "Screenshot Basic": {
+    "prefix": ["screenshot"],
+    "body": [
+      "screenshot {",
+      "\tbase64",
+      "}"
+    ],
+    "description": "Basic viewport screenshot"
+  },
+  "Screenshot Full Page": {
+    "prefix": ["screenshot-full", "screenshot-fullpage"],
+    "body": [
+      "screenshot(fullPage: ${1|true,false|}) {",
+      "\tbase64",
+      "}"
+    ],
+    "description": "Full page screenshot"
+  },
+  "Screenshot Element": {
+    "prefix": ["screenshot-element", "screenshot-selector"],
+    "body": [
+      "screenshot(selector: \"${1:header}\") {",
+      "\tbase64",
+      "}"
+    ],
+    "description": "Screenshot specific element"
+  },
+  "Screenshot JPEG": {
+    "prefix": ["screenshot-jpeg", "screenshot-jpg"],
+    "body": [
+      "screenshot(",
+      "\ttype: jpeg",
+      "\tquality: ${1:80}",
+      "\t${2:fullPage: ${3|true,false|}}",
+      ") {",
+      "\tbase64",
+      "}"
+    ],
+    "description": "JPEG screenshot with quality control"
+  },
+  "Screenshot PNG": {
+    "prefix": ["screenshot-png"],
+    "body": [
+      "screenshot(",
+      "\ttype: png",
+      "\t${1:omitBackground: ${2|true,false|}}",
+      "\t${3:selector: \"${4:.modal}\"}",
+      ") {",
+      "\tbase64",
+      "}"
+    ],
+    "description": "PNG screenshot with transparency option"
+  },
+  "Screenshot Clipped": {
+    "prefix": ["screenshot-clip", "screenshot-region"],
+    "body": [
+      "screenshot(",
+      "\tclip: {",
+      "\t\tx: ${1:100}",
+      "\t\ty: ${2:100}",
+      "\t\twidth: ${3:500}",
+      "\t\theight: ${4:300}",
+      "\t}",
+      "\ttype: ${5|png,jpeg|}",
+      ") {",
+      "\tbase64",
+      "}"
+    ],
+    "description": "Screenshot clipped region"
+  },
+  "Screenshot Performance": {
+    "prefix": ["screenshot-fast", "screenshot-performance"],
+    "body": [
+      "screenshot(",
+      "\toptimizeForSpeed: ${1|true,false|}",
+      "\ttype: ${2|jpeg,png|}",
+      "\t${3:quality: ${4:60}}",
+      "\t${5:captureBeyondViewport: ${6|false,true|}}",
+      ") {",
+      "\tbase64",
+      "}"
+    ],
+    "description": "Performance optimized screenshot"
+  },
+  "Screenshot Mobile": {
+    "prefix": ["screenshot-mobile"],
+    "body": [
+      "screenshot(",
+      "\tselector: \"${1:.mobile-menu}\"",
+      "\ttimeout: ${2:10000}",
+      "\ttype: ${3|png,jpeg|}",
+      "\t${4:omitBackground: ${5|true,false|}}",
+      ") {",
+      "\tbase64",
+      "}"
+    ],
+    "description": "Mobile element screenshot with timeout"
+  },
+  "Screenshot Transparent": {
+    "prefix": ["screenshot-transparent"],
+    "body": [
+      "screenshot(",
+      "\ttype: png",
+      "\tomitBackground: true",
+      "\tselector: \"${1:.overlay}\"",
+      ") {",
+      "\tbase64",
+      "}"
+    ],
+    "description": "Transparent background screenshot"
+  },
+  "Screenshot Complete": {
+    "prefix": ["screenshot-full", "screenshot-complete"],
+    "body": [
+      "${1:pageScreenshot}: screenshot(",
+      "\t${2:selector: \"${3:main}\"}",
+      "\t${4:fullPage: ${5|false,true|}}",
+      "\t${6:type: ${7|png,jpeg|}}",
+      "\t${8:quality: ${9:80}}",
+      "\t${10:omitBackground: ${11|false,true|}}",
+      "\t${12:optimizeForSpeed: ${13|false,true|}}",
+      "\t${14:captureBeyondViewport: ${15|true,false|}}",
+      "\t${16:timeout: ${17:30000}}",
+      ") {",
+      "\t# Screenshot data",
+      "\tbase64",
+      "\t$0",
+      "}"
+    ],
+    "description": "Complete screenshot with all options"
+  },
+  "Screenshot Workflow": {
+    "prefix": ["screenshot-workflow"],
+    "body": [
+      "# Navigate to page",
+      "goto(url: \"${1:https://example.com}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "# Take full page screenshot",
+      "${2:fullPage}: screenshot(",
+      "\tfullPage: true",
+      "\ttype: ${3|png,jpeg|}",
+      "\t${4:quality: ${5:85}}",
+      ") {",
+      "\tbase64",
+      "}",
+      "",
+      "# Capture specific sections",
+      "${6:header}: screenshot(selector: \"${7:header}\") {",
+      "\tbase64",
+      "}",
+      "",
+      "${8:content}: screenshot(",
+      "\tselector: \"${9:main, .content}\"",
+      "\ttype: ${10|png,jpeg|}",
+      "\ttimeout: ${11:15000}",
+      ") {",
+      "\tbase64",
+      "}",
+      "",
+      "# Mobile responsive screenshot",
+      "${12:mobile}: screenshot(",
+      "\tselector: \"${13:.mobile-nav}\"",
+      "\tomitBackground: ${14|true,false|}",
+      "\ttimeout: ${15:10000}",
+      ") {",
+      "\tbase64",
+      "}",
+      "$0"
+    ],
+    "description": "Complete screenshot workflow with multiple captures"
+  },
+  "Scroll Basic": {
+    "prefix": ["scroll"],
+    "body": [
+      "scroll(selector: \"${1:header}\") {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Basic scroll to element"
+  },
+  "Scroll Coordinates": {
+    "prefix": ["scroll-coords", "scroll-xy"],
+    "body": [
+      "scroll(x: ${1:500}, y: ${2:1000}) {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Scroll to specific coordinates"
+  },
+  "Scroll Visible": {
+    "prefix": ["scroll-visible"],
+    "body": [
+      "scroll(",
+      "\tselector: \"${1:.content}\"",
+      "\tvisible: ${2|true,false|}",
+      "\ttimeout: ${3:10000}",
+      ") {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Scroll to visible element with timeout"
+  },
+  "Scroll No Wait": {
+    "prefix": ["scroll-nowait"],
+    "body": [
+      "scroll(",
+      "\tselector: \"${1:.target}\"",
+      "\twait: false",
+      ") {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Scroll without waiting for element"
+  },
+  "Scroll Navigation": {
+    "prefix": ["scroll-nav"],
+    "body": [
+      "scroll(selector: \"${1:nav, .navigation}\") {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Scroll to navigation elements"
+  },
+  "Scroll Content": {
+    "prefix": ["scroll-content"],
+    "body": [
+      "scroll(selector: \"${1:main, .content, article}\") {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Scroll to main content area"
+  },
+  "Scroll Footer": {
+    "prefix": ["scroll-footer"],
+    "body": [
+      "scroll(selector: \"${1:footer}\") {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Scroll to footer"
+  },
+  "Scroll Form": {
+    "prefix": ["scroll-form"],
+    "body": [
+      "scroll(",
+      "\tselector: \"${1:form}\"",
+      "\tvisible: ${2|true,false|}",
+      "\ttimeout: ${3:8000}",
+      ") {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Scroll to form element"
+  },
+  "Scroll Top": {
+    "prefix": ["scroll-top"],
+    "body": [
+      "scroll(x: 0, y: 0) {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Scroll to top of page"
+  },
+  "Scroll Bottom": {
+    "prefix": ["scroll-bottom"],
+    "body": [
+      "scroll(y: ${1:9999}) {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Scroll to bottom of page"
+  },
+  "Scroll Mobile": {
+    "prefix": ["scroll-mobile"],
+    "body": [
+      "scroll(",
+      "\tselector: \"${1:.mobile-menu}\"",
+      "\tvisible: ${2|true,false|}",
+      "\ttimeout: ${3:12000}",
+      ") {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Scroll to mobile element"
+  },
+  "Scroll Complete": {
+    "prefix": ["scroll-full", "scroll-complete"],
+    "body": [
+      "${1:scrollAction}: scroll(",
+      "\t${2:selector: \"${3:.target}\"}",
+      "\t${4:x: ${5:500}}",
+      "\t${6:y: ${7:1000}}",
+      "\t${8:visible: ${9|false,true|}}",
+      "\t${10:wait: ${11|true,false|}}",
+      "\t${12:timeout: ${13:30000}}",
+      ") {",
+      "\t# Scroll timing",
+      "\ttime",
+      "\t$0",
+      "}"
+    ],
+    "description": "Complete scroll with all options"
+  },
+  "Scroll Workflow": {
+    "prefix": ["scroll-workflow"],
+    "body": [
+      "# Navigate to page",
+      "goto(url: \"${1:https://example.com}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "# Scroll to header",
+      "${2:headerScroll}: scroll(selector: \"${3:header}\") {",
+      "\ttime",
+      "}",
+      "",
+      "# Scroll to main content",
+      "${4:contentScroll}: scroll(",
+      "\tselector: \"${5:main, .content}\"",
+      "\tvisible: ${6|true,false|}",
+      ") {",
+      "\ttime",
+      "}",
+      "",
+      "# Scroll to specific coordinates",
+      "${7:coordScroll}: scroll(x: ${8:500}, y: ${9:1000}) {",
+      "\ttime",
+      "}",
+      "",
+      "# Scroll to footer",
+      "${10:footerScroll}: scroll(",
+      "\tselector: \"${11:footer}\"",
+      "\ttimeout: ${12:10000}",
+      ") {",
+      "\ttime",
+      "}",
+      "$0"
+    ],
+    "description": "Complete scroll workflow with multiple scroll operations"
+  },
+  "Evaluate Operation": {
+    "prefix": ["evaluate", "eval"],
+    "body": [
+      "evaluate(expression: \"${1:document.title}\") {",
+      "\t${2|result,error|}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Evaluate JavaScript expression"
+  },
+  "Include Directive": {
+    "prefix": ["@include", "include"],
+    "body": [
+      "@include(if: ${1|true,false|})"
+    ],
+    "description": "Include field or fragment conditionally"
+  },
+  "Skip Directive": {
+    "prefix": ["@skip", "skip"],
+    "body": [
+      "@skip(if: ${1|true,false|})"
+    ],
+    "description": "Skip field or fragment conditionally"
+  },
+  "Conditional Field with Include": {
+    "prefix": ["field-include"],
+    "body": [
+      "${1:fieldName} @include(if: ${2|true,false|})"
+    ],
+    "description": "Field with conditional include directive"
+  },
+  "Conditional Field with Skip": {
+    "prefix": ["field-skip"],
+    "body": [
+      "${1:fieldName} @skip(if: ${2|true,false|})"
+    ],
+    "description": "Field with conditional skip directive"
+  },
+  "Cookies Get Operation": {
+    "prefix": ["cookies-get", "get-cookies"],
+    "body": [
+      "cookies {",
+      "\tcookies {",
+      "\t\t${1|name,value,domain,path,secure,httpOnly,sameSite,expires|}",
+      "\t\t$0",
+      "\t}",
+      "\ttime",
+      "}"
+    ],
+    "description": "Get cookies from the page"
+  },
+  "Cookies Set Operation": {
+    "prefix": ["cookies-set", "set-cookies"],
+    "body": [
+      "cookies(cookies: [",
+      "\t{",
+      "\t\tname: \"${1:cookie-name}\"",
+      "\t\tvalue: \"${2:cookie-value}\"",
+      "\t\t${3:url: \"${4:https://example.com}\"}",
+      "\t\t${5:domain: \"${6:.example.com}\"}",
+      "\t\t${7:secure: ${8|true,false|}}",
+      "\t\t${9:httpOnly: ${10|true,false|}}",
+      "\t\t${11:sameSite: ${12|Strict,Lax,None|}}",
+      "\t}",
+      "]) {",
+      "\tcookies {",
+      "\t\t${13|name,value,domain,path|}",
+      "\t\t$0",
+      "\t}",
+      "\ttime",
+      "}"
+    ],
+    "description": "Set cookies on the page"
+  },
+  "Cookie Object": {
+    "prefix": ["cookie-object"],
+    "body": [
+      "{",
+      "\tname: \"${1:cookie-name}\"",
+      "\tvalue: \"${2:cookie-value}\"",
+      "\t${3:url: \"${4:https://example.com}\"}",
+      "\t${5:domain: \"${6:.example.com}\"}",
+      "\t${7:path: \"${8:/}\"}",
+      "\t${9:secure: ${10|true,false|}}",
+      "\t${11:httpOnly: ${12|true,false|}}",
+      "\t${13:sameSite: ${14|Strict,Lax,None|}}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Cookie input object structure"
+  },
+  "Evaluate Simple": {
+    "prefix": ["evaluate-simple", "eval"],
+    "body": [
+      "evaluate(content: \"${1:2 + 2}\") {",
+      "\tvalue",
+      "}"
+    ],
+    "description": "Simple JavaScript evaluation"
+  },
+  "Evaluate Complex": {
+    "prefix": ["evaluate-complex", "eval-complex"],
+    "body": [
+      "evaluate(content: `",
+      "\t// ${1:Get page information}",
+      "\tconst title = document.title;",
+      "\tconst url = window.location.href;",
+      "\t",
+      "\t// ${2:Your JavaScript code here}",
+      "\t$0",
+      "\t",
+      "\t// Return result",
+      "\treturn { title, url, timestamp: Date.now() };",
+      "`) {",
+      "\tvalue",
+      "}"
+    ],
+    "description": "Complex JavaScript evaluation with template literal"
+  },
+  "Evaluate Async": {
+    "prefix": ["evaluate-async", "eval-async"],
+    "body": [
+      "evaluate(content: `",
+      "\t// Wait for element to appear",
+      "\tconst element = await new Promise(resolve => {",
+      "\t\tconst check = () => {",
+      "\t\t\tconst el = document.querySelector('${1:selector}');",
+      "\t\t\tif (el) resolve(el);",
+      "\t\t\telse setTimeout(check, 100);",
+      "\t\t};",
+      "\t\tcheck();",
+      "\t});",
+      "\t",
+      "\t// ${2:Process element}",
+      "\t$0",
+      "\t",
+      "\treturn element.textContent;",
+      "`, timeout: ${3:30000}) {",
+      "\tvalue",
+      "}"
+    ],
+    "description": "Async JavaScript evaluation with Promise handling"
+  },
+  "Evaluate DOM": {
+    "prefix": ["evaluate-dom"],
+    "body": [
+      "evaluate(content: `",
+      "\t// Query DOM elements",
+      "\tconst elements = document.querySelectorAll('${1:selector}');",
+      "\t",
+      "\t// Extract data",
+      "\tconst data = Array.from(elements).map(el => ({",
+      "\t\ttext: el.textContent.trim(),",
+      "\t\thref: el.href || null,",
+      "\t\tclasses: Array.from(el.classList)",
+      "\t}));",
+      "\t",
+      "\treturn { count: elements.length, items: data };",
+      "`) {",
+      "\tvalue",
+      "}"
+    ],
+    "description": "DOM manipulation and data extraction"
+  },
+  "Evaluate URL": {
+    "prefix": ["evaluate-url", "eval-url"],
+    "body": [
+      "evaluate(url: \"${1:https://example.com/script.js}\") {",
+      "\tvalue",
+      "}"
+    ],
+    "description": "Evaluate JavaScript from URL"
+  },
+  "Forward Navigation": {
+    "prefix": ["forward", "go-forward"],
+    "body": [
+      "forward(waitUntil: ${1|load,domContentLoaded,commit,networkIdle|}) {",
+      "\tstatus",
+      "\ttime",
+      "\ttext",
+      "\turl",
+      "}"
+    ],
+    "description": "Go forward in browser history"
+  },
+  "Forward with Timeout": {
+    "prefix": ["forward-timeout"],
+    "body": [
+      "forward(",
+      "\twaitUntil: ${1|load,domContentLoaded,commit,networkIdle|}",
+      "\ttimeout: ${2:30000}",
+      ") {",
+      "\tstatus",
+      "\ttime",
+      "\ttext",
+      "\turl",
+      "}"
+    ],
+    "description": "Go forward in browser history with custom timeout"
+  },
+  "Hover Simple": {
+    "prefix": ["hover"],
+    "body": [
+      "hover(selector: \"${1:a}\") {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Hover over an element"
+  },
+  "Hover with Coordinates": {
+    "prefix": ["hover-coords"],
+    "body": [
+      "hover(x: ${1:100}, y: ${2:200}) {",
+      "\tx",
+      "\ty",
+      "\ttime",
+      "}"
+    ],
+    "description": "Hover at specific coordinates"
+  },
+  "Hover Complete": {
+    "prefix": ["hover-full"],
+    "body": [
+      "hover(",
+      "\tselector: \"${1:.menu-item}\"",
+      "\tscroll: ${2|true,false|}",
+      "\tvisible: ${3|false,true|}",
+      "\twait: ${4|true,false|}",
+      "\ttimeout: ${5:30000}",
+      ") {",
+      "\t${6|selector,x,y,time|}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Hover with all options"
+  },
+  "HTML Basic": {
+    "prefix": ["html"],
+    "body": [
+      "html {",
+      "\thtml",
+      "}"
+    ],
+    "description": "Get HTML content of entire page"
+  },
+  "HTML Selector": {
+    "prefix": ["html-selector"],
+    "body": [
+      "html(selector: \"${1:h1}\") {",
+      "\thtml",
+      "\ttime",
+      "}"
+    ],
+    "description": "Get HTML content of specific element"
+  },
+  "HTML Clean": {
+    "prefix": ["html-clean"],
+    "body": [
+      "html(clean: {",
+      "\tremoveAttributes: ${1|true,false|}",
+      "\tremoveNonTextNodes: ${2|true,false|}",
+      "}) {",
+      "\thtml",
+      "\ttime",
+      "}"
+    ],
+    "description": "Get cleaned HTML content for LLMs"
+  },
+  "HTML Complete": {
+    "prefix": ["html-full"],
+    "body": [
+      "html(",
+      "\tselector: \"${1:main}\"",
+      "\tvisible: ${2|false,true|}",
+      "\ttimeout: ${3:30000}",
+      "\tclean: {",
+      "\t\tremoveAttributes: ${4|true,false|}",
+      "\t\tremoveNonTextNodes: ${5|true,false|}",
+      "\t\tremoveWhitespace: ${6|false,true|}",
+      "\t\tremoveNewlines: ${7|false,true|}",
+      "\t}",
+      ") {",
+      "\t${8|html,time|}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Get HTML with all cleaning options"
+  },
+  "If Conditional": {
+    "prefix": ["if"],
+    "body": [
+      "if(selector: \"${1:h1}\") {",
+      "\t${2:screenshot {",
+      "\t\tbase64",
+      "\t}}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Conditional execution when condition is true"
+  },
+  "If with Visibility": {
+    "prefix": ["if-visible"],
+    "body": [
+      "if(selector: \"${1:.modal}\", visible: ${2|true,false|}) {",
+      "\t${3:click(selector: \"${4:.close-button}\") {",
+      "\t\ttime",
+      "\t}}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Conditional execution with visibility check"
+  },
+  "If Complex": {
+    "prefix": ["if-complex"],
+    "body": [
+      "if(selector: \"${1:form}\") {",
+      "\ttype(selector: \"${2:input[name='email']}\", text: \"${3:test@example.com}\") {",
+      "\t\ttime",
+      "\t}",
+      "\tclick(selector: \"${4:button[type='submit']}\") {",
+      "\t\ttime",
+      "\t}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Complex conditional with multiple nested operations"
+  },
+  "If Not Conditional": {
+    "prefix": ["ifnot"],
+    "body": [
+      "ifnot(selector: \"${1:h2}\") {",
+      "\t${2:screenshot {",
+      "\t\tbase64",
+      "\t}}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Conditional execution when condition is false"
+  },
+  "If Not Loading": {
+    "prefix": ["ifnot-loading"],
+    "body": [
+      "ifnot(selector: \"${1:.loading-spinner}\") {",
+      "\t# Page has loaded, proceed with actions",
+      "\t${2:click(selector: \"${3:button.primary}\") {",
+      "\t\ttime",
+      "\t}}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Handle loading states with ifnot"
+  },
+  "If Not Fallback": {
+    "prefix": ["ifnot-fallback"],
+    "body": [
+      "ifnot(selector: \"${1:.advanced-form}\") {",
+      "\t# Use simple form instead",
+      "\ttype(selector: \"${2:input[name='query']}\", text: \"${3:search term}\") {",
+      "\t\ttime",
+      "\t}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Fallback operations when condition is false"
+  },
+  "JavaScript Status": {
+    "prefix": ["javascript-status", "js-status"],
+    "body": [
+      "javaScriptEnabled {",
+      "\tenabled",
+      "}"
+    ],
+    "description": "Get current JavaScript execution status"
+  },
+  "JavaScript Enable": {
+    "prefix": ["javascript-enable", "js-enable"],
+    "body": [
+      "javaScriptEnabled(enabled: ${1|true,false|}) {",
+      "\tenabled",
+      "}"
+    ],
+    "description": "Enable or disable JavaScript execution"
+  },
+  "JavaScript Control": {
+    "prefix": ["javascript-control", "js-control"],
+    "body": [
+      "# Get current JavaScript status",
+      "status: javaScriptEnabled {",
+      "\tenabled",
+      "}",
+      "",
+      "# ${1|Enable,Disable|} JavaScript",
+      "${2:enable}: javaScriptEnabled(enabled: ${3|true,false|}) {",
+      "\tenabled",
+      "}",
+      "",
+      "# Navigate to see the effect",
+      "goto(url: \"${4:https://example.com}\") {",
+      "\tstatus",
+      "\ttime",
+      "}",
+      "$0"
+    ],
+    "description": "Complete JavaScript control workflow with navigation"
+  },
+  "Live URL Basic": {
+    "prefix": ["liveurl", "live-url"],
+    "body": [
+      "liveURL {",
+      "\tliveURL",
+      "}"
+    ],
+    "description": "Basic live streaming URL (interactive, resizable, high quality)"
+  },
+  "Live URL View Only": {
+    "prefix": ["liveurl-view", "live-url-view-only"],
+    "body": [
+      "liveURL(interactable: ${1|false,true|}) {",
+      "\tliveURL",
+      "}"
+    ],
+    "description": "Non-interactive live URL for view-only streaming"
+  },
+  "Live URL Low Quality": {
+    "prefix": ["liveurl-low-quality", "live-url-bandwidth"],
+    "body": [
+      "liveURL(quality: ${1:20}, type: ${2|jpeg,png|}) {",
+      "\tliveURL",
+      "}"
+    ],
+    "description": "Low quality live URL for better bandwidth"
+  },
+  "Live URL Fixed Viewport": {
+    "prefix": ["liveurl-fixed", "live-url-fixed-viewport"],
+    "body": [
+      "liveURL(resizable: ${1|false,true|}) {",
+      "\tliveURL",
+      "}"
+    ],
+    "description": "Fixed viewport live URL (non-resizable)"
+  },
+  "Live URL Complete": {
+    "prefix": ["liveurl-full", "live-url-complete"],
+    "body": [
+      "liveURL(",
+      "\ttimeout: ${1:60000}",
+      "\tinteractable: ${2|true,false|}",
+      "\ttype: ${3|jpeg,png|}",
+      "\tquality: ${4:80}",
+      "\tresizable: ${5|true,false|}",
+      ") {",
+      "\tliveURL",
+      "}",
+      "$0"
+    ],
+    "description": "Complete live URL configuration with all options"
+  },
+  "Live URL Workflow": {
+    "prefix": ["liveurl-workflow", "live-url-workflow"],
+    "body": [
+      "# Navigate to page first",
+      "goto(url: \"${1:https://example.com}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "# Create live streaming URL",
+      "${2:stream}: liveURL(",
+      "\ttimeout: ${3:30000}",
+      "\tinteractable: ${4|true,false|}",
+      "\ttype: ${5|jpeg,png|}",
+      "\tquality: ${6:80}",
+      ") {",
+      "\tliveURL",
+      "}",
+      "$0"
+    ],
+    "description": "Complete live URL workflow with navigation"
+  },
+  "Map Selector Basic": {
+    "prefix": ["mapselector", "map-selector"],
+    "body": [
+      "mapSelector(selector: \"${1:.item}\") {",
+      "\t${2|innerHTML,innerText,outerHTML,tagName|}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Basic mapSelector for data extraction"
+  },
+  "Map Selector Simple": {
+    "prefix": ["mapselector-simple", "map-simple"],
+    "body": [
+      "${1:items}: mapSelector(selector: \"${2:.item}\") {",
+      "\t${3:title}: innerText",
+      "\t${4:content}: innerHTML",
+      "\ttagName",
+      "\t$0",
+      "}"
+    ],
+    "description": "Simple data extraction with aliases"
+  },
+  "Map Selector Nested": {
+    "prefix": ["mapselector-nested", "map-nested"],
+    "body": [
+      "${1:posts}: mapSelector(selector: \"${2:.post}\") {",
+      "\t${3:title}: innerText",
+      "\t",
+      "\t# Get nested ${4:authors}",
+      "\t${4:authors}: mapSelector(selector: \"${5:.author}\") {",
+      "\t\t${6:authorName}: innerText",
+      "\t}",
+      "\t",
+      "\t# Get custom attributes",
+      "\tattributes {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Nested mapSelector with hierarchical data extraction"
+  },
+  "Map Selector Products": {
+    "prefix": ["mapselector-products", "map-products"],
+    "body": [
+      "${1:products}: mapSelector(selector: \"${2:.product-item}\") {",
+      "\tproductTitle: innerText",
+      "\tproductHTML: innerHTML",
+      "\t",
+      "\t# Get pricing information",
+      "\tpricing: mapSelector(selector: \"${3:.price}\") {",
+      "\t\tpriceText: innerText",
+      "\t\tattributes {",
+      "\t\t\tname",
+      "\t\t\tvalue",
+      "\t\t}",
+      "\t}",
+      "\t",
+      "\t# Get product images",
+      "\timages: mapSelector(selector: \"${4:img}\") {",
+      "\t\tattributes {",
+      "\t\t\tname",
+      "\t\t\tvalue",
+      "\t\t}",
+      "\t}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Product listing data extraction with nested elements"
+  },
+  "Map Selector Search Results": {
+    "prefix": ["mapselector-search", "map-search"],
+    "body": [
+      "${1:searchResults}: mapSelector(",
+      "\tselector: \"${2:.search-result}\"",
+      "\ttimeout: ${3:10000}",
+      "\twait: ${4|true,false|}",
+      ") {",
+      "\ttitle: innerText",
+      "\tfullHTML: outerHTML",
+      "\t",
+      "\t# Get nested links",
+      "\tlinks: mapSelector(selector: \"${5:a}\") {",
+      "\t\tlinkText: innerText",
+      "\t\tattributes {",
+      "\t\t\tname",
+      "\t\t\tvalue",
+      "\t\t}",
+      "\t}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Search results mapping with timeout and nested links"
+  },
+  "Map Selector Complete": {
+    "prefix": ["mapselector-full", "map-complete"],
+    "body": [
+      "${1:dataItems}: mapSelector(",
+      "\tselector: \"${2:.data-item}\"",
+      "\ttimeout: ${3:30000}",
+      "\twait: ${4|true,false|}",
+      ") {",
+      "\t# Basic content extraction",
+      "\t${5:title}: innerText",
+      "\t${6:content}: innerHTML",
+      "\tfullElement: outerHTML",
+      "\ttag: tagName",
+      "\t",
+      "\t# Get all attributes",
+      "\tattributes {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "\t",
+      "\t# Nested data extraction",
+      "\t${7:nestedItems}: mapSelector(selector: \"${8:.nested}\") {",
+      "\t\t${9:nestedTitle}: innerText",
+      "\t\tattributes {",
+      "\t\t\tname",
+      "\t\t\tvalue",
+      "\t\t}",
+      "\t}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Complete mapSelector with all options and nested extraction"
+  },
+  "PDF Basic": {
+    "prefix": ["pdf"],
+    "body": [
+      "pdf {",
+      "\tbase64",
+      "}"
+    ],
+    "description": "Basic PDF generation"
+  },
+  "PDF Custom Format": {
+    "prefix": ["pdf-format"],
+    "body": [
+      "pdf(format: ${1|a4,letter,a3,a5,legal,tabloid|}) {",
+      "\tbase64",
+      "}"
+    ],
+    "description": "PDF with custom page format"
+  },
+  "PDF with Headers": {
+    "prefix": ["pdf-headers"],
+    "body": [
+      "pdf(",
+      "\tdisplayHeaderFooter: true",
+      "\theaderTemplate: \"${1:<span style='font-size: 16pt;'>Document Title</span>}\"",
+      "\tfooterTemplate: \"${2:<span style='font-size: 12pt;'>Page <span class='pageNumber'></span> of <span class='totalPages'></span></span>}\"",
+      ") {",
+      "\tbase64",
+      "}"
+    ],
+    "description": "PDF with custom headers and footers"
+  },
+  "PDF Landscape": {
+    "prefix": ["pdf-landscape"],
+    "body": [
+      "pdf(",
+      "\tlandscape: ${1|true,false|}",
+      "\tformat: ${2|a4,letter,a3,legal|}",
+      "\tprintBackground: ${3|true,false|}",
+      ") {",
+      "\tbase64",
+      "}"
+    ],
+    "description": "PDF in landscape orientation"
+  },
+  "PDF Custom Margins": {
+    "prefix": ["pdf-margins"],
+    "body": [
+      "pdf(",
+      "\tmarginTop: \"${1:2cm}\"",
+      "\tmarginBottom: \"${2:2cm}\"",
+      "\tmarginLeft: \"${3:1.5cm}\"",
+      "\tmarginRight: \"${4:1.5cm}\"",
+      "\tformat: ${5|a4,letter,a3|}",
+      ") {",
+      "\tbase64",
+      "}"
+    ],
+    "description": "PDF with custom margins"
+  },
+  "PDF Accessible": {
+    "prefix": ["pdf-accessible"],
+    "body": [
+      "pdf(",
+      "\tgenerateTaggedPDF: ${1|true,false|}",
+      "\tgenerateDocumentOutline: ${2|true,false|}",
+      "\tformat: ${3|a4,letter,a3|}",
+      "\ttimeout: ${4:45000}",
+      ") {",
+      "\tbase64",
+      "}"
+    ],
+    "description": "PDF with accessibility features"
+  },
+  "PDF Page Ranges": {
+    "prefix": ["pdf-ranges"],
+    "body": [
+      "pdf(",
+      "\tpageRanges: \"${1:1-3, 5}\"",
+      "\tformat: ${2|a4,letter,a3|}",
+      "\ttimeout: ${3:30000}",
+      ") {",
+      "\tbase64",
+      "}"
+    ],
+    "description": "PDF with specific page ranges"
+  },
+  "PDF Complete": {
+    "prefix": ["pdf-full", "pdf-complete"],
+    "body": [
+      "pdf(",
+      "\tformat: ${1|a4,letter,a3,a5,legal|}",
+      "\tlandscape: ${2|false,true|}",
+      "\tdisplayHeaderFooter: ${3|false,true|}",
+      "\theaderTemplate: \"${4:<div style='font-size: 12pt; text-align: center;'><span class='title'></span></div>}\"",
+      "\tfooterTemplate: \"${5:<div style='font-size: 10pt; text-align: center;'>Page <span class='pageNumber'></span>/<span class='totalPages'></span></div>}\"",
+      "\tprintBackground: ${6|true,false|}",
+      "\tscale: ${7:1.0}",
+      "\tmarginTop: \"${8:1cm}\"",
+      "\tmarginBottom: \"${9:1cm}\"",
+      "\tmarginLeft: \"${10:1cm}\"",
+      "\tmarginRight: \"${11:1cm}\"",
+      "\tgenerateTaggedPDF: ${12|false,true|}",
+      "\ttimeout: ${13:30000}",
+      ") {",
+      "\tbase64",
+      "\t$0",
+      "}"
+    ],
+    "description": "Complete PDF generation with all options"
+  },
+  "PDF Workflow": {
+    "prefix": ["pdf-workflow"],
+    "body": [
+      "# Navigate to page",
+      "goto(url: \"${1:https://example.com}\", waitUntil: ${2|firstMeaningfulPaint,domContentLoaded,load|}) {",
+      "\tstatus",
+      "}",
+      "",
+      "# Generate PDF",
+      "${3:document}: pdf(",
+      "\tformat: ${4|a4,letter,a3|}",
+      "\tprintBackground: ${5|true,false|}",
+      "\ttimeout: ${6:30000}",
+      ") {",
+      "\tbase64",
+      "}",
+      "$0"
+    ],
+    "description": "Complete PDF generation workflow with navigation"
+  },
+  "Preferences Basic": {
+    "prefix": ["preferences"],
+    "body": [
+      "preferences(timeout: ${1:30000}) {",
+      "\ttimeout",
+      "}"
+    ],
+    "description": "Set session preferences with default timeout"
+  },
+  "Preferences Fast": {
+    "prefix": ["preferences-fast"],
+    "body": [
+      "# Fast session configuration for simple operations",
+      "fastConfig: preferences(timeout: ${1:10000}) {",
+      "\ttimeout",
+      "}",
+      "$0"
+    ],
+    "description": "Fast session preferences for simple operations"
+  },
+  "Preferences Slow": {
+    "prefix": ["preferences-slow"],
+    "body": [
+      "# Slow session configuration for complex operations",
+      "slowConfig: preferences(timeout: ${1:60000}) {",
+      "\ttimeout",
+      "}",
+      "$0"
+    ],
+    "description": "Slow session preferences for complex operations"
+  },
+  "Preferences Adaptive": {
+    "prefix": ["preferences-adaptive"],
+    "body": [
+      "# Fast setup for initial operations",
+      "quickSetup: preferences(timeout: ${1:5000}) {",
+      "\ttimeout",
+      "}",
+      "",
+      "# Quick operations here...",
+      "$2",
+      "",
+      "# Switch to slower configuration",
+      "slowSetup: preferences(timeout: ${3:45000}) {",
+      "\ttimeout",
+      "}",
+      "",
+      "# Complex operations here...",
+      "$0"
+    ],
+    "description": "Adaptive timeout configuration changing during workflow"
+  },
+  "Preferences Workflow": {
+    "prefix": ["preferences-workflow"],
+    "body": [
+      "# Configure session timeout",
+      "sessionConfig: preferences(timeout: ${1:30000}) {",
+      "\ttimeout",
+      "}",
+      "",
+      "# Navigate using default timeout",
+      "goto(url: \"${2:https://example.com}\") {",
+      "\tstatus",
+      "\ttime",
+      "}",
+      "",
+      "# All operations use the configured default",
+      "${3:operation}: ${4|click,type,waitForSelector|}(${5:selector: \"${6:#element}\"}) {",
+      "\t${7|selector,text,success|}",
+      "\ttime",
+      "}",
+      "$0"
+    ],
+    "description": "Complete preferences workflow with session configuration"
+  },
+  "Proxy Basic": {
+    "prefix": ["proxy"],
+    "body": [
+      "proxy(",
+      "\turl: [\"${1:*}\"]",
+      "\tcountry: ${2|US,GB,FR,DE,CA,AU,BR,JP,IN,CN|}",
+      ") {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Basic proxy configuration with country selection"
+  },
+  "Proxy External": {
+    "prefix": ["proxy-external"],
+    "body": [
+      "proxy(",
+      "\turl: [\"${1:*}\"]",
+      "\tserver: \"${2:http://username:password@proxy.example.com:8080}\"",
+      ") {",
+      "\ttime",
+      "}"
+    ],
+    "description": "External proxy server configuration"
+  },
+  "Proxy Residential": {
+    "prefix": ["proxy-residential"],
+    "body": [
+      "proxy(",
+      "\turl: [\"${1:*}\"]",
+      "\tcountry: ${2|US,GB,FR,DE,CA,AU,BR,JP,IN,CN|}",
+      "\tstate: \"${3:california}\"",
+      "\tcity: \"${4:losangeles}\"",
+      "\tsticky: ${5|true,false|}",
+      ") {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Residential proxy with location targeting"
+  },
+  "Proxy API": {
+    "prefix": ["proxy-api"],
+    "body": [
+      "proxy(",
+      "\turl: [\"${1:https://api.example.com/*}\"]",
+      "\tmethod: [${2|GET,POST,PUT,DELETE,PATCH|}]",
+      "\ttype: [${3|xhr,fetch,document|}]",
+      "\tcountry: ${4|US,GB,FR,DE,CA|}",
+      "\toperator: ${5|and,or|}",
+      ") {",
+      "\ttime",
+      "}"
+    ],
+    "description": "API-specific proxy configuration"
+  },
+  "Proxy Advanced": {
+    "prefix": ["proxy-advanced"],
+    "body": [
+      "proxy(",
+      "\turl: [\"${1:https://example.com/*}\", \"${2:https://api.example.com/*}\"]",
+      "\tmethod: [${3|GET,POST|}, ${4|PUT,DELETE|}]",
+      "\ttype: [${5|document,xhr,fetch,stylesheet,script|}]",
+      "\tcountry: ${6|US,GB,FR,DE,CA,AU,BR,JP|}",
+      "\tstate: \"${7:california}\"",
+      "\tcity: \"${8:losangeles}\"",
+      "\tsticky: ${9|true,false|}",
+      "\toperator: ${10|and,or|}",
+      ") {",
+      "\ttime",
+      "}"
+    ],
+    "description": "Advanced proxy configuration with multiple conditions"
+  },
+  "Proxy Workflow": {
+    "prefix": ["proxy-workflow"],
+    "body": [
+      "# Configure proxy for all requests",
+      "proxyConfig: proxy(",
+      "\turl: [\"${1:*}\"]",
+      "\tcountry: ${2|US,GB,FR,DE,CA|}",
+      ") {",
+      "\ttime",
+      "}",
+      "",
+      "# Navigate using proxy",
+      "goto(url: \"${3:https://example.com}\") {",
+      "\tstatus",
+      "\turl",
+      "}",
+      "",
+      "# All subsequent requests use the proxy",
+      "${4:operation}: ${5|click,type,html|}(${6:selector: \"${7:#element}\"}) {",
+      "\t${8|selector,text,html|}",
+      "\ttime",
+      "}",
+      "$0"
+    ],
+    "description": "Complete proxy workflow with navigation"
+  },
+  "Proxy GeoLocation": {
+    "prefix": ["proxy-geo"],
+    "body": [
+      "# Geographic targeting proxy",
+      "geoProxy: proxy(",
+      "\turl: [\"${1:https://geo-restricted.example.com/*}\"]",
+      "\tcountry: ${2|US,GB,FR,DE,CA,AU,BR,JP,IN,CN,RU,IT,ES,NL,SE|}",
+      "\tstate: \"${3:california}\"",
+      "\tcity: \"${4:sanfrancisco}\"",
+      "\tsticky: ${5|true,false|}",
+      ") {",
+      "\ttime",
+      "}",
+      "$0"
+    ],
+    "description": "Geographic location-specific proxy configuration"
+  },
+  "Proxy Security": {
+    "prefix": ["proxy-security"],
+    "body": [
+      "# Security-focused proxy configuration",
+      "secureProxy: proxy(",
+      "\turl: [\"${1:https://secure-api.example.com/*}\"]",
+      "\tmethod: [${2|POST,PUT,DELETE,PATCH|}]",
+      "\ttype: [${3|xhr,fetch|}]",
+      "\tserver: \"${4:https://secure-user:secure-pass@enterprise-proxy.com:8080}\"",
+      "\toperator: ${5|and,or|}",
+      ") {",
+      "\ttime",
+      "}",
+      "$0"
+    ],
+    "description": "Security-focused proxy for sensitive operations"
+  },
+  "QuerySelectorAll Basic": {
+    "prefix": ["querySelectorAll"],
+    "body": [
+      "querySelectorAll(selector: \"${1:div}\") {",
+      "\t${2|innerHTML,innerText,tagName,outerHTML|}",
+      "}"
+    ],
+    "description": "Basic querySelectorAll to get multiple elements"
+  },
+  "QuerySelectorAll with Attributes": {
+    "prefix": ["querySelectorAll-attributes"],
+    "body": [
+      "querySelectorAll(selector: \"${1:a}\") {",
+      "\t${2|innerHTML,innerText,tagName|}",
+      "\tattributes {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}"
+    ],
+    "description": "QuerySelectorAll with element attributes extraction"
+  },
+  "QuerySelectorAll Visible": {
+    "prefix": ["querySelectorAll-visible"],
+    "body": [
+      "querySelectorAll(",
+      "\tselector: \"${1:.visible-element}\"",
+      "\tvisible: ${2|true,false|}",
+      "\ttimeout: ${3:5000}",
+      ") {",
+      "\t${4|innerHTML,innerText,tagName|}",
+      "\tattributes {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}"
+    ],
+    "description": "QuerySelectorAll with visibility and timeout options"
+  },
+  "QuerySelectorAll Links": {
+    "prefix": ["querySelectorAll-links"],
+    "body": [
+      "# Get all links with href attributes",
+      "links: querySelectorAll(selector: \"a[href]\") {",
+      "\tinnerText",
+      "\tattributes {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}"
+    ],
+    "description": "Get all links with their href attributes"
+  },
+  "QuerySelectorAll Forms": {
+    "prefix": ["querySelectorAll-forms"],
+    "body": [
+      "# Get all form elements",
+      "formElements: querySelectorAll(",
+      "\tselector: \"${1:input, textarea, select, button}\"",
+      "\tvisible: ${2|true,false|}",
+      ") {",
+      "\ttagName",
+      "\tattributes {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}"
+    ],
+    "description": "Get all form elements with their attributes"
+  },
+  "QuerySelectorAll Images": {
+    "prefix": ["querySelectorAll-images"],
+    "body": [
+      "# Get all images with src attributes",
+      "images: querySelectorAll(",
+      "\tselector: \"img\"",
+      "\tvisible: ${1|true,false|}",
+      ") {",
+      "\ttagName",
+      "\tattributes {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}"
+    ],
+    "description": "Get all images with their src and alt attributes"
+  },
+  "QuerySelectorAll Data Attributes": {
+    "prefix": ["querySelectorAll-data"],
+    "body": [
+      "# Get elements with data attributes",
+      "dataElements: querySelectorAll(selector: \"[data-${1:id}]\") {",
+      "\ttagName",
+      "\t${2|innerHTML,innerText|}",
+      "\tattributes {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}"
+    ],
+    "description": "Get elements with specific data attributes"
+  },
+  "QuerySelectorAll Complete": {
+    "prefix": ["querySelectorAll-full", "querySelectorAll-complete"],
+    "body": [
+      "${1:elements}: querySelectorAll(",
+      "\tselector: \"${2:.element-class}\"",
+      "\ttimeout: ${3:10000}",
+      "\tvisible: ${4|true,false|}",
+      ") {",
+      "\t# Basic content",
+      "\t${5|innerHTML,innerText,tagName,outerHTML|}",
+      "\t",
+      "\t# All attributes",
+      "\tattributes {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Complete querySelectorAll with all options and fields"
+  },
+  "QuerySelectorAll Workflow": {
+    "prefix": ["querySelectorAll-workflow"],
+    "body": [
+      "# Navigate to page",
+      "goto(url: \"${1:https://example.com}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "# Get multiple element types",
+      "headings: querySelectorAll(selector: \"${2:h1, h2, h3}\") {",
+      "\tinnerText",
+      "\ttagName",
+      "}",
+      "",
+      "links: querySelectorAll(selector: \"${3:a[href]}\") {",
+      "\tinnerText",
+      "\tattributes {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}",
+      "",
+      "images: querySelectorAll(",
+      "\tselector: \"${4:img}\"",
+      "\tvisible: ${5|true,false|}",
+      ") {",
+      "\tattributes {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}",
+      "$0"
+    ],
+    "description": "Complete querySelectorAll workflow with multiple element queries"
+  },
+  "QuerySelector Basic": {
+    "prefix": ["querySelector"],
+    "body": [
+      "querySelector(selector: \"${1:h1}\") {",
+      "\t${2|innerHTML,innerText,tagName,outerHTML|}",
+      "}"
+    ],
+    "description": "Basic querySelector to get first matching element"
+  },
+  "QuerySelector with Attributes": {
+    "prefix": ["querySelector-attributes"],
+    "body": [
+      "querySelector(selector: \"${1:a[href]}\") {",
+      "\t${2|innerHTML,innerText,tagName|}",
+      "\tattributes {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}"
+    ],
+    "description": "QuerySelector with element attributes extraction"
+  },
+  "QuerySelector Visible": {
+    "prefix": ["querySelector-visible"],
+    "body": [
+      "querySelector(",
+      "\tselector: \"${1:button.primary}\"",
+      "\tvisible: ${2|true,false|}",
+      "\ttimeout: ${3:5000}",
+      ") {",
+      "\t${4|innerHTML,innerText,tagName|}",
+      "\tattributes {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}"
+    ],
+    "description": "QuerySelector with visibility and timeout options"
+  },
+  "QuerySelector Form": {
+    "prefix": ["querySelector-form"],
+    "body": [
+      "querySelector(selector: \"${1:form#login}\") {",
+      "\ttagName",
+      "\touterHTML",
+      "\tattributes {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}"
+    ],
+    "description": "QuerySelector for form elements"
+  },
+  "QuerySelector Navigation": {
+    "prefix": ["querySelector-nav"],
+    "body": [
+      "querySelector(selector: \"${1:nav.primary, nav[role='navigation']}\") {",
+      "\t${2|innerHTML,innerText,tagName|}",
+      "\tattributes {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}"
+    ],
+    "description": "QuerySelector for navigation elements"
+  },
+  "QuerySelector Data Attributes": {
+    "prefix": ["querySelector-data"],
+    "body": [
+      "querySelector(selector: \"${1:[data-id='main-content']}\") {",
+      "\t${2|innerHTML,innerText,tagName|}",
+      "\tattributes {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}"
+    ],
+    "description": "QuerySelector for elements with data attributes"
+  },
+  "QuerySelector Complete": {
+    "prefix": ["querySelector-full", "querySelector-complete"],
+    "body": [
+      "${1:element}: querySelector(",
+      "\tselector: \"${2:div.main}\"",
+      "\tvisible: ${3|true,false|}",
+      "\ttimeout: ${4:5000}",
+      ") {",
+      "\t# Basic content",
+      "\t${5|innerHTML,innerText,tagName,outerHTML|}",
+      "\t",
+      "\t# All attributes",
+      "\tattributes {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Complete querySelector with all options and fields"
+  },
+  "QuerySelector Workflow": {
+    "prefix": ["querySelector-workflow"],
+    "body": [
+      "# Navigate to page",
+      "goto(url: \"${1:https://example.com}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "# Get single elements",
+      "mainHeading: querySelector(selector: \"${2:h1}\") {",
+      "\tinnerText",
+      "\ttagName",
+      "}",
+      "",
+      "primaryLink: querySelector(selector: \"${3:a[href]}\") {",
+      "\tinnerText",
+      "\tattributes {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}",
+      "",
+      "heroImage: querySelector(",
+      "\tselector: \"${4:img.hero}\"",
+      "\tvisible: ${5|true,false|}",
+      ") {",
+      "\ttagName",
+      "\tattributes {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}",
+      "$0"
+    ],
+    "description": "Complete querySelector workflow with single element queries"
+  },
+  "Reconnect Basic": {
+    "prefix": ["reconnect"],
+    "body": [
+      "reconnect {",
+      "\t${1|browserQLEndpoint,browserWSEndpoint,devtoolsFrontendUrl,webSocketDebuggerUrl|}",
+      "}"
+    ],
+    "description": "Basic reconnect with default timeout (30 seconds)"
+  },
+  "Reconnect with Timeout": {
+    "prefix": ["reconnect-timeout"],
+    "body": [
+      "reconnect(timeout: ${1:60000}) {",
+      "\tbrowserQLEndpoint",
+      "\tbrowserWSEndpoint",
+      "\tdevtoolsFrontendUrl",
+      "\twebSocketDebuggerUrl",
+      "}"
+    ],
+    "description": "Reconnect with custom timeout"
+  },
+  "Reconnect Development": {
+    "prefix": ["reconnect-dev"],
+    "body": [
+      "reconnect(timeout: ${1:120000}) {",
+      "\tbrowserQLEndpoint",
+      "\tdevtoolsFrontendUrl",
+      "\twebSocketDebuggerUrl",
+      "}"
+    ],
+    "description": "Development reconnect with DevTools URLs"
+  },
+  "Reconnect Production": {
+    "prefix": ["reconnect-prod"],
+    "body": [
+      "reconnect(timeout: ${1:45000}) {",
+      "\tbrowserQLEndpoint",
+      "\tbrowserWSEndpoint",
+      "}"
+    ],
+    "description": "Production reconnect with essential endpoints"
+  },
+  "Reconnect Long Session": {
+    "prefix": ["reconnect-long"],
+    "body": [
+      "reconnect(timeout: ${1:300000}) {",
+      "\tbrowserQLEndpoint",
+      "\tbrowserWSEndpoint",
+      "\tdevtoolsFrontendUrl",
+      "\twebSocketDebuggerUrl",
+      "}"
+    ],
+    "description": "Long-running session reconnect (5 minutes)"
+  },
+  "Reconnect Automation": {
+    "prefix": ["reconnect-automation"],
+    "body": [
+      "reconnect(timeout: ${1:180000}) {",
+      "\tbrowserQLEndpoint",
+      "\tbrowserWSEndpoint",
+      "}"
+    ],
+    "description": "Automation-focused reconnect with WebSocket endpoints"
+  },
+  "Reconnect Debug": {
+    "prefix": ["reconnect-debug"],
+    "body": [
+      "reconnect(timeout: ${1:600000}) {",
+      "\tbrowserQLEndpoint",
+      "\tdevtoolsFrontendUrl",
+      "\twebSocketDebuggerUrl",
+      "}"
+    ],
+    "description": "Debug session reconnect with extended timeout (10 minutes)"
+  },
+  "Reconnect Complete": {
+    "prefix": ["reconnect-full", "reconnect-complete"],
+    "body": [
+      "${1:session}: reconnect(timeout: ${2:60000}) {",
+      "\t# GraphQL endpoint for BrowserQL operations",
+      "\tbrowserQLEndpoint",
+      "\t",
+      "\t# WebSocket endpoint for real-time connection",
+      "\tbrowserWSEndpoint",
+      "\t",
+      "\t# DevTools frontend URL for debugging",
+      "\tdevtoolsFrontendUrl",
+      "\t",
+      "\t# WebSocket debugger URL for Chrome DevTools",
+      "\twebSocketDebuggerUrl",
+      "\t$0",
+      "}"
+    ],
+    "description": "Complete reconnect with all endpoints and documentation"
+  },
+  "Reconnect Workflow": {
+    "prefix": ["reconnect-workflow"],
+    "body": [
+      "# Initial navigation",
+      "goto(url: \"${1:https://example.com}\") {",
+      "\tstatus",
+      "\turl",
+      "}",
+      "",
+      "# Set up long-running session",
+      "${2:sessionInfo}: reconnect(timeout: ${3:300000}) {",
+      "\tbrowserQLEndpoint",
+      "\tbrowserWSEndpoint",
+      "\tdevtoolsFrontendUrl",
+      "\twebSocketDebuggerUrl",
+      "}",
+      "",
+      "# Continue with operations...",
+      "${4:operation}: ${5|click,type,html|}(${6:selector: \"${7:#element}\"}) {",
+      "\t${8|selector,text,html|}",
+      "\ttime",
+      "}",
+      "$0"
+    ],
+    "description": "Complete reconnect workflow with session management"
+  },
+  "Reject Basic": {
+    "prefix": ["reject"],
+    "body": [
+      "reject(${1|type: [image\\, media],url: [\"*ads*\"],method: [GET]|}) {",
+      "\t${2|enabled,time|}",
+      "}"
+    ],
+    "description": "Basic request rejection"
+  },
+  "Reject Media": {
+    "prefix": ["reject-media"],
+    "body": [
+      "reject(type: [${1|image,media,font,stylesheet,script|}]) {",
+      "\tenabled",
+      "\ttime",
+      "}"
+    ],
+    "description": "Reject media resources (images, videos, fonts)"
+  },
+  "Reject Tracking": {
+    "prefix": ["reject-tracking"],
+    "body": [
+      "reject(",
+      "\turl: [",
+      "\t\t\"${1:*google-analytics.com*}\",",
+      "\t\t\"${2:*googletagmanager.com*}\",",
+      "\t\t\"${3:*facebook.com/tr*}\",",
+      "\t\t\"${4:*ads*}\"",
+      "\t]",
+      "\toperator: ${5|or,and|}",
+      ") {",
+      "\tenabled",
+      "\ttime",
+      "}"
+    ],
+    "description": "Reject tracking and analytics scripts"
+  },
+  "Reject API Methods": {
+    "prefix": ["reject-api"],
+    "body": [
+      "reject(",
+      "\tmethod: [${1|POST,PUT,DELETE,PATCH|}]",
+      "\turl: [\"${2:*/api/*}\", \"${3:*/v1/*}\"]",
+      "\toperator: ${4|or,and|}",
+      ") {",
+      "\tenabled",
+      "\ttime",
+      "}"
+    ],
+    "description": "Reject specific API methods and endpoints"
+  },
+  "Reject Performance": {
+    "prefix": ["reject-performance"],
+    "body": [
+      "reject(",
+      "\ttype: [${1|image,media,font|}]",
+      "\turl: [\"${2:*.jpg}\", \"${3:*.png}\", \"${4:*.mp4}\"]",
+      "\toperator: ${5|or,and|}",
+      ") {",
+      "\tenabled",
+      "\ttime",
+      "}"
+    ],
+    "description": "Performance optimization - reject heavy resources"
+  },
+  "Reject Security": {
+    "prefix": ["reject-security"],
+    "body": [
+      "reject(",
+      "\turl: [",
+      "\t\t\"${1:*malware*}\",",
+      "\t\t\"${2:*phishing*}\",",
+      "\t\t\"${3:*.exe}\",",
+      "\t\t\"${4:*.bat}\"",
+      "\t]",
+      "\toperator: ${5|or,and|}",
+      ") {",
+      "\tenabled",
+      "\ttime",
+      "}"
+    ],
+    "description": "Security-focused request rejections"
+  },
+  "Reject AND Condition": {
+    "prefix": ["reject-and"],
+    "body": [
+      "reject(",
+      "\toperator: and",
+      "\ttype: [${1:image}]",
+      "\turl: [\"${2:*google.com*}\"]",
+      ") {",
+      "\tenabled",
+      "\ttime",
+      "}"
+    ],
+    "description": "Reject with AND condition (all conditions must match)"
+  },
+  "Reject Disable": {
+    "prefix": ["reject-disable"],
+    "body": [
+      "reject(enabled: false) {",
+      "\tenabled",
+      "\ttime",
+      "}"
+    ],
+    "description": "Disable request rejections"
+  },
+  "Reject Complete": {
+    "prefix": ["reject-full", "reject-complete"],
+    "body": [
+      "${1:rejectFilter}: reject(",
+      "\tenabled: ${2|true,false|}",
+      "\tmethod: [${3|GET,POST,PUT,DELETE|}]",
+      "\toperator: ${4|or,and|}",
+      "\ttype: [${5|image,media,script,stylesheet,xhr,fetch|}]",
+      "\turl: [\"${6:*pattern*}\"]",
+      ") {",
+      "\t# Rejection status",
+      "\tenabled",
+      "\t",
+      "\t# Performance timing",
+      "\ttime",
+      "\t$0",
+      "}"
+    ],
+    "description": "Complete reject with all options"
+  },
+  "Reject Workflow": {
+    "prefix": ["reject-workflow"],
+    "body": [
+      "# Set up request rejections before navigation",
+      "${1:mediaBlock}: reject(type: [${2|image,media,font|}]) {",
+      "\tenabled",
+      "\ttime",
+      "}",
+      "",
+      "# Navigate with rejections active",
+      "goto(url: \"${3:https://example.com}\", waitUntil: ${4|load,firstMeaningfulPaint,domContentLoaded|}) {",
+      "\tstatus",
+      "\ttime",
+      "\turl",
+      "}",
+      "",
+      "# Additional operations with filtering active",
+      "${5:operation}: ${6|click,type,html|}(${7:selector: \"${8:#element}\"}) {",
+      "\t${9|selector,text,html|}",
+      "\ttime",
+      "}",
+      "",
+      "# Disable rejections when done",
+      "disableReject: reject(enabled: false) {",
+      "\tenabled",
+      "\ttime",
+      "}",
+      "$0"
+    ],
+    "description": "Complete reject workflow with navigation and cleanup"
+  },
+  "Reload Basic": {
+    "prefix": ["reload"],
+    "body": [
+      "reload {",
+      "\t${1|status,time,text,url|}",
+      "}"
+    ],
+    "description": "Basic page reload with default settings"
+  },
+  "Reload with Timeout": {
+    "prefix": ["reload-timeout"],
+    "body": [
+      "reload(timeout: ${1:10000}) {",
+      "\tstatus",
+      "\ttime",
+      "\turl",
+      "}"
+    ],
+    "description": "Reload with custom timeout"
+  },
+  "Reload WaitUntil": {
+    "prefix": ["reload-wait"],
+    "body": [
+      "reload(waitUntil: ${1|load,domContentLoaded,commit,networkIdle|}) {",
+      "\tstatus",
+      "\ttime",
+      "\turl",
+      "}"
+    ],
+    "description": "Reload with specific wait condition"
+  },
+  "Reload Fast": {
+    "prefix": ["reload-fast"],
+    "body": [
+      "reload(",
+      "\ttimeout: ${1:5000}",
+      "\twaitUntil: ${2|commit,domContentLoaded|}",
+      ") {",
+      "\tstatus",
+      "\ttime",
+      "\turl",
+      "}"
+    ],
+    "description": "Fast reload for quick refresh"
+  },
+  "Reload Complete": {
+    "prefix": ["reload-full", "reload-complete"],
+    "body": [
+      "reload(",
+      "\ttimeout: ${1:30000}",
+      "\twaitUntil: ${2|load,domContentLoaded,commit,networkIdle|}",
+      ") {",
+      "\tstatus",
+      "\ttime",
+      "\ttext",
+      "\turl",
+      "}"
+    ],
+    "description": "Complete reload with all options and content"
+  },
+  "Reload Development": {
+    "prefix": ["reload-dev"],
+    "body": [
+      "reload(",
+      "\ttimeout: ${1:60000}",
+      "\twaitUntil: ${2|load,domContentLoaded|}",
+      ") {",
+      "\tstatus",
+      "\ttime",
+      "\ttext",
+      "\turl",
+      "}"
+    ],
+    "description": "Development reload with extended timeout"
+  },
+  "Reload Production": {
+    "prefix": ["reload-prod"],
+    "body": [
+      "reload(",
+      "\ttimeout: ${1:15000}",
+      "\twaitUntil: ${2|domContentLoaded,load|}",
+      ") {",
+      "\tstatus",
+      "\ttime",
+      "\turl",
+      "}"
+    ],
+    "description": "Production reload with balanced timeout"
+  },
+  "Reload Testing": {
+    "prefix": ["reload-test"],
+    "body": [
+      "reload(",
+      "\ttimeout: ${1:8000}",
+      "\twaitUntil: ${2|commit,domContentLoaded|}",
+      ") {",
+      "\tstatus",
+      "\ttime",
+      "\turl",
+      "}"
+    ],
+    "description": "Testing reload for automation"
+  },
+  "Reload Performance": {
+    "prefix": ["reload-perf"],
+    "body": [
+      "reload(",
+      "\ttimeout: ${1:3000}",
+      "\twaitUntil: commit",
+      ") {",
+      "\tstatus",
+      "\ttime",
+      "\turl",
+      "}"
+    ],
+    "description": "Performance reload for speed testing"
+  },
+  "Reload Workflow": {
+    "prefix": ["reload-workflow"],
+    "body": [
+      "# Initial navigation",
+      "goto(url: \"${1:https://example.com}\") {",
+      "\tstatus",
+      "\turl",
+      "}",
+      "",
+      "# Perform operations that might change page state",
+      "${2:operation}: ${3|click,type,evaluate|}(${4:selector: \"${5:#element}\"}) {",
+      "\t${6|selector,text,value|}",
+      "\ttime",
+      "}",
+      "",
+      "# Reload to refresh page state",
+      "${7:refreshed}: reload(",
+      "\ttimeout: ${8:15000}",
+      "\twaitUntil: ${9|load,domContentLoaded,commit|}",
+      ") {",
+      "\tstatus",
+      "\ttime",
+      "\turl",
+      "}",
+      "",
+      "# Continue with fresh page state",
+      "${10:nextOperation}: ${11|html,text,querySelector|}(${12:selector: \"${13:#newElement}\"}) {",
+      "\t${14|html,text,innerHTML|}",
+      "\ttime",
+      "}",
+      "$0"
+    ],
+    "description": "Complete reload workflow with state refresh"
+  },
+  "Request Basic": {
+    "prefix": ["request"],
+    "body": [
+      "request(${1|type: [document],method: [GET],url: [\"*/api/*\"]|}) {",
+      "\turl",
+      "\ttype",
+      "\tmethod",
+      "}"
+    ],
+    "description": "Basic request monitoring"
+  },
+  "Request Document": {
+    "prefix": ["request-document"],
+    "body": [
+      "request(type: [document]) {",
+      "\turl",
+      "\ttype",
+      "\tmethod",
+      "\theaders {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}"
+    ],
+    "description": "Monitor document requests"
+  },
+  "Request AJAX": {
+    "prefix": ["request-ajax"],
+    "body": [
+      "request(",
+      "\ttype: [${1|xhr,fetch|}]",
+      "\tmethod: [${2|GET,POST|}]",
+      "\toperator: ${3|and,or|}",
+      ") {",
+      "\turl",
+      "\ttype",
+      "\tmethod",
+      "\theaders {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}"
+    ],
+    "description": "Monitor AJAX/XHR requests"
+  },
+  "Request API": {
+    "prefix": ["request-api"],
+    "body": [
+      "request(",
+      "\turl: [\"${1:*/api/*}\", \"${2:*/v1/*}\", \"${3:*/graphql*}\"]",
+      "\toperator: ${4|or,and|}",
+      ") {",
+      "\turl",
+      "\ttype",
+      "\tmethod",
+      "\theaders {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}"
+    ],
+    "description": "Monitor API endpoint requests"
+  },
+  "Request Resources": {
+    "prefix": ["request-resources"],
+    "body": [
+      "request(type: [${1|image,script,stylesheet,font,media|}]) {",
+      "\turl",
+      "\ttype",
+      "\tmethod",
+      "}"
+    ],
+    "description": "Monitor resource requests (images, scripts, styles)"
+  },
+  "Request Method": {
+    "prefix": ["request-method"],
+    "body": [
+      "request(method: [${1|GET,POST,PUT,DELETE,PATCH|}]) {",
+      "\turl",
+      "\ttype",
+      "\tmethod",
+      "\theaders {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}"
+    ],
+    "description": "Monitor requests by HTTP method"
+  },
+  "Request External": {
+    "prefix": ["request-external"],
+    "body": [
+      "request(",
+      "\ttype: [${1|xhr,fetch|}]",
+      "\turl: [\"${2:https://*}\", \"${3:http://*}\"]",
+      "\toperator: and",
+      ") {",
+      "\turl",
+      "\ttype",
+      "\tmethod",
+      "\theaders {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}"
+    ],
+    "description": "Monitor external API requests"
+  },
+  "Request No Wait": {
+    "prefix": ["request-nowait"],
+    "body": [
+      "request(",
+      "\twait: false",
+      "\ttimeout: ${1:1000}",
+      ") {",
+      "\turl",
+      "\ttype",
+      "\tmethod",
+      "}"
+    ],
+    "description": "Get existing requests without waiting"
+  },
+  "Request Complete": {
+    "prefix": ["request-full", "request-complete"],
+    "body": [
+      "${1:requests}: request(",
+      "\ttype: [${2|document,xhr,fetch,script,stylesheet,image|}]",
+      "\tmethod: [${3|GET,POST,PUT,DELETE|}]",
+      "\ttimeout: ${4:30000}",
+      "\turl: [\"${5:*pattern*}\"]",
+      "\twait: ${6|true,false|}",
+      "\toperator: ${7|or,and|}",
+      ") {",
+      "\t# Request details",
+      "\turl",
+      "\ttype",
+      "\tmethod",
+      "\t",
+      "\t# Request headers",
+      "\theaders {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Complete request monitoring with all options"
+  },
+  "Request Workflow": {
+    "prefix": ["request-workflow"],
+    "body": [
+      "# Navigate to trigger requests",
+      "goto(url: \"${1:https://example.com}\", waitUntil: ${2|load,domContentLoaded|}) {",
+      "\tstatus",
+      "}",
+      "",
+      "# Monitor API requests",
+      "${3:apiRequests}: request(",
+      "\turl: [\"${4:*/api/*}\"]",
+      "\tmethod: [${5|GET,POST|}]",
+      "\toperator: ${6|or,and|}",
+      ") {",
+      "\turl",
+      "\ttype",
+      "\tmethod",
+      "\theaders {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}",
+      "",
+      "# Monitor resource loading",
+      "${7:resources}: request(type: [${8|image,script,stylesheet|}]) {",
+      "\turl",
+      "\ttype",
+      "\tmethod",
+      "}",
+      "",
+      "# Check for third-party requests",
+      "${9:thirdParty}: request(",
+      "\turl: [\"${10:*analytics*}\", \"${11:*tracking*}\"]",
+      "\toperator: or",
+      ") {",
+      "\turl",
+      "\ttype",
+      "\tmethod",
+      "}",
+      "$0"
+    ],
+    "description": "Complete request monitoring workflow"
+  },
+  "Response Basic": {
+    "prefix": ["response"],
+    "body": [
+      "response(${1|type: [document],method: [GET],status: [200]|}) {",
+      "\turl",
+      "\ttype",
+      "\tmethod",
+      "\tstatus",
+      "}"
+    ],
+    "description": "Basic response monitoring"
+  },
+  "Response Document": {
+    "prefix": ["response-document"],
+    "body": [
+      "response(type: [document]) {",
+      "\turl",
+      "\ttype",
+      "\tmethod",
+      "\tstatus",
+      "\tbody",
+      "\theaders {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}"
+    ],
+    "description": "Monitor document responses"
+  },
+  "Response AJAX": {
+    "prefix": ["response-ajax"],
+    "body": [
+      "response(",
+      "\ttype: [${1|xhr,fetch|}]",
+      "\tmethod: [${2|GET,POST|}]",
+      "\toperator: ${3|and,or|}",
+      ") {",
+      "\turl",
+      "\ttype",
+      "\tmethod",
+      "\tstatus",
+      "\tbody",
+      "\theaders {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}"
+    ],
+    "description": "Monitor AJAX/XHR responses"
+  },
+  "Response Success": {
+    "prefix": ["response-success"],
+    "body": [
+      "response(",
+      "\tstatus: [${1|200,201,202,204|}]",
+      "\toperator: ${2|or,and|}",
+      ") {",
+      "\turl",
+      "\ttype",
+      "\tmethod",
+      "\tstatus",
+      "\tbody",
+      "\theaders {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}"
+    ],
+    "description": "Monitor successful responses"
+  },
+  "Response Errors": {
+    "prefix": ["response-errors"],
+    "body": [
+      "response(",
+      "\tstatus: [${1|400,401,403,404,500,502,503|}]",
+      "\toperator: ${2|or,and|}",
+      ") {",
+      "\turl",
+      "\ttype",
+      "\tmethod",
+      "\tstatus",
+      "\tbody",
+      "\theaders {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}"
+    ],
+    "description": "Monitor error responses"
+  },
+  "Response API": {
+    "prefix": ["response-api"],
+    "body": [
+      "response(",
+      "\turl: [\"${1:*/api/*}\", \"${2:*/v1/*}\", \"${3:*/graphql*}\"]",
+      "\toperator: ${4|or,and|}",
+      ") {",
+      "\turl",
+      "\ttype",
+      "\tmethod",
+      "\tstatus",
+      "\tbody",
+      "\theaders {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}"
+    ],
+    "description": "Monitor API endpoint responses"
+  },
+  "Response Resources": {
+    "prefix": ["response-resources"],
+    "body": [
+      "response(type: [${1|image,script,stylesheet,font,media|}]) {",
+      "\turl",
+      "\ttype",
+      "\tmethod",
+      "\tstatus",
+      "}"
+    ],
+    "description": "Monitor resource responses (images, scripts, styles)"
+  },
+  "Response Redirects": {
+    "prefix": ["response-redirects"],
+    "body": [
+      "response(",
+      "\tstatus: [${1|301,302,303,307,308|}]",
+      "\toperator: ${2|or,and|}",
+      ") {",
+      "\turl",
+      "\ttype",
+      "\tmethod",
+      "\tstatus",
+      "\theaders {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}"
+    ],
+    "description": "Monitor redirect responses"
+  },
+  "Response No Wait": {
+    "prefix": ["response-nowait"],
+    "body": [
+      "response(",
+      "\twait: false",
+      "\ttimeout: ${1:1000}",
+      ") {",
+      "\turl",
+      "\ttype",
+      "\tmethod",
+      "\tstatus",
+      "}"
+    ],
+    "description": "Get existing responses without waiting"
+  },
+  "Response Complete": {
+    "prefix": ["response-full", "response-complete"],
+    "body": [
+      "${1:responses}: response(",
+      "\tstatus: [${2|200,404,500|}]",
+      "\tmethod: [${3|GET,POST,PUT,DELETE|}]",
+      "\ttype: [${4|document,xhr,fetch,script,stylesheet|}]",
+      "\ttimeout: ${5:30000}",
+      "\turl: [\"${6:*pattern*}\"]",
+      "\twait: ${7|true,false|}",
+      "\toperator: ${8|or,and|}",
+      ") {",
+      "\t# Response details",
+      "\turl",
+      "\ttype",
+      "\tmethod",
+      "\tstatus",
+      "\t",
+      "\t# Response content",
+      "\tbody",
+      "\t",
+      "\t# Response headers",
+      "\theaders {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Complete response monitoring with all options"
+  },
+  "Response Workflow": {
+    "prefix": ["response-workflow"],
+    "body": [
+      "# Navigate to trigger responses",
+      "goto(url: \"${1:https://example.com}\", waitUntil: ${2|load,domContentLoaded|}) {",
+      "\tstatus",
+      "}",
+      "",
+      "# Monitor successful API responses",
+      "${3:apiResponses}: response(",
+      "\turl: [\"${4:*/api/*}\"]",
+      "\tstatus: [${5:200}]",
+      "\tmethod: [${6|GET,POST|}]",
+      "\toperator: and",
+      ") {",
+      "\turl",
+      "\ttype",
+      "\tmethod",
+      "\tstatus",
+      "\tbody",
+      "\theaders {",
+      "\t\tname",
+      "\t\tvalue",
+      "\t}",
+      "}",
+      "",
+      "# Monitor error responses",
+      "${7:errors}: response(",
+      "\tstatus: [${8|400,404,500|}]",
+      "\toperator: or",
+      ") {",
+      "\turl",
+      "\ttype",
+      "\tmethod",
+      "\tstatus",
+      "\tbody",
+      "}",
+      "",
+      "# Monitor resource responses",
+      "${9:resources}: response(type: [${10|image,script,stylesheet|}]) {",
+      "\turl",
+      "\ttype",
+      "\tmethod",
+      "\tstatus",
+      "}",
+      "",
+      "# Check third-party responses",
+      "${11:thirdParty}: response(",
+      "\turl: [\"${12:*analytics*}\", \"${13:*tracking*}\"]",
+      "\toperator: or",
+      ") {",
+      "\turl",
+      "\ttype",
+      "\tmethod",
+      "\tstatus",
+      "}",
+      "$0"
+    ],
+    "description": "Complete response monitoring workflow"
+  },
+  "Solve Basic": {
+    "prefix": ["solve"],
+    "body": [
+      "solve(type: ${1|hcaptcha,cloudflare|}) {",
+      "\tfound",
+      "\tsolved",
+      "\ttime",
+      "}"
+    ],
+    "description": "🚨 EXPERIMENTAL: Basic captcha solving"
+  },
+  "Solve hCaptcha": {
+    "prefix": ["solve-hcaptcha"],
+    "body": [
+      "solve(type: hcaptcha) {",
+      "\tfound",
+      "\tsolved",
+      "\ttime",
+      "}"
+    ],
+    "description": "🚨 EXPERIMENTAL: Solve hCaptcha challenge"
+  },
+  "Solve Cloudflare": {
+    "prefix": ["solve-cloudflare", "solve-cf"],
+    "body": [
+      "solve(type: cloudflare) {",
+      "\tfound",
+      "\tsolved",
+      "\ttime",
+      "}"
+    ],
+    "description": "🚨 EXPERIMENTAL: Solve Cloudflare challenge"
+  },
+  "Solve with Timeout": {
+    "prefix": ["solve-timeout"],
+    "body": [
+      "solve(",
+      "\ttype: ${1|hcaptcha,cloudflare|}",
+      "\ttimeout: ${2:30000}",
+      ") {",
+      "\tfound",
+      "\tsolved",
+      "\ttime",
+      "}"
+    ],
+    "description": "🚨 EXPERIMENTAL: Solve captcha with timeout"
+  },
+  "Solve No Wait": {
+    "prefix": ["solve-nowait"],
+    "body": [
+      "solve(",
+      "\ttype: ${1|hcaptcha,cloudflare|}",
+      "\twait: false",
+      ") {",
+      "\tfound",
+      "\tsolved",
+      "\ttime",
+      "}"
+    ],
+    "description": "🚨 EXPERIMENTAL: Check for captcha without waiting"
+  },
+  "Solve Authentication": {
+    "prefix": ["solve-auth"],
+    "body": [
+      "# Navigate to protected page",
+      "goto(url: \"${1:https://protected.domain}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "# Solve authentication captcha",
+      "solve(type: ${2|hcaptcha,cloudflare|}) {",
+      "\tfound",
+      "\tsolved",
+      "\ttime",
+      "}"
+    ],
+    "description": "🚨 EXPERIMENTAL: Solve captcha for authentication"
+  },
+  "Solve Bot Protection": {
+    "prefix": ["solve-bot", "solve-protection"],
+    "body": [
+      "solve(",
+      "\ttype: ${1|cloudflare,hcaptcha|}",
+      "\ttimeout: ${2:45000}",
+      "\twait: ${3|true,false|}",
+      ") {",
+      "\tfound",
+      "\tsolved",
+      "\ttime",
+      "}"
+    ],
+    "description": "🚨 EXPERIMENTAL: Solve bot protection challenge"
+  },
+  "Solve Form Submission": {
+    "prefix": ["solve-form"],
+    "body": [
+      "# Fill form fields first",
+      "type(selector: \"${1:input[name='email']}\", text: \"${2:user@example.com}\") {",
+      "\ttime",
+      "}",
+      "",
+      "# Solve captcha before submission",
+      "solve(type: ${3|hcaptcha,cloudflare|}) {",
+      "\tfound",
+      "\tsolved",
+      "\ttime",
+      "}",
+      "",
+      "# Submit form",
+      "click(selector: \"${4:button[type='submit']}\") {",
+      "\tselector",
+      "\ttime",
+      "}"
+    ],
+    "description": "🚨 EXPERIMENTAL: Solve captcha in form submission workflow"
+  },
+  "Solve Multiple Attempts": {
+    "prefix": ["solve-retry", "solve-multiple"],
+    "body": [
+      "# First attempt",
+      "${1:firstAttempt}: solve(",
+      "\ttype: ${2|hcaptcha,cloudflare|}",
+      "\ttimeout: ${3:15000}",
+      ") {",
+      "\tfound",
+      "\tsolved",
+      "\ttime",
+      "}",
+      "",
+      "# Retry with longer timeout if needed",
+      "${4:retryAttempt}: solve(",
+      "\ttype: ${5|hcaptcha,cloudflare|}",
+      "\ttimeout: ${6:45000}",
+      "\twait: ${7|true,false|}",
+      ") {",
+      "\tfound",
+      "\tsolved",
+      "\ttime",
+      "}"
+    ],
+    "description": "🚨 EXPERIMENTAL: Multiple captcha solving attempts"
+  },
+  "Solve API Integration": {
+    "prefix": ["solve-api"],
+    "body": [
+      "# Navigate to API endpoint with protection",
+      "goto(url: \"${1:https://api.example.com/protected}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "# Solve challenge before API access",
+      "${2:apiChallenge}: solve(",
+      "\ttype: ${3|cloudflare,hcaptcha|}",
+      "\ttimeout: ${4:30000}",
+      ") {",
+      "\tfound",
+      "\tsolved",
+      "\ttime",
+      "}",
+      "",
+      "# Make API request after solving",
+      "evaluate(content: \"${5:fetch('/api/data').then(r => r.json())}\") {",
+      "\tvalue",
+      "}"
+    ],
+    "description": "🚨 EXPERIMENTAL: Solve captcha for API integration"
+  },
+  "Solve E-commerce": {
+    "prefix": ["solve-ecommerce", "solve-shop"],
+    "body": [
+      "# Navigate to checkout page",
+      "goto(url: \"${1:https://shop.example.com/checkout}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "# Solve checkout protection",
+      "${2:checkoutChallenge}: solve(",
+      "\ttype: ${3|hcaptcha,cloudflare|}",
+      "\ttimeout: ${4:30000}",
+      ") {",
+      "\tfound",
+      "\tsolved",
+      "\ttime",
+      "}",
+      "",
+      "# Complete purchase",
+      "click(selector: \"${5:button.complete-order}\") {",
+      "\tselector",
+      "\ttime",
+      "}"
+    ],
+    "description": "🚨 EXPERIMENTAL: Solve captcha in e-commerce workflow"
+  },
+  "Solve Complete": {
+    "prefix": ["solve-full", "solve-complete"],
+    "body": [
+      "${1:captchaSolution}: solve(",
+      "\ttype: ${2|hcaptcha,cloudflare|}",
+      "\ttimeout: ${3:30000}",
+      "\twait: ${4|true,false|}",
+      ") {",
+      "\t# Challenge detection",
+      "\tfound",
+      "\t",
+      "\t# Solution status",
+      "\tsolved",
+      "\t",
+      "\t# Performance timing",
+      "\ttime",
+      "\t$0",
+      "}"
+    ],
+    "description": "🚨 EXPERIMENTAL: Complete captcha solving with all options"
+  },
+  "Solve Workflow": {
+    "prefix": ["solve-workflow"],
+    "body": [
+      "# Navigate to protected resource",
+      "goto(url: \"${1:https://protected.example.com}\") {",
+      "\tstatus",
+      "\turl",
+      "}",
+      "",
+      "# Detect and solve challenge",
+      "${2:challengeCheck}: solve(",
+      "\ttype: ${3|hcaptcha,cloudflare|}",
+      "\ttimeout: ${4:15000}",
+      "\twait: true",
+      ") {",
+      "\tfound",
+      "\tsolved",
+      "\ttime",
+      "}",
+      "",
+      "# Conditional retry if not solved",
+      "${5:retryIfNeeded}: solve(",
+      "\ttype: ${6|hcaptcha,cloudflare|}",
+      "\ttimeout: ${7:45000}",
+      "\twait: ${8|true,false|}",
+      ") {",
+      "\tfound",
+      "\tsolved",
+      "\ttime",
+      "}",
+      "",
+      "# Access protected content after solving",
+      "${9:protectedContent}: html(selector: \"${10:.protected-content}\") {",
+      "\thtml",
+      "\ttime",
+      "}",
+      "",
+      "# Verify successful access",
+      "${11:verification}: text(selector: \"${12:h1.success}\") {",
+      "\ttext",
+      "\ttime",
+      "}",
+      "$0"
+    ],
+    "description": "🚨 EXPERIMENTAL: Complete captcha solving workflow with verification"
+  },
+  "Title Basic": {
+    "prefix": ["title"],
+    "body": [
+      "title {",
+      "\ttitle",
+      "}$0"
+    ],
+    "description": "Get the title of the current page"
+  },
+  "Title Simple": {
+    "prefix": ["title-basic"],
+    "body": [
+      "# Get page title",
+      "title {",
+      "\ttitle",
+      "}$0"
+    ],
+    "description": "Basic page title extraction"
+  },
+  "Title Navigation": {
+    "prefix": ["title-navigation"],
+    "body": [
+      "# Navigate and get page title",
+      "goto(url: \"${1:https://example.com}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "pageTitle: title {",
+      "\ttitle",
+      "}$0"
+    ],
+    "description": "Navigate to page and extract title"
+  },
+  "Title Verification": {
+    "prefix": ["title-verification"],
+    "body": [
+      "# Verify page title contains expected text",
+      "goto(url: \"${1:https://example.com}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "pageTitle: title {",
+      "\ttitle",
+      "}",
+      "",
+      "# Use with conditional operations",
+      "if(expression: \"pageTitle.title.includes('${2:Expected Text}')\") {",
+      "\t# Page title is correct",
+      "\tverify(expression: \"true\") {",
+      "\t\tsuccess",
+      "\t}",
+      "}$0"
+    ],
+    "description": "Verify page title contains expected text"
+  },
+  "Title Comparison": {
+    "prefix": ["title-comparison"],
+    "body": [
+      "# Compare titles between pages",
+      "goto(url: \"${1:https://page1.com}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "firstTitle: title {",
+      "\ttitle",
+      "}",
+      "",
+      "goto(url: \"${2:https://page2.com}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "secondTitle: title {",
+      "\ttitle",
+      "}$0"
+    ],
+    "description": "Compare page titles between different pages"
+  },
+  "Title Metadata": {
+    "prefix": ["title-metadata"],
+    "body": [
+      "# Extract page title and metadata",
+      "goto(url: \"${1:https://example.com}\") {",
+      "\tstatus",
+      "\turl",
+      "}",
+      "",
+      "pageTitle: title {",
+      "\ttitle",
+      "}",
+      "",
+      "# Get additional metadata",
+      "metaDescription: text(selector: \"meta[name='description']\") {",
+      "\ttext",
+      "}",
+      "",
+      "canonical: text(selector: \"link[rel='canonical']\") {",
+      "\ttext",
+      "}$0"
+    ],
+    "description": "Extract page title along with other metadata"
+  },
+  "Title SEO": {
+    "prefix": ["title-seo"],
+    "body": [
+      "# SEO analysis: check page title",
+      "goto(url: \"${1:https://example.com}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "pageTitle: title {",
+      "\ttitle",
+      "}",
+      "",
+      "# Check title length for SEO (should be 50-60 characters)",
+      "titleLength: evaluate(expression: \"document.title.length\") {",
+      "\tresult",
+      "}",
+      "",
+      "# Check if title is unique and descriptive",
+      "hasKeywords: evaluate(expression: \"document.title.toLowerCase().includes('${2:keyword}')\") {",
+      "\tresult",
+      "}$0"
+    ],
+    "description": "SEO analysis of page title including length and keyword checks"
+  },
+  "Title Testing": {
+    "prefix": ["title-testing"],
+    "body": [
+      "# Test page title functionality",
+      "goto(url: \"${1:https://example.com}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "initialTitle: title {",
+      "\ttitle",
+      "}",
+      "",
+      "# Perform action that might change title",
+      "${2:click(selector: \".change-title-btn\") {",
+      "\tclicked",
+      "\\}}",
+      "",
+      "# Check if title changed",
+      "updatedTitle: title {",
+      "\ttitle",
+      "}$0"
+    ],
+    "description": "Test page title changes during user interactions"
+  },
+  "Title Monitoring": {
+    "prefix": ["title-monitoring"],
+    "body": [
+      "# Monitor title changes across navigation",
+      "goto(url: \"${1:https://page1.com}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "# Navigate to different section",
+      "click(selector: \"${2:a[href*='section']}\") {",
+      "\tclicked",
+      "}",
+      "",
+      "sectionTitle: title {",
+      "\ttitle",
+      "}",
+      "",
+      "# Back navigation",
+      "back {",
+      "\tstatus",
+      "}",
+      "",
+      "backTitle: title {",
+      "\ttitle",
+      "}$0"
+    ],
+    "description": "Monitor page title changes during navigation flow"
+  },
+  "Title Workflow": {
+    "prefix": ["title-workflow"],
+    "body": [
+      "# Professional page title analysis workflow",
+      "mutation AnalyzePageTitle {",
+      "\t# Navigate to target page",
+      "\tgoto(url: \"${1:https://example.com}\") {",
+      "\t\tstatus",
+      "\t\turl",
+      "\t}",
+      "",
+      "\t# Extract page title",
+      "\tpageTitle: title {",
+      "\t\ttitle",
+      "\t}",
+      "",
+      "\t# Analyze title characteristics",
+      "\ttitleAnalysis: evaluate(expression: \\`",
+      "\t\tconst title = document.title;",
+      "\t\treturn {",
+      "\t\t\tlength: title.length,",
+      "\t\t\twordCount: title.split(' ').length,",
+      "\t\t\tisOptimalLength: title.length >= 30 && title.length <= 60,",
+      "\t\t\thasNumbers: /\\\\d/.test(title),",
+      "\t\t\thasSpecialChars: /[^a-zA-Z0-9\\\\s]/.test(title)",
+      "\t\t};",
+      "\t\\`) {",
+      "\t\tresult",
+      "\t}",
+      "",
+      "\t# Screenshot for documentation",
+      "\tscreenshot(type: png) {",
+      "\t\tdata",
+      "\t}",
+      "}",
+      "$0"
+    ],
+    "description": "Complete page title analysis workflow with characteristics evaluation and documentation"
+  },
+  "URL Basic": {
+    "prefix": ["url"],
+    "body": [
+      "url {",
+      "\turl",
+      "}$0"
+    ],
+    "description": "Get the current page URL"
+  },
+  "URL Simple": {
+    "prefix": ["url-basic"],
+    "body": [
+      "# Get current URL",
+      "url {",
+      "\turl",
+      "}$0"
+    ],
+    "description": "Basic URL extraction"
+  },
+  "URL Navigation": {
+    "prefix": ["url-navigation"],
+    "body": [
+      "# Navigate and get current URL",
+      "goto(url: \"${1:https://example.com}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "currentURL: url {",
+      "\turl",
+      "}$0"
+    ],
+    "description": "Navigate to page and extract URL"
+  },
+  "URL Verification": {
+    "prefix": ["url-verification"],
+    "body": [
+      "# Verify current URL matches expected",
+      "goto(url: \"${1:https://example.com}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "currentURL: url {",
+      "\turl",
+      "}",
+      "",
+      "# Use with conditional operations",
+      "if(expression: \"currentURL.url.includes('${2:expected-path}')\") {",
+      "\t# URL is correct",
+      "\tverify(expression: \"true\") {",
+      "\t\tsuccess",
+      "\t}",
+      "}$0"
+    ],
+    "description": "Verify current URL contains expected path"
+  },
+  "URL Tracking": {
+    "prefix": ["url-tracking"],
+    "body": [
+      "# Track URL changes during navigation",
+      "initialURL: url {",
+      "\turl",
+      "}",
+      "",
+      "# Perform navigation action",
+      "click(selector: \"${1:a[href]}\") {",
+      "\tclicked",
+      "}",
+      "",
+      "finalURL: url {",
+      "\turl",
+      "}$0"
+    ],
+    "description": "Track URL changes during user interactions"
+  },
+  "URL Redirect Check": {
+    "prefix": ["url-redirect"],
+    "body": [
+      "# Check for redirects",
+      "goto(url: \"${1:https://short-url.com/abc}\") {",
+      "\tstatus",
+      "\turl",
+      "}",
+      "",
+      "finalURL: url {",
+      "\turl",
+      "}",
+      "",
+      "# Check if redirected",
+      "redirected: evaluate(expression: \"'${2:https://short-url.com/abc}' !== '${3:https://final-destination.com}'\") {",
+      "\tresult",
+      "}$0"
+    ],
+    "description": "Check if URL was redirected to different location"
+  },
+  "URL Parameters": {
+    "prefix": ["url-params"],
+    "body": [
+      "# Get current URL with parameters",
+      "goto(url: \"${1:https://example.com}?param1=value1&param2=value2\") {",
+      "\tstatus",
+      "}",
+      "",
+      "currentURL: url {",
+      "\turl",
+      "}",
+      "",
+      "# Extract URL parameters",
+      "urlParams: evaluate(expression: \"new URLSearchParams(window.location.search).get('${2:param1}')\") {",
+      "\tresult",
+      "}$0"
+    ],
+    "description": "Extract URL and analyze query parameters"
+  },
+  "URL Validation": {
+    "prefix": ["url-validation"],
+    "body": [
+      "# Validate URL format and structure",
+      "goto(url: \"${1:https://example.com}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "currentURL: url {",
+      "\turl",
+      "}",
+      "",
+      "# Validate URL structure",
+      "urlValidation: evaluate(expression: \\`",
+      "\ttry {",
+      "\t\tconst url = new URL(window.location.href);",
+      "\t\treturn {",
+      "\t\t\tisValid: true,",
+      "\t\t\tprotocol: url.protocol,",
+      "\t\t\thostname: url.hostname,",
+      "\t\t\tpathname: url.pathname,",
+      "\t\t\tsearch: url.search,",
+      "\t\t\thash: url.hash",
+      "\t\t};",
+      "\t} catch (e) {",
+      "\t\treturn { isValid: false, error: e.message };",
+      "\t}",
+      "\\`) {",
+      "\tresult",
+      "}$0"
+    ],
+    "description": "Validate URL format and extract components"
+  },
+  "URL History": {
+    "prefix": ["url-history"],
+    "body": [
+      "# Track URL history during navigation",
+      "initialURL: url {",
+      "\turl",
+      "}",
+      "",
+      "# Navigate to first page",
+      "goto(url: \"${1:https://page1.com}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "page1URL: url {",
+      "\turl",
+      "}",
+      "",
+      "# Navigate to second page",
+      "goto(url: \"${2:https://page2.com}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "page2URL: url {",
+      "\turl",
+      "}",
+      "",
+      "# Go back and check URL",
+      "back {",
+      "\tstatus",
+      "}",
+      "",
+      "backURL: url {",
+      "\turl",
+      "}$0"
+    ],
+    "description": "Track URL changes through navigation history"
+  },
+  "URL E-commerce": {
+    "prefix": ["url-ecommerce"],
+    "body": [
+      "# E-commerce URL tracking workflow",
+      "goto(url: \"${1:https://shop.example.com}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "homepageURL: url {",
+      "\turl",
+      "}",
+      "",
+      "# Navigate to product page",
+      "click(selector: \"${2:.product-link}\") {",
+      "\tclicked",
+      "}",
+      "",
+      "productURL: url {",
+      "\turl",
+      "}",
+      "",
+      "# Add to cart and track URL",
+      "click(selector: \"${3:.add-to-cart}\") {",
+      "\tclicked",
+      "}",
+      "",
+      "cartURL: url {",
+      "\turl",
+      "}$0"
+    ],
+    "description": "Track URLs through e-commerce shopping flow"
+  },
+  "URL Complete": {
+    "prefix": ["url-full", "url-complete"],
+    "body": [
+      "${1:currentLocation}: url {",
+      "\t# Current page URL",
+      "\turl",
+      "\t$0",
+      "}"
+    ],
+    "description": "Complete URL extraction with alias"
+  },
+  "URL Workflow": {
+    "prefix": ["url-workflow"],
+    "body": [
+      "# Professional URL tracking workflow",
+      "mutation TrackNavigation {",
+      "\t# Initial URL",
+      "\tstartURL: url {",
+      "\t\turl",
+      "\t}",
+      "",
+      "\t# Navigate to target page",
+      "\tgoto(url: \"${1:https://example.com}\") {",
+      "\t\tstatus",
+      "\t\turl",
+      "\t}",
+      "",
+      "\t# Verify navigation",
+      "\tverifyURL: url {",
+      "\t\turl",
+      "\t}",
+      "",
+      "\t# Perform user action",
+      "\tinteraction: ${2|click,type,scroll|}(${3:selector: \"${4:#element}\"}) {",
+      "\t\t${5|selector,text,time|}",
+      "\t}",
+      "",
+      "\t# Track final URL",
+      "\tfinalURL: url {",
+      "\t\turl",
+      "\t}",
+      "",
+      "\t# URL analysis",
+      "\turlAnalysis: evaluate(expression: \\`",
+      "\t\tconst currentUrl = window.location.href;",
+      "\t\tconst url = new URL(currentUrl);",
+      "\t\treturn {",
+      "\t\t\tfullUrl: currentUrl,",
+      "\t\t\tdomain: url.hostname,",
+      "\t\t\tpath: url.pathname,",
+      "\t\t\tparams: Object.fromEntries(url.searchParams),",
+      "\t\t\tisSecure: url.protocol === 'https:'",
+      "\t\t};",
+      "\t\\`) {",
+      "\t\tresult",
+      "\t}",
+      "}",
+      "$0"
+    ],
+    "description": "Complete URL tracking workflow with navigation analysis"
+  },
+  "UserAgent Basic": {
+    "prefix": ["userAgent"],
+    "body": [
+      "userAgent(userAgent: \"${1:Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15}\") {",
+      "\tuserAgent",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Set User-Agent string for browser session"
+  },
+  "UserAgent Mobile iPhone": {
+    "prefix": ["userAgent-mobile", "userAgent-iphone"],
+    "body": [
+      "userAgent(userAgent: \"Mozilla/5.0 (iPhone; CPU iPhone OS ${1:14_6} like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/${2:14.0} Mobile/15E148 Safari/604.1\") {",
+      "\tuserAgent",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Set iPhone mobile User-Agent"
+  },
+  "UserAgent Mobile Android": {
+    "prefix": ["userAgent-android"],
+    "body": [
+      "userAgent(userAgent: \"Mozilla/5.0 (Linux; Android ${1:11}; ${2:SM-G991B}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${3:120.0.0.0} Mobile Safari/537.36\") {",
+      "\tuserAgent",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Set Android mobile User-Agent"
+  },
+  "UserAgent Desktop Chrome": {
+    "prefix": ["userAgent-chrome", "userAgent-desktop"],
+    "body": [
+      "userAgent(userAgent: \"Mozilla/5.0 (${1|Windows NT 10.0; Win64; x64,Macintosh; Intel Mac OS X 10_15_7,X11; Linux x86_64|}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${2:120.0.0.0} Safari/537.36\") {",
+      "\tuserAgent",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Set desktop Chrome User-Agent"
+  },
+  "UserAgent Desktop Firefox": {
+    "prefix": ["userAgent-firefox"],
+    "body": [
+      "userAgent(userAgent: \"Mozilla/5.0 (${1|Windows NT 10.0; Win64; x64,Macintosh; Intel Mac OS X 10.15,X11; Linux x86_64|}) Gecko/20100101 Firefox/${2:120.0}\") {",
+      "\tuserAgent",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Set desktop Firefox User-Agent"
+  },
+  "UserAgent Desktop Safari": {
+    "prefix": ["userAgent-safari"],
+    "body": [
+      "userAgent(userAgent: \"Mozilla/5.0 (Macintosh; Intel Mac OS X ${1:10_15_7}) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/${2:17.0} Safari/605.1.15\") {",
+      "\tuserAgent",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Set desktop Safari User-Agent"
+  },
+  "UserAgent Bot Crawler": {
+    "prefix": ["userAgent-bot", "userAgent-crawler"],
+    "body": [
+      "userAgent(userAgent: \"${1:CustomBot}/1.0 (+https://${2:example.com}/bot)\") {",
+      "\tuserAgent",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Set custom bot/crawler User-Agent"
+  },
+  "UserAgent Testing": {
+    "prefix": ["userAgent-test"],
+    "body": [
+      "userAgent(userAgent: \"${1:TestBot}/1.0 (Testing; +https://${2:example.com}/testing)\") {",
+      "\tuserAgent",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Set testing User-Agent string"
+  },
+  "UserAgent Tablet iPad": {
+    "prefix": ["userAgent-ipad", "userAgent-tablet"],
+    "body": [
+      "userAgent(userAgent: \"Mozilla/5.0 (iPad; CPU OS ${1:14_6} like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/${2:14.0} Mobile/15E148 Safari/604.1\") {",
+      "\tuserAgent",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Set iPad tablet User-Agent"
+  },
+  "UserAgent Mobile Simulation": {
+    "prefix": ["userAgent-mobile-sim"],
+    "body": [
+      "# Set mobile User-Agent for device simulation",
+      "userAgent(userAgent: \"Mozilla/5.0 (${1|iPhone; CPU iPhone OS 14_6 like Mac OS X,Linux; Android 11; SM-G991B|}) AppleWebKit/${2|605.1.15,537.36|} (KHTML, like Gecko) ${3|Version/14.0 Mobile/15E148 Safari/604.1,Chrome/120.0.0.0 Mobile Safari/537.36|}\") {",
+      "\tuserAgent",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Mobile device simulation with User-Agent"
+  },
+  "UserAgent SEO Bot": {
+    "prefix": ["userAgent-seo"],
+    "body": [
+      "userAgent(userAgent: \"${1:SEOBot}/1.0 (SEO Analysis; +https://${2:example.com}/seo-bot)\") {",
+      "\tuserAgent",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Set SEO analysis bot User-Agent"
+  },
+  "UserAgent Monitoring": {
+    "prefix": ["userAgent-monitor"],
+    "body": [
+      "userAgent(userAgent: \"${1:MonitorBot}/1.0 (Site Monitoring; +https://${2:example.com}/monitor)\") {",
+      "\tuserAgent",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Set monitoring bot User-Agent"
+  },
+  "UserAgent Legacy Browser": {
+    "prefix": ["userAgent-legacy"],
+    "body": [
+      "userAgent(userAgent: \"Mozilla/5.0 (${1|Windows NT 6.1; WOW64,compatible; MSIE 11.0; Windows NT 6.1|}) ${2|Trident/7.0,AppleWebKit/537.36|}\") {",
+      "\tuserAgent",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Set legacy browser User-Agent for compatibility testing"
+  },
+  "UserAgent Complete": {
+    "prefix": ["userAgent-full", "userAgent-complete"],
+    "body": [
+      "${1:deviceAgent}: userAgent(userAgent: \"${2:Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15}\") {",
+      "\t# User-Agent string that was set",
+      "\tuserAgent",
+      "\t",
+      "\t# Time taken for operation",
+      "\ttime",
+      "\t$0",
+      "}"
+    ],
+    "description": "Complete User-Agent configuration with documentation"
+  },
+  "UserAgent Workflow": {
+    "prefix": ["userAgent-workflow"],
+    "body": [
+      "# Professional User-Agent simulation workflow",
+      "mutation DeviceSimulation {",
+      "\t# Set mobile User-Agent",
+      "\tmobileAgent: userAgent(userAgent: \"${1:Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15}\") {",
+      "\t\tuserAgent",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Navigate with mobile User-Agent",
+      "\tmobileNavigation: goto(url: \"${2:https://example.com}\") {",
+      "\t\tstatus",
+      "\t\turl",
+      "\t}",
+      "",
+      "\t# Test mobile-specific content",
+      "\tmobileContent: text(selector: \"${3:.mobile-content}\") {",
+      "\t\ttext",
+      "\t}",
+      "",
+      "\t# Switch to desktop User-Agent",
+      "\tdesktopAgent: userAgent(userAgent: \"${4:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36}\") {",
+      "\t\tuserAgent",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Navigate with desktop User-Agent",
+      "\tdesktopNavigation: goto(url: \"${5:https://example.com}\") {",
+      "\t\tstatus",
+      "\t\turl",
+      "\t}",
+      "",
+      "\t# Test desktop-specific content",
+      "\tdesktopContent: text(selector: \"${6:.desktop-content}\") {",
+      "\t\ttext",
+      "\t}",
+      "",
+      "\t# Verify User-Agent detection",
+      "\tuserAgentCheck: evaluate(expression: \"navigator.userAgent\") {",
+      "\t\tvalue",
+      "\t}",
+      "}",
+      "$0"
+    ],
+    "description": "Complete User-Agent simulation workflow with device switching"
+  },
+  "Verify Basic": {
+    "prefix": ["verify"],
+    "body": [
+      "verify(type: ${1|cloudflare|}) {",
+      "\tfound",
+      "\tsolved",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "🚨 EXPERIMENTAL: Basic verification challenge solving"
+  },
+  "Verify Cloudflare": {
+    "prefix": ["verify-cloudflare", "verify-cf"],
+    "body": [
+      "verify(type: cloudflare) {",
+      "\tfound",
+      "\tsolved",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "🚨 EXPERIMENTAL: Solve Cloudflare verification challenge"
+  },
+  "Verify with Timeout": {
+    "prefix": ["verify-timeout"],
+    "body": [
+      "verify(",
+      "\ttype: ${1|cloudflare|}",
+      "\ttimeout: ${2:30000}",
+      ") {",
+      "\tfound",
+      "\tsolved",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "🚨 EXPERIMENTAL: Solve verification with custom timeout"
+  },
+  "Verify No Wait": {
+    "prefix": ["verify-nowait"],
+    "body": [
+      "verify(",
+      "\ttype: ${1|cloudflare|}",
+      "\twait: false",
+      ") {",
+      "\tfound",
+      "\tsolved",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "🚨 EXPERIMENTAL: Check for verification without waiting"
+  },
+  "Verify Authentication": {
+    "prefix": ["verify-auth"],
+    "body": [
+      "# Navigate to protected page",
+      "goto(url: \"${1:https://protected.domain}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "# Solve authentication verification",
+      "verify(type: ${2|cloudflare|}) {",
+      "\tfound",
+      "\tsolved",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "🚨 EXPERIMENTAL: Solve verification for authentication"
+  },
+  "Verify Bot Protection": {
+    "prefix": ["verify-bot", "verify-protection"],
+    "body": [
+      "verify(",
+      "\ttype: ${1|cloudflare|}",
+      "\ttimeout: ${2:45000}",
+      "\twait: ${3|true,false|}",
+      ") {",
+      "\tfound",
+      "\tsolved",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "🚨 EXPERIMENTAL: Solve bot protection verification"
+  },
+  "Verify Form Submission": {
+    "prefix": ["verify-form"],
+    "body": [
+      "# Fill form fields first",
+      "type(selector: \"${1:input[name='email']}\", text: \"${2:user@example.com}\") {",
+      "\ttime",
+      "}",
+      "",
+      "# Solve verification before submission",
+      "verify(type: ${3|cloudflare|}) {",
+      "\tfound",
+      "\tsolved",
+      "\ttime",
+      "}",
+      "",
+      "# Submit form",
+      "click(selector: \"${4:button[type='submit']}\") {",
+      "\tselector",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "🚨 EXPERIMENTAL: Solve verification in form submission workflow"
+  },
+  "Verify Multiple Attempts": {
+    "prefix": ["verify-retry", "verify-multiple"],
+    "body": [
+      "# First verification attempt",
+      "${1:firstAttempt}: verify(",
+      "\ttype: ${2|cloudflare|}",
+      "\ttimeout: ${3:15000}",
+      ") {",
+      "\tfound",
+      "\tsolved",
+      "\ttime",
+      "}",
+      "",
+      "# Retry with longer timeout if needed",
+      "${4:retryAttempt}: verify(",
+      "\ttype: ${5|cloudflare|}",
+      "\ttimeout: ${6:45000}",
+      "\twait: ${7|true,false|}",
+      ") {",
+      "\tfound",
+      "\tsolved",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "🚨 EXPERIMENTAL: Multiple verification solving attempts"
+  },
+  "Verify API Integration": {
+    "prefix": ["verify-api"],
+    "body": [
+      "# Navigate to API endpoint with protection",
+      "goto(url: \"${1:https://api.example.com/protected}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "# Solve verification before API access",
+      "${2:apiVerification}: verify(",
+      "\ttype: ${3|cloudflare|}",
+      "\ttimeout: ${4:30000}",
+      ") {",
+      "\tfound",
+      "\tsolved",
+      "\ttime",
+      "}",
+      "",
+      "# Make API request after verification",
+      "evaluate(content: \"${5:fetch('/api/data').then(r => r.json())}\") {",
+      "\tvalue",
+      "}$0"
+    ],
+    "description": "🚨 EXPERIMENTAL: Solve verification for API integration"
+  },
+  "Verify E-commerce": {
+    "prefix": ["verify-ecommerce", "verify-shop"],
+    "body": [
+      "# Navigate to checkout page",
+      "goto(url: \"${1:https://shop.example.com/checkout}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "# Solve checkout verification",
+      "${2:checkoutVerification}: verify(",
+      "\ttype: ${3|cloudflare|}",
+      "\ttimeout: ${4:30000}",
+      ") {",
+      "\tfound",
+      "\tsolved",
+      "\ttime",
+      "}",
+      "",
+      "# Complete purchase",
+      "click(selector: \"${5:button.complete-order}\") {",
+      "\tselector",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "🚨 EXPERIMENTAL: Solve verification in e-commerce workflow"
+  },
+  "Verify Complete": {
+    "prefix": ["verify-full", "verify-complete"],
+    "body": [
+      "${1:verificationResult}: verify(",
+      "\ttype: ${2|cloudflare|}",
+      "\ttimeout: ${3:30000}",
+      "\twait: ${4|true,false|}",
+      ") {",
+      "\t# Challenge detection",
+      "\tfound",
+      "\t",
+      "\t# Solution status",
+      "\tsolved",
+      "\t",
+      "\t# Performance timing",
+      "\ttime",
+      "\t$0",
+      "}"
+    ],
+    "description": "🚨 EXPERIMENTAL: Complete verification solving with all options"
+  },
+  "Verify Workflow": {
+    "prefix": ["verify-workflow"],
+    "body": [
+      "# Professional verification workflow",
+      "mutation VerificationWorkflow {",
+      "\t# Navigate to protected resource",
+      "\tgoto(url: \"${1:https://protected.example.com}\") {",
+      "\t\tstatus",
+      "\t\turl",
+      "\t}",
+      "",
+      "\t# Detect and solve verification",
+      "\t${2:verificationCheck}: verify(",
+      "\t\ttype: ${3|cloudflare|}",
+      "\t\ttimeout: ${4:15000}",
+      "\t\twait: true",
+      "\t) {",
+      "\t\tfound",
+      "\t\tsolved",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Conditional retry if not solved",
+      "\t${5:retryIfNeeded}: verify(",
+      "\t\ttype: ${6|cloudflare|}",
+      "\t\ttimeout: ${7:45000}",
+      "\t\twait: ${8|true,false|}",
+      "\t) {",
+      "\t\tfound",
+      "\t\tsolved",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Access protected content after verification",
+      "\t${9:protectedContent}: html(selector: \"${10:.protected-content}\") {",
+      "\t\thtml",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Verify successful access",
+      "\t${11:verification}: text(selector: \"${12:h1.success}\") {",
+      "\t\ttext",
+      "\t\ttime",
+      "\t}",
+      "}",
+      "$0"
+    ],
+    "description": "🚨 EXPERIMENTAL: Complete verification workflow with verification"
+  },
+  "WaitForNavigation Basic": {
+    "prefix": ["waitForNavigation"],
+    "body": [
+      "waitForNavigation {",
+      "\tstatus",
+      "\turl",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Basic wait for navigation event to complete"
+  },
+  "WaitForNavigation with Timeout": {
+    "prefix": ["waitForNavigation-timeout"],
+    "body": [
+      "waitForNavigation(timeout: ${1:30000}) {",
+      "\tstatus",
+      "\turl",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for navigation with custom timeout"
+  },
+  "WaitForNavigation Load": {
+    "prefix": ["waitForNavigation-load"],
+    "body": [
+      "waitForNavigation(waitUntil: load) {",
+      "\tstatus",
+      "\turl",
+      "\theaders",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for navigation until page load event"
+  },
+  "WaitForNavigation DOM Content": {
+    "prefix": ["waitForNavigation-dom", "waitForNavigation-domcontentloaded"],
+    "body": [
+      "waitForNavigation(waitUntil: domcontentloaded) {",
+      "\tstatus",
+      "\turl",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for navigation until DOM content loaded"
+  },
+  "WaitForNavigation Network Idle": {
+    "prefix": ["waitForNavigation-idle", "waitForNavigation-networkidle"],
+    "body": [
+      "waitForNavigation(waitUntil: networkidle) {",
+      "\tstatus",
+      "\turl",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for navigation until network is idle"
+  },
+  "WaitForNavigation Form Submit": {
+    "prefix": ["waitForNavigation-form", "waitForNavigation-submit"],
+    "body": [
+      "# Submit form",
+      "click(selector: \"${1:button[type='submit']}\") {",
+      "\tselector",
+      "}",
+      "",
+      "# Wait for form submission navigation",
+      "waitForNavigation(",
+      "\ttimeout: ${2:30000}",
+      "\twaitUntil: ${3|load,domcontentloaded,networkidle|}",
+      ") {",
+      "\tstatus",
+      "\turl",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for navigation after form submission"
+  },
+  "WaitForNavigation Link Click": {
+    "prefix": ["waitForNavigation-link", "waitForNavigation-click"],
+    "body": [
+      "# Click navigation link",
+      "click(selector: \"${1:a[href='/products']}\") {",
+      "\tselector",
+      "}",
+      "",
+      "# Wait for link navigation",
+      "waitForNavigation {",
+      "\tstatus",
+      "\turl",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for navigation after clicking a link"
+  },
+  "WaitForNavigation SPA": {
+    "prefix": ["waitForNavigation-spa", "waitForNavigation-single-page"],
+    "body": [
+      "# Click SPA navigation",
+      "click(selector: \"${1:.nav-link}\") {",
+      "\tselector",
+      "}",
+      "",
+      "# Wait for SPA route change",
+      "waitForNavigation(",
+      "\ttimeout: ${2:15000}",
+      "\twaitUntil: domcontentloaded",
+      ") {",
+      "\tstatus",
+      "\turl",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for navigation in single-page applications"
+  },
+  "WaitForNavigation Redirect": {
+    "prefix": ["waitForNavigation-redirect"],
+    "body": [
+      "# Navigate to redirecting URL",
+      "goto(url: \"${1:https://example.com/redirect}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "# Wait for redirect completion",
+      "waitForNavigation(",
+      "\ttimeout: ${2:45000}",
+      "\twaitUntil: ${3|load,networkidle|}",
+      ") {",
+      "\tstatus",
+      "\turl",
+      "\theaders",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for navigation through redirects"
+  },
+  "WaitForNavigation Authentication": {
+    "prefix": ["waitForNavigation-auth", "waitForNavigation-login"],
+    "body": [
+      "# Fill login form",
+      "type(selector: \"input[name='username']\", text: \"${1:username}\") {",
+      "\ttime",
+      "}",
+      "",
+      "type(selector: \"input[name='password']\", text: \"${2:password}\") {",
+      "\ttime",
+      "}",
+      "",
+      "# Submit login",
+      "click(selector: \"button[type='submit']\") {",
+      "\tselector",
+      "}",
+      "",
+      "# Wait for authentication redirect",
+      "waitForNavigation(",
+      "\ttimeout: ${3:30000}",
+      "\twaitUntil: load",
+      ") {",
+      "\tstatus",
+      "\turl",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for navigation after authentication"
+  },
+  "WaitForNavigation API": {
+    "prefix": ["waitForNavigation-api"],
+    "body": [
+      "# Trigger API navigation",
+      "evaluate(expression: \"${1:window.location.href = '/api/endpoint'}\") {",
+      "\tvalue",
+      "}",
+      "",
+      "# Wait for programmatic navigation",
+      "waitForNavigation(",
+      "\ttimeout: ${2:20000}",
+      "\twaitUntil: ${3|load,domcontentloaded|}",
+      ") {",
+      "\tstatus",
+      "\turl",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for navigation triggered by JavaScript/API calls"
+  },
+  "WaitForNavigation E-commerce": {
+    "prefix": ["waitForNavigation-ecommerce", "waitForNavigation-shop"],
+    "body": [
+      "# Add item to cart",
+      "click(selector: \"${1:button.add-to-cart}\") {",
+      "\tselector",
+      "}",
+      "",
+      "# Wait for cart page navigation",
+      "waitForNavigation(",
+      "\ttimeout: ${2:25000}",
+      "\twaitUntil: load",
+      ") {",
+      "\tstatus",
+      "\turl",
+      "\ttime",
+      "}",
+      "",
+      "# Verify cart page loaded",
+      "cartItems: text(selector: \"${3:.cart-items}\") {",
+      "\ttext",
+      "}$0"
+    ],
+    "description": "Wait for navigation in e-commerce workflows"
+  },
+  "WaitForNavigation Complete": {
+    "prefix": ["waitForNavigation-full", "waitForNavigation-complete"],
+    "body": [
+      "${1:navigationResult}: waitForNavigation(",
+      "\ttimeout: ${2:30000}",
+      "\twaitUntil: ${3|load,domcontentloaded,networkidle|}",
+      ") {",
+      "\t# Response status",
+      "\tstatus",
+      "\t",
+      "\t# Final URL after redirects",
+      "\turl",
+      "\t",
+      "\t# Response headers",
+      "\theaders",
+      "\t",
+      "\t# Navigation timing",
+      "\ttime",
+      "\t$0",
+      "}"
+    ],
+    "description": "Complete wait for navigation with all options and fields"
+  },
+  "WaitForNavigation Workflow": {
+    "prefix": ["waitForNavigation-workflow"],
+    "body": [
+      "# Professional navigation workflow",
+      "mutation NavigationWorkflow {",
+      "\t# Initial page load",
+      "\tgoto(url: \"${1:https://example.com}\") {",
+      "\t\tstatus",
+      "\t\turl",
+      "\t}",
+      "",
+      "\t# Navigate to section",
+      "\tclick(selector: \"${2:a[href='/products']}\") {",
+      "\t\tselector",
+      "\t}",
+      "",
+      "\t# Wait for navigation",
+      "\t${3:productNavigation}: waitForNavigation(",
+      "\t\ttimeout: ${4:30000}",
+      "\t\twaitUntil: ${5|load,domcontentloaded,networkidle|}",
+      "\t) {",
+      "\t\tstatus",
+      "\t\turl",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Interact with new page",
+      "\t${6:pageContent}: text(selector: \"${7:h1}\") {",
+      "\t\ttext",
+      "\t}",
+      "",
+      "\t# Navigate to details",
+      "\tclick(selector: \"${8:.product-link}\") {",
+      "\t\tselector",
+      "\t}",
+      "",
+      "\t# Wait for detail page",
+      "\t${9:detailNavigation}: waitForNavigation(",
+      "\t\ttimeout: ${10:25000}",
+      "\t\twaitUntil: load",
+      "\t) {",
+      "\t\tstatus",
+      "\t\turl",
+      "\t\theaders",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Verify final page",
+      "\t${11:finalContent}: html(selector: \"${12:.product-details}\") {",
+      "\t\thtml",
+      "\t\ttime",
+      "\t}",
+      "}",
+      "$0"
+    ],
+    "description": "Complete navigation workflow with multiple wait points"
+  },
+  "WaitForRequest Basic": {
+    "prefix": ["waitForRequest"],
+    "body": [
+      "waitForRequest {",
+      "\tmethod",
+      "\turl",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Basic wait for any network request"
+  },
+  "WaitForRequest GET": {
+    "prefix": ["waitForRequest-get"],
+    "body": [
+      "waitForRequest(method: GET) {",
+      "\tmethod",
+      "\turl",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for GET request"
+  },
+  "WaitForRequest POST": {
+    "prefix": ["waitForRequest-post"],
+    "body": [
+      "waitForRequest(method: POST) {",
+      "\tmethod",
+      "\turl",
+      "\theaders",
+      "\tpostData",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for POST request with request data"
+  },
+  "WaitForRequest API": {
+    "prefix": ["waitForRequest-api"],
+    "body": [
+      "waitForRequest(",
+      "\tmethod: ${1|GET,POST,PUT,DELETE|}",
+      "\turl: \"${2:**/api/**}\"",
+      ") {",
+      "\tmethod",
+      "\turl",
+      "\theaders",
+      "\tpostData",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for specific API endpoint request"
+  },
+  "WaitForRequest with Timeout": {
+    "prefix": ["waitForRequest-timeout"],
+    "body": [
+      "waitForRequest(",
+      "\tmethod: ${1|GET,POST,PUT,DELETE|}",
+      "\ttimeout: ${2:30000}",
+      ") {",
+      "\tmethod",
+      "\turl",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for request with custom timeout"
+  },
+  "WaitForRequest URL Pattern": {
+    "prefix": ["waitForRequest-pattern", "waitForRequest-url"],
+    "body": [
+      "waitForRequest(url: \"${1:**/users/**}\") {",
+      "\tmethod",
+      "\turl",
+      "\theaders",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for request matching URL pattern"
+  },
+  "WaitForRequest Image": {
+    "prefix": ["waitForRequest-image", "waitForRequest-img"],
+    "body": [
+      "waitForRequest(url: \"${1:**/*.{jpg,png,gif,webp}}\") {",
+      "\tmethod",
+      "\turl",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for image resource requests"
+  },
+  "WaitForRequest Script": {
+    "prefix": ["waitForRequest-js", "waitForRequest-script"],
+    "body": [
+      "waitForRequest(url: \"${1:**/*.js}\") {",
+      "\tmethod",
+      "\turl",
+      "\theaders",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for JavaScript file requests"
+  },
+  "WaitForRequest CSS": {
+    "prefix": ["waitForRequest-css"],
+    "body": [
+      "waitForRequest(url: \"${1:**/*.css}\") {",
+      "\tmethod",
+      "\turl",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for CSS stylesheet requests"
+  },
+  "WaitForRequest AJAX": {
+    "prefix": ["waitForRequest-ajax", "waitForRequest-xhr"],
+    "body": [
+      "# Trigger AJAX request",
+      "click(selector: \"${1:button.load-data}\") {",
+      "\tselector",
+      "}",
+      "",
+      "# Wait for AJAX request",
+      "waitForRequest(",
+      "\tmethod: ${2|GET,POST|}",
+      "\turl: \"${3:**/ajax/**}\"",
+      ") {",
+      "\tmethod",
+      "\turl",
+      "\theaders",
+      "\tpostData",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for AJAX/XHR requests after user action"
+  },
+  "WaitForRequest Form Submit": {
+    "prefix": ["waitForRequest-form", "waitForRequest-submit"],
+    "body": [
+      "# Fill form fields",
+      "type(selector: \"input[name='username']\", text: \"${1:user}\") {",
+      "\ttime",
+      "}",
+      "",
+      "# Submit form",
+      "click(selector: \"button[type='submit']\") {",
+      "\tselector",
+      "}",
+      "",
+      "# Wait for form submission request",
+      "waitForRequest(",
+      "\tmethod: POST",
+      "\turl: \"${2:**/login**}\"",
+      ") {",
+      "\tmethod",
+      "\turl",
+      "\theaders",
+      "\tpostData",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for form submission request"
+  },
+  "WaitForRequest Third Party": {
+    "prefix": ["waitForRequest-third-party", "waitForRequest-external"],
+    "body": [
+      "waitForRequest(url: \"${1:https://cdn.example.com/**}\") {",
+      "\tmethod",
+      "\turl",
+      "\theaders",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for third-party/external requests"
+  },
+  "WaitForRequest Analytics": {
+    "prefix": ["waitForRequest-analytics", "waitForRequest-tracking"],
+    "body": [
+      "waitForRequest(url: \"${1:**/analytics/**}\") {",
+      "\tmethod",
+      "\turl",
+      "\theaders",
+      "\tpostData",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for analytics/tracking requests"
+  },
+  "WaitForRequest GraphQL": {
+    "prefix": ["waitForRequest-graphql", "waitForRequest-gql"],
+    "body": [
+      "waitForRequest(",
+      "\tmethod: POST",
+      "\turl: \"${1:**/graphql}\"",
+      ") {",
+      "\tmethod",
+      "\turl",
+      "\theaders",
+      "\tpostData",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for GraphQL API requests"
+  },
+  "WaitForRequest Complete": {
+    "prefix": ["waitForRequest-full", "waitForRequest-complete"],
+    "body": [
+      "${1:requestCapture}: waitForRequest(",
+      "\tmethod: ${2|GET,POST,PUT,DELETE,PATCH|}",
+      "\turl: \"${3:**/api/**}\"",
+      "\ttimeout: ${4:30000}",
+      ") {",
+      "\t# Request method",
+      "\tmethod",
+      "\t",
+      "\t# Request URL",
+      "\turl",
+      "\t",
+      "\t# Request headers",
+      "\theaders",
+      "\t",
+      "\t# Request body/POST data",
+      "\tpostData",
+      "\t",
+      "\t# Request timing",
+      "\ttime",
+      "\t$0",
+      "}"
+    ],
+    "description": "Complete request monitoring with all options and fields"
+  },
+  "WaitForRequest Workflow": {
+    "prefix": ["waitForRequest-workflow"],
+    "body": [
+      "# Professional request monitoring workflow",
+      "mutation RequestMonitoringWorkflow {",
+      "\t# Navigate to page with API calls",
+      "\tgoto(url: \"${1:https://api-app.example.com}\") {",
+      "\t\tstatus",
+      "\t\turl",
+      "\t}",
+      "",
+      "\t# Wait for initial data load",
+      "\t${2:initialLoad}: waitForRequest(",
+      "\t\tmethod: ${3|GET,POST|}",
+      "\t\turl: \"${4:**/api/data**}\"",
+      "\t\ttimeout: ${5:15000}",
+      "\t) {",
+      "\t\tmethod",
+      "\t\turl",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Trigger user action",
+      "\tclick(selector: \"${6:button.load-more}\") {",
+      "\t\tselector",
+      "\t}",
+      "",
+      "\t# Monitor subsequent API call",
+      "\t${7:userTriggeredRequest}: waitForRequest(",
+      "\t\tmethod: ${8|GET,POST|}",
+      "\t\turl: \"${9:**/api/more-data**}\"",
+      "\t\ttimeout: ${10:20000}",
+      "\t) {",
+      "\t\tmethod",
+      "\t\turl",
+      "\t\theaders",
+      "\t\tpostData",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Monitor analytics tracking",
+      "\t${11:analyticsRequest}: waitForRequest(",
+      "\t\turl: \"${12:**/analytics/**}\"",
+      "\t\ttimeout: ${13:10000}",
+      "\t) {",
+      "\t\tmethod",
+      "\t\turl",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Verify page state after requests",
+      "\t${14:finalContent}: text(selector: \"${15:.data-container}\") {",
+      "\t\ttext",
+      "\t\ttime",
+      "\t}",
+      "}",
+      "$0"
+    ],
+    "description": "Complete request monitoring workflow with multiple capture points"
+  },
+  "WaitForResponse Basic": {
+    "prefix": ["waitForResponse"],
+    "body": [
+      "waitForResponse {",
+      "\tstatus",
+      "\turl",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Basic wait for any network response"
+  },
+  "WaitForResponse Success": {
+    "prefix": ["waitForResponse-success", "waitForResponse-200"],
+    "body": [
+      "waitForResponse(statuses: [200]) {",
+      "\tstatus",
+      "\turl",
+      "\theaders",
+      "\tbody",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for successful HTTP 200 response"
+  },
+  "WaitForResponse Error": {
+    "prefix": ["waitForResponse-error", "waitForResponse-4xx"],
+    "body": [
+      "waitForResponse(statuses: [${1|400,401,403,404,500|}]) {",
+      "\tstatus",
+      "\turl",
+      "\theaders",
+      "\tbody",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for error HTTP response codes"
+  },
+  "WaitForResponse API": {
+    "prefix": ["waitForResponse-api"],
+    "body": [
+      "waitForResponse(",
+      "\tstatuses: [${1|200,201,400,404,500|}]",
+      "\turl: \"${2:**/api/**}\"",
+      ") {",
+      "\tstatus",
+      "\turl",
+      "\theaders",
+      "\tbody",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for specific API endpoint response"
+  },
+  "WaitForResponse Multiple Status": {
+    "prefix": ["waitForResponse-multiple", "waitForResponse-list"],
+    "body": [
+      "waitForResponse(statuses: [${1:200, 201, 202}]) {",
+      "\tstatus",
+      "\turl",
+      "\theaders",
+      "\tbody",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for multiple acceptable status codes"
+  },
+  "WaitForResponse with Timeout": {
+    "prefix": ["waitForResponse-timeout"],
+    "body": [
+      "waitForResponse(",
+      "\tstatuses: [${1|200,400,500|}]",
+      "\ttimeout: ${2:30000}",
+      ") {",
+      "\tstatus",
+      "\turl",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for response with custom timeout"
+  },
+  "WaitForResponse URL Pattern": {
+    "prefix": ["waitForResponse-pattern", "waitForResponse-url"],
+    "body": [
+      "waitForResponse(",
+      "\tstatuses: [${1|200,404|}]",
+      "\turl: \"${2:**/users/**}\"",
+      ") {",
+      "\tstatus",
+      "\turl",
+      "\theaders",
+      "\tbody",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for response matching URL pattern"
+  },
+  "WaitForResponse JSON API": {
+    "prefix": ["waitForResponse-json", "waitForResponse-rest"],
+    "body": [
+      "waitForResponse(",
+      "\tstatuses: [200, 201]",
+      "\turl: \"${1:**/api/**}\"",
+      ") {",
+      "\tstatus",
+      "\turl",
+      "\theaders",
+      "\tbody",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for JSON API response"
+  },
+  "WaitForResponse GraphQL": {
+    "prefix": ["waitForResponse-graphql", "waitForResponse-gql"],
+    "body": [
+      "waitForResponse(",
+      "\tstatuses: [200]",
+      "\turl: \"${1:**/graphql}\"",
+      ") {",
+      "\tstatus",
+      "\turl",
+      "\theaders",
+      "\tbody",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for GraphQL API response"
+  },
+  "WaitForResponse Image": {
+    "prefix": ["waitForResponse-image", "waitForResponse-img"],
+    "body": [
+      "waitForResponse(",
+      "\tstatuses: [200]",
+      "\turl: \"${1:**/*.{jpg,png,gif,webp}}\"",
+      ") {",
+      "\tstatus",
+      "\turl",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for image resource response"
+  },
+  "WaitForResponse Auth": {
+    "prefix": ["waitForResponse-auth", "waitForResponse-login"],
+    "body": [
+      "# Fill login form",
+      "type(selector: \"input[name='username']\", text: \"${1:user}\") {",
+      "\ttime",
+      "}",
+      "",
+      "type(selector: \"input[name='password']\", text: \"${2:password}\") {",
+      "\ttime",
+      "}",
+      "",
+      "# Submit login",
+      "click(selector: \"button[type='submit']\") {",
+      "\tselector",
+      "}",
+      "",
+      "# Wait for authentication response",
+      "waitForResponse(",
+      "\tstatuses: [${3|200,401,403|}]",
+      "\turl: \"${4:**/login**}\"",
+      ") {",
+      "\tstatus",
+      "\turl",
+      "\theaders",
+      "\tbody",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for authentication response after login"
+  },
+  "WaitForResponse Form Submit": {
+    "prefix": ["waitForResponse-form", "waitForResponse-submit"],
+    "body": [
+      "# Fill form",
+      "type(selector: \"input[name='email']\", text: \"${1:user@example.com}\") {",
+      "\ttime",
+      "}",
+      "",
+      "# Submit form",
+      "click(selector: \"button[type='submit']\") {",
+      "\tselector",
+      "}",
+      "",
+      "# Wait for form submission response",
+      "waitForResponse(",
+      "\tstatuses: [${2|200,400,422|}]",
+      "\turl: \"${3:**/contact**}\"",
+      ") {",
+      "\tstatus",
+      "\turl",
+      "\theaders",
+      "\tbody",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for form submission response"
+  },
+  "WaitForResponse AJAX": {
+    "prefix": ["waitForResponse-ajax", "waitForResponse-xhr"],
+    "body": [
+      "# Trigger AJAX request",
+      "click(selector: \"${1:button.load-data}\") {",
+      "\tselector",
+      "}",
+      "",
+      "# Wait for AJAX response",
+      "waitForResponse(",
+      "\tstatuses: [${2|200,404,500|}]",
+      "\turl: \"${3:**/ajax/**}\"",
+      ") {",
+      "\tstatus",
+      "\turl",
+      "\theaders",
+      "\tbody",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for AJAX/XHR response after user action"
+  },
+  "WaitForResponse File Upload": {
+    "prefix": ["waitForResponse-upload", "waitForResponse-file"],
+    "body": [
+      "# Upload file",
+      "type(selector: \"input[type='file']\", text: \"${1:/path/to/file.jpg}\") {",
+      "\ttime",
+      "}",
+      "",
+      "click(selector: \"button[type='submit']\") {",
+      "\tselector",
+      "}",
+      "",
+      "# Wait for upload response",
+      "waitForResponse(",
+      "\tstatuses: [${2|200,413,422|}]",
+      "\turl: \"${3:**/upload**}\"",
+      "\ttimeout: ${4:120000}",
+      ") {",
+      "\tstatus",
+      "\turl",
+      "\theaders",
+      "\tbody",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for file upload response"
+  },
+  "WaitForResponse Error Handling": {
+    "prefix": ["waitForResponse-errors"],
+    "body": [
+      "waitForResponse(",
+      "\tstatuses: [400, 401, 403, 404, 422, 500, 502, 503]",
+      "\turl: \"${1:**/api/**}\"",
+      ") {",
+      "\tstatus",
+      "\turl",
+      "\theaders",
+      "\tbody",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for error responses for debugging"
+  },
+  "WaitForResponse Complete": {
+    "prefix": ["waitForResponse-full", "waitForResponse-complete"],
+    "body": [
+      "${1:responseCapture}: waitForResponse(",
+      "\tstatuses: [${2:200, 400, 500}]",
+      "\turl: \"${3:**/api/**}\"",
+      "\ttimeout: ${4:30000}",
+      ") {",
+      "\t# HTTP status code",
+      "\tstatus",
+      "\t",
+      "\t# Response URL",
+      "\turl",
+      "\t",
+      "\t# Response headers",
+      "\theaders",
+      "\t",
+      "\t# Response body content",
+      "\tbody",
+      "\t",
+      "\t# Response timing",
+      "\ttime",
+      "\t$0",
+      "}"
+    ],
+    "description": "Complete response monitoring with all options and fields"
+  },
+  "WaitForResponse Workflow": {
+    "prefix": ["waitForResponse-workflow"],
+    "body": [
+      "# Professional response monitoring workflow",
+      "mutation ResponseMonitoringWorkflow {",
+      "\t# Navigate to application",
+      "\tgoto(url: \"${1:https://api-app.example.com}\") {",
+      "\t\tstatus",
+      "\t\turl",
+      "\t}",
+      "",
+      "\t# Wait for initial API response",
+      "\t${2:initialResponse}: waitForResponse(",
+      "\t\tstatuses: [${3|200,404|}]",
+      "\t\turl: \"${4:**/api/data**}\"",
+      "\t\ttimeout: ${5:15000}",
+      "\t) {",
+      "\t\tstatus",
+      "\t\turl",
+      "\t\theaders",
+      "\t\tbody",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Trigger user action",
+      "\tclick(selector: \"${6:button.submit-form}\") {",
+      "\t\tselector",
+      "\t}",
+      "",
+      "\t# Monitor form submission response",
+      "\t${7:formResponse}: waitForResponse(",
+      "\t\tstatuses: [${8|200,400,422|}]",
+      "\t\turl: \"${9:**/api/submit**}\"",
+      "\t\ttimeout: ${10:20000}",
+      "\t) {",
+      "\t\tstatus",
+      "\t\turl",
+      "\t\theaders",
+      "\t\tbody",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Monitor error responses",
+      "\t${11:errorResponse}: waitForResponse(",
+      "\t\tstatuses: [400, 401, 403, 404, 500]",
+      "\t\turl: \"${12:**/api/**}\"",
+      "\t\ttimeout: ${13:10000}",
+      "\t) {",
+      "\t\tstatus",
+      "\t\turl",
+      "\t\theaders",
+      "\t\tbody",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Verify final page state",
+      "\t${14:finalContent}: text(selector: \"${15:.result-container}\") {",
+      "\t\ttext",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Response analysis",
+      "\t${16:responseAnalysis}: evaluate(expression: `",
+      "\t\treturn {",
+      "\t\t\tinitialStatus: ${17:${initialResponse.status}},",
+      "\t\t\tformStatus: ${18:${formResponse.status}},",
+      "\t\t\terrorStatus: ${19:${errorResponse.status}},",
+      "\t\t\ttotalTime: ${20:${initialResponse.time}} + ${21:${formResponse.time}},",
+      "\t\t\ttimestamp: Date.now()",
+      "\t\t};",
+      "\t`) {",
+      "\t\tvalue",
+      "\t}",
+      "}",
+      "$0"
+    ],
+    "description": "Complete response monitoring workflow with multiple capture points"
+  },
+  "WaitForSelector Basic": {
+    "prefix": ["waitForSelector"],
+    "body": [
+      "waitForSelector(selector: \"${1:#element}\") {",
+      "\tselector",
+      "\tvisible",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Basic wait for DOM element to be present"
+  },
+  "WaitForSelector Visible": {
+    "prefix": ["waitForSelector-visible", "waitForSelector-show"],
+    "body": [
+      "waitForSelector(",
+      "\tselector: \"${1:.dynamic-content}\"",
+      "\tvisible: true",
+      ") {",
+      "\tselector",
+      "\tvisible",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for element to be visible in DOM"
+  },
+  "WaitForSelector Timeout": {
+    "prefix": ["waitForSelector-timeout"],
+    "body": [
+      "waitForSelector(",
+      "\tselector: \"${1:.slow-loading}\"",
+      "\ttimeout: ${2:60000}",
+      "\tvisible: ${3|true,false|}",
+      ") {",
+      "\tselector",
+      "\tvisible",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for element with custom timeout"
+  },
+  "WaitForSelector Form": {
+    "prefix": ["waitForSelector-form"],
+    "body": [
+      "waitForSelector(",
+      "\tselector: \"form${1:.contact-form}\"",
+      "\tvisible: true",
+      ") {",
+      "\tselector",
+      "\tvisible",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for form element to be ready"
+  },
+  "WaitForSelector Button": {
+    "prefix": ["waitForSelector-button"],
+    "body": [
+      "waitForSelector(",
+      "\tselector: \"button${1:.submit-btn}\"",
+      "\tvisible: true",
+      ") {",
+      "\tselector",
+      "\tvisible",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for button element to be clickable"
+  },
+  "WaitForSelector Dynamic": {
+    "prefix": ["waitForSelector-dynamic", "waitForSelector-ajax"],
+    "body": [
+      "waitForSelector(",
+      "\tselector: \"${1:[data-loaded='true']}\"",
+      "\ttimeout: ${2:45000}",
+      "\tvisible: true",
+      ") {",
+      "\tselector",
+      "\tvisible",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for dynamically loaded content"
+  },
+  "WaitForSelector Modal": {
+    "prefix": ["waitForSelector-modal", "waitForSelector-popup"],
+    "body": [
+      "waitForSelector(",
+      "\tselector: \"${1:.modal, .popup, .overlay}\"",
+      "\tvisible: true",
+      "\ttimeout: ${2:30000}",
+      ") {",
+      "\tselector",
+      "\tvisible",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for modal or popup to appear"
+  },
+  "WaitForSelector Loading": {
+    "prefix": ["waitForSelector-loading", "waitForSelector-spinner"],
+    "body": [
+      "# Wait for loading spinner to disappear",
+      "waitForSelector(",
+      "\tselector: \"${1:.loading:not([style*='display: none'])}\"",
+      "\tvisible: false",
+      "\ttimeout: ${2:60000}",
+      ") {",
+      "\tselector",
+      "\tvisible",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for loading indicator to disappear"
+  },
+  "WaitForSelector Data Attribute": {
+    "prefix": ["waitForSelector-data", "waitForSelector-attr"],
+    "body": [
+      "waitForSelector(",
+      "\tselector: \"${1:[data-state='${2:ready}']}\"",
+      "\tvisible: ${3|true,false|}",
+      ") {",
+      "\tselector",
+      "\tvisible",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for element with specific data attribute"
+  },
+  "WaitForSelector Class": {
+    "prefix": ["waitForSelector-class"],
+    "body": [
+      "waitForSelector(",
+      "\tselector: \"${1:.ready, .loaded, .complete}\"",
+      "\tvisible: true",
+      ") {",
+      "\tselector",
+      "\tvisible",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for element with specific class"
+  },
+  "WaitForSelector ID": {
+    "prefix": ["waitForSelector-id"],
+    "body": [
+      "waitForSelector(",
+      "\tselector: \"#${1:dynamic-content}\"",
+      "\tvisible: true",
+      ") {",
+      "\tselector",
+      "\tvisible",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for element with specific ID"
+  },
+  "WaitForSelector Text Content": {
+    "prefix": ["waitForSelector-text", "waitForSelector-content"],
+    "body": [
+      "waitForSelector(",
+      "\tselector: \"${1:*}:contains('${2:Expected Text}')\"",
+      "\tvisible: true",
+      "\ttimeout: ${3:30000}",
+      ") {",
+      "\tselector",
+      "\tvisible",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for element containing specific text"
+  },
+  "WaitForSelector Navigation": {
+    "prefix": ["waitForSelector-nav", "waitForSelector-navigation"],
+    "body": [
+      "# Navigate to page",
+      "goto(url: \"${1:https://example.com}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "# Wait for navigation to complete",
+      "waitForSelector(",
+      "\tselector: \"${2:body.loaded, .main-content}\"",
+      "\tvisible: true",
+      "\ttimeout: ${3:30000}",
+      ") {",
+      "\tselector",
+      "\tvisible",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for page navigation to complete"
+  },
+  "WaitForSelector Image": {
+    "prefix": ["waitForSelector-image", "waitForSelector-img"],
+    "body": [
+      "waitForSelector(",
+      "\tselector: \"img${1:[src*='${2:image.jpg}']}\"",
+      "\tvisible: true",
+      "\ttimeout: ${3:45000}",
+      ") {",
+      "\tselector",
+      "\tvisible",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for image to load and be visible"
+  },
+  "WaitForSelector Table": {
+    "prefix": ["waitForSelector-table"],
+    "body": [
+      "waitForSelector(",
+      "\tselector: \"table${1:.data-table} tbody tr\"",
+      "\tvisible: true",
+      "\ttimeout: ${2:30000}",
+      ") {",
+      "\tselector",
+      "\tvisible",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for table data to be populated"
+  },
+  "WaitForSelector List": {
+    "prefix": ["waitForSelector-list", "waitForSelector-ul"],
+    "body": [
+      "waitForSelector(",
+      "\tselector: \"${1:ul, ol}${2:.item-list} li\"",
+      "\tvisible: true",
+      ") {",
+      "\tselector",
+      "\tvisible",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for list items to be populated"
+  },
+  "WaitForSelector Complete": {
+    "prefix": ["waitForSelector-full", "waitForSelector-complete"],
+    "body": [
+      "${1:elementReady}: waitForSelector(",
+      "\t# Required: CSS selector for element",
+      "\tselector: \"${2:#element, .class, [attribute]}\"",
+      "\t",
+      "\t# Optional: Custom timeout (default: 30000ms)",
+      "\ttimeout: ${3:30000}",
+      "\t",
+      "\t# Optional: Wait for visibility (default: false)",
+      "\tvisible: ${4|true,false|}",
+      ") {",
+      "\t# Matched selector",
+      "\tselector",
+      "\t",
+      "\t# Element visibility status",
+      "\tvisible",
+      "\t",
+      "\t# Time taken to find element",
+      "\ttime",
+      "\t$0",
+      "}"
+    ],
+    "description": "Complete selector waiting with all options and fields"
+  },
+  "WaitForSelector Workflow": {
+    "prefix": ["waitForSelector-workflow"],
+    "body": [
+      "# Professional element waiting workflow",
+      "mutation ElementWaitingWorkflow {",
+      "\t# Navigate to page",
+      "\tgoto(url: \"${1:https://app.example.com}\") {",
+      "\t\tstatus",
+      "\t\turl",
+      "\t}",
+      "",
+      "\t# Wait for initial page load",
+      "\t${2:pageReady}: waitForSelector(",
+      "\t\tselector: \"${3:body.loaded, .main-content}\"",
+      "\t\tvisible: true",
+      "\t\ttimeout: ${4:30000}",
+      "\t) {",
+      "\t\tselector",
+      "\t\tvisible",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Wait for dynamic content",
+      "\t${5:dynamicContent}: waitForSelector(",
+      "\t\tselector: \"${6:[data-loaded='true']}\"",
+      "\t\tvisible: true",
+      "\t\ttimeout: ${7:45000}",
+      "\t) {",
+      "\t\tselector",
+      "\t\tvisible",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Wait for interactive elements",
+      "\t${8:interactiveElement}: waitForSelector(",
+      "\t\tselector: \"${9:button.interactive:not([disabled])}\"",
+      "\t\tvisible: true",
+      "\t) {",
+      "\t\tselector",
+      "\t\tvisible",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Interact with element",
+      "\tclick(selector: \"${10:button.interactive}\") {",
+      "\t\tselector",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Wait for result",
+      "\t${11:resultElement}: waitForSelector(",
+      "\t\tselector: \"${12:.result, .success, .complete}\"",
+      "\t\tvisible: true",
+      "\t\ttimeout: ${13:60000}",
+      "\t) {",
+      "\t\tselector",
+      "\t\tvisible",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Timing analysis",
+      "\t${14:timingAnalysis}: evaluate(expression: `",
+      "\t\treturn {",
+      "\t\t\tpageLoadTime: ${15:${pageReady.time}},",
+      "\t\t\tdynamicContentTime: ${16:${dynamicContent.time}},",
+      "\t\t\tinteractiveTime: ${17:${interactiveElement.time}},",
+      "\t\t\tresultTime: ${18:${resultElement.time}},",
+      "\t\t\ttotalTime: ${19:${pageReady.time}} + ${20:${dynamicContent.time}} + ${21:${interactiveElement.time}} + ${22:${resultElement.time}},",
+      "\t\t\ttimestamp: Date.now()",
+      "\t\t};",
+      "\t`) {",
+      "\t\tvalue",
+      "\t}",
+      "}",
+      "$0"
+    ],
+    "description": "Complete element waiting workflow with timing analysis"
+  },
+  "WaitForTimeout Basic": {
+    "prefix": ["waitForTimeout"],
+    "body": [
+      "waitForTimeout(time: ${1:1000}) {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Basic timeout wait for specified duration"
+  },
+  "WaitForTimeout Short": {
+    "prefix": ["waitForTimeout-short", "waitForTimeout-500"],
+    "body": [
+      "waitForTimeout(time: ${1:500}) {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Short 500ms delay for animations and quick operations"
+  },
+  "WaitForTimeout Animation": {
+    "prefix": ["waitForTimeout-animation", "waitForTimeout-anim"],
+    "body": [
+      "# Wait for animation to complete",
+      "waitForTimeout(time: ${1:800}) {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for CSS animations or transitions to complete"
+  },
+  "WaitForTimeout Network": {
+    "prefix": ["waitForTimeout-network", "waitForTimeout-settle"],
+    "body": [
+      "# Wait for network requests to settle",
+      "waitForTimeout(time: ${1:2000}) {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for network requests to complete and settle"
+  },
+  "WaitForTimeout Processing": {
+    "prefix": ["waitForTimeout-processing", "waitForTimeout-long"],
+    "body": [
+      "# Wait for server processing",
+      "waitForTimeout(time: ${1:5000}) {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Longer wait for server processing or heavy operations"
+  },
+  "WaitForTimeout Navigation": {
+    "prefix": ["waitForTimeout-nav", "waitForTimeout-navigation"],
+    "body": [
+      "# Navigate to page",
+      "goto(url: \"${1:https://example.com}\") {",
+      "\tstatus",
+      "}",
+      "",
+      "# Wait for page to settle",
+      "waitForTimeout(time: ${2:2000}) {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait after navigation for page to fully load"
+  },
+  "WaitForTimeout Between Actions": {
+    "prefix": ["waitForTimeout-between", "waitForTimeout-actions"],
+    "body": [
+      "# First action",
+      "click(selector: \"${1:button.first}\") {",
+      "\tselector",
+      "}",
+      "",
+      "# Wait between actions",
+      "waitForTimeout(time: ${2:1500}) {",
+      "\ttime",
+      "}",
+      "",
+      "# Second action",
+      "click(selector: \"${3:button.second}\") {",
+      "\tselector",
+      "}$0"
+    ],
+    "description": "Add delay between user interactions"
+  },
+  "WaitForTimeout Form": {
+    "prefix": ["waitForTimeout-form"],
+    "body": [
+      "# Fill form field",
+      "type(selector: \"${1:input[name='field']}\", text: \"${2:value}\") {",
+      "\ttime",
+      "}",
+      "",
+      "# Wait for validation",
+      "waitForTimeout(time: ${3:1000}) {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait after form input for validation to complete"
+  },
+  "WaitForTimeout Loading": {
+    "prefix": ["waitForTimeout-loading"],
+    "body": [
+      "# Trigger loading operation",
+      "click(selector: \"${1:button.load-data}\") {",
+      "\tselector",
+      "}",
+      "",
+      "# Wait for loading to complete",
+      "waitForTimeout(time: ${2:3000}) {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for loading operations to complete"
+  },
+  "WaitForTimeout API": {
+    "prefix": ["waitForTimeout-api"],
+    "body": [
+      "# Trigger API call",
+      "click(selector: \"${1:button.api-call}\") {",
+      "\tselector",
+      "}",
+      "",
+      "# Wait for API response processing",
+      "waitForTimeout(time: ${2:4000}) {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for API calls to complete and process"
+  },
+  "WaitForTimeout Modal": {
+    "prefix": ["waitForTimeout-modal"],
+    "body": [
+      "# Open modal",
+      "click(selector: \"${1:button.open-modal}\") {",
+      "\tselector",
+      "}",
+      "",
+      "# Wait for modal animation",
+      "waitForTimeout(time: ${2:600}) {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for modal opening animations"
+  },
+  "WaitForTimeout Scroll": {
+    "prefix": ["waitForTimeout-scroll"],
+    "body": [
+      "# Scroll to element",
+      "scroll(selector: \"${1:body}\", x: 0, y: ${2:1000}) {",
+      "\ttime",
+      "}",
+      "",
+      "# Wait for scroll animation",
+      "waitForTimeout(time: ${3:800}) {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for scroll animations to complete"
+  },
+  "WaitForTimeout Debounce": {
+    "prefix": ["waitForTimeout-debounce"],
+    "body": [
+      "# Multiple rapid interactions",
+      "type(selector: \"${1:input[type='search']}\", text: \"${2:search term}\") {",
+      "\ttime",
+      "}",
+      "",
+      "# Wait for debounce period",
+      "waitForTimeout(time: ${3:1200}) {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for debounced operations like search suggestions"
+  },
+  "WaitForTimeout Media": {
+    "prefix": ["waitForTimeout-media", "waitForTimeout-video"],
+    "body": [
+      "# Start media playback",
+      "click(selector: \"${1:.play-button}\") {",
+      "\tselector",
+      "}",
+      "",
+      "# Wait for media to start",
+      "waitForTimeout(time: ${2:2000}) {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for media elements to start playing"
+  },
+  "WaitForTimeout Cache": {
+    "prefix": ["waitForTimeout-cache"],
+    "body": [
+      "# Clear cache or refresh",
+      "reload {",
+      "\tstatus",
+      "}",
+      "",
+      "# Wait for cache to rebuild",
+      "waitForTimeout(time: ${1:3000}) {",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Wait for cache operations to complete"
+  },
+  "WaitForTimeout Polling": {
+    "prefix": ["waitForTimeout-polling", "waitForTimeout-repeat"],
+    "body": [
+      "# Wait before polling check",
+      "waitForTimeout(time: ${1:5000}) {",
+      "\ttime",
+      "}",
+      "",
+      "# Check status after wait",
+      "statusCheck: text(selector: \"${2:.status-indicator}\") {",
+      "\ttext",
+      "\ttime",
+      "}$0"
+    ],
+    "description": "Add delay for polling operations"
+  },
+  "WaitForTimeout Complete": {
+    "prefix": ["waitForTimeout-full", "waitForTimeout-complete"],
+    "body": [
+      "${1:delayOperation}: waitForTimeout(",
+      "\t# Required: Time to wait in milliseconds", 
+      "\ttime: ${2:1000}",
+      ") {",
+      "\t# Actual time waited",
+      "\ttime",
+      "\t$0",
+      "}"
+    ],
+    "description": "Complete timeout operation with documentation"
+  },
+  "WaitForTimeout Workflow": {
+    "prefix": ["waitForTimeout-workflow"],
+    "body": [
+      "# Professional timing control workflow",
+      "mutation TimingControlWorkflow {",
+      "\t# Navigate to application",
+      "\tgoto(url: \"${1:https://app.example.com}\") {",
+      "\t\tstatus",
+      "\t\turl",
+      "\t}",
+      "",
+      "\t# Wait for initial page settlement",
+      "\t${2:pageSettlement}: waitForTimeout(time: ${3:2000}) {",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Trigger first action",
+      "\tclick(selector: \"${4:button.action-one}\") {",
+      "\t\tselector",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Wait between actions",
+      "\t${5:actionDelay}: waitForTimeout(time: ${6:1500}) {",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Trigger second action",
+      "\ttype(selector: \"${7:input[name='data']}\", text: \"${8:test data}\") {",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Wait for processing",
+      "\t${9:processingDelay}: waitForTimeout(time: ${10:3000}) {",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Submit form",
+      "\tclick(selector: \"${11:button[type='submit']}\") {",
+      "\t\tselector",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Wait for submission to complete",
+      "\t${12:submissionDelay}: waitForTimeout(time: ${13:4000}) {",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Verify final result",
+      "\t${14:finalResult}: text(selector: \"${15:.success-message}\") {",
+      "\t\ttext",
+      "\t\ttime",
+      "\t}",
+      "",
+      "\t# Timing analysis",
+      "\t${16:timingAnalysis}: evaluate(expression: `",
+      "\t\treturn {",
+      "\t\t\tpageSettlementTime: ${17:${pageSettlement.time}},",
+      "\t\t\tactionDelayTime: ${18:${actionDelay.time}},",
+      "\t\t\tprocessingDelayTime: ${19:${processingDelay.time}},",
+      "\t\t\tsubmissionDelayTime: ${20:${submissionDelay.time}},",
+      "\t\t\ttotalWaitTime: ${21:${pageSettlement.time}} + ${22:${actionDelay.time}} + ${23:${processingDelay.time}} + ${24:${submissionDelay.time}},",
+      "\t\t\tworkflowDuration: Date.now() - ${25:workflowStart},",
+      "\t\t\ttimestamp: Date.now()",
+      "\t\t};",
+      "\t`) {",
+      "\t\tvalue",
+      "\t}",
+            "}",
+      "$0"
+    ],
+    "description": "Complete timing control workflow with multiple delays"
+  },
+  "Browser Query": {
+    "prefix": ["browser"],
+    "body": [
+      "browser$0"
+    ],
+    "description": "Get browser version information"
+  },
+  "Browser Info": {
+    "prefix": ["browser-info"],
+    "body": [
+      "# Get browser version",
+      "browserInfo: browser$0"
+    ],
+    "description": "Get browser version with alias"
+  },
+  "Browser Compatibility": {
+    "prefix": ["browser-compatibility", "browser-compat"],
+    "body": [
+      "# Check browser compatibility",
+      "browserVersion: browser",
+      "",
+      "# Version-specific logic",
+      "compatibilityCheck: evaluate(expression: `",
+      "\tconst browserVersion = \"${1:${browserVersion}}\";",
+      "\tconst isChrome = browserVersion.includes('Chrome');",
+      "\tconst isSafari = browserVersion.includes('Safari');",
+      "\tconst isFirefox = browserVersion.includes('Firefox');",
+      "\t",
+      "\treturn {",
+      "\t\tbrowserVersion,",
+      "\t\tisChrome,",
+      "\t\tisSafari,",
+      "\t\tisFirefox,",
+      "\t\tsupported: isChrome || isSafari || isFirefox",
+      "\t};",
+      "`) {",
+      "\tvalue",
+      "}$0"
+    ],
+    "description": "Browser compatibility checking workflow"
+  },
+  "Browser Testing": {
+    "prefix": ["browser-testing", "browser-test"],
+    "body": [
+      "# Browser testing workflow",
+      "testInfo: {",
+      "\tbrowser",
+      "\tversion",
+      "}",
+      "",
+      "# Browser-specific test logic",
+      "browserSpecificTest: evaluate(expression: `",
+      "\tconst browser = \"${1:${testInfo.browser}}\";",
+      "\tconst version = \"${2:${testInfo.version}}\";",
+      "\t",
+      "\treturn {",
+      "\t\tbrowser,",
+      "\t\tversion,",
+      "\t\ttestEnvironment: 'development',",
+      "\t\ttimestamp: Date.now()",
+      "\t};",
+      "`) {",
+      "\tvalue",
+      "}$0"
+    ],
+    "description": "Browser testing workflow with system info"
+  },
+  "Browser Feature Detection": {
+    "prefix": ["browser-features", "browser-detection"],
+    "body": [
+      "# Browser feature detection",
+      "browserVersion: browser",
+      "",
+      "# Feature availability check",
+      "featureSupport: evaluate(expression: `",
+      "\tconst browser = \"${1:${browserVersion}}\";",
+      "\t",
+      "\t// Extract version numbers",
+      "\tconst chromeMatch = browser.match(/Chrome\\/(\\d+)/);",
+      "\tconst safariMatch = browser.match(/Safari\\/(\\d+)/);",
+      "\tconst firefoxMatch = browser.match(/Firefox\\/(\\d+)/);",
+      "\t",
+      "\tconst version = chromeMatch ? parseInt(chromeMatch[1]) : ",
+      "\t\t\t\t\t\tsafariMatch ? parseInt(safariMatch[1]) : ",
+      "\t\t\t\t\t\tfirefoxMatch ? parseInt(firefoxMatch[1]) : 0;",
+      "\t",
+      "\treturn {",
+      "\t\tbrowser,",
+      "\t\tversion,",
+      "\t\tsupportsWebGL: version > 50,",
+      "\t\tsupportsES6: version > 45,",
+      "\t\tsupportsModules: version > 60,",
+      "\t\tsupportsWebAssembly: version > 57",
+      "\t};",
+      "`) {",
+      "\tvalue",
+      "}$0"
+    ],
+    "description": "Browser feature detection and capability checking"
+  },
+  "Version Query": {
+    "prefix": ["version"],
+    "body": [
+      "version$0"
+    ],
+    "description": "Get BrowserQL server version"
+  },
+  "Version Info": {
+    "prefix": ["version-info"],
+    "body": [
+      "# Get server version",
+      "serverVersion: version$0"
+    ],
+    "description": "Get server version with alias"
+  },
+  "Version Compatibility": {
+    "prefix": ["version-compatibility", "version-compat"],
+    "body": [
+      "# Check server version compatibility",
+      "serverVersion: version",
+      "",
+      "# Version compatibility check",
+      "compatibilityCheck: evaluate(expression: `",
+      "\tconst version = \"${1:${serverVersion}}\";",
+      "\tconst [major, minor, patch] = version.split('.').map(Number);",
+      "\t",
+      "\treturn {",
+      "\t\tversion,",
+      "\t\tmajor,",
+      "\t\tminor,",
+      "\t\tpatch,",
+      "\t\tsupportsNewFeatures: major >= 2 && minor >= 15,",
+      "\t\tisStable: major >= 2,",
+      "\t\trequiresUpdate: major < 2 || (major === 2 && minor < 10)",
+      "\t};",
+      "`) {",
+      "\tvalue",
+      "}$0"
+    ],
+    "description": "Server version compatibility checking workflow"
+  },
+  "System Info": {
+    "prefix": ["system-info", "system"],
+    "body": [
+      "# Complete system information",
+      "systemInfo: {",
+      "\tbrowser",
+      "\tversion",
+      "}",
+      "",
+      "# System analysis",
+      "systemAnalysis: evaluate(expression: `",
+      "\treturn {",
+      "\t\tbrowser: \"${1:${systemInfo.browser}}\",",
+      "\t\tserverVersion: \"${2:${systemInfo.version}}\",",
+      "\t\ttimestamp: Date.now(),",
+      "\t\tenvironment: 'production',",
+      "\t\tsession: {",
+      "\t\t\tid: Math.random().toString(36).substr(2, 9),",
+      "\t\t\tstartTime: Date.now()",
+      "\t\t}",
+      "\t};",
+      "`) {",
+      "\tvalue",
+      "}$0"
+    ],
+    "description": "Complete system information gathering"
+  },
+  "Environment Check": {
+    "prefix": ["environment-check", "env-check"],
+    "body": [
+      "# Environment information check",
+      "environment: {",
+      "\tbrowserVersion: browser",
+      "\tserverVersion: version",
+      "}",
+      "",
+      "# Environment validation",
+      "envValidation: evaluate(expression: `",
+      "\tconst browser = \"${1:${environment.browserVersion}}\";",
+      "\tconst server = \"${2:${environment.serverVersion}}\";",
+      "\t",
+      "\treturn {",
+      "\t\tbrowser,",
+      "\t\tserver,",
+      "\t\tisCompatible: true,",
+      "\t\tenvironment: 'testing',",
+      "\t\tcheckedAt: new Date().toISOString(),",
+      "\t\trecommendations: []",
+      "\t};",
+      "`) {",
+      "\tvalue",
+      "}$0"
+    ],
+    "description": "Environment checking and validation workflow"
+  },
+  "Debugging Info": {
+    "prefix": ["debug-info", "debug"],
+    "body": [
+      "# Debugging information collection",
+      "debugInfo: {",
+      "\tbrowser",
+      "\tversion",
+      "}",
+      "",
+      "# Debug session details",
+      "debugSession: evaluate(expression: `",
+      "\treturn {",
+      "\t\tbrowser: \"${1:${debugInfo.browser}}\",",
+      "\t\tserver: \"${2:${debugInfo.version}}\",",
+      "\t\tuserAgent: navigator.userAgent,",
+      "\t\tscreen: {",
+      "\t\t\twidth: screen.width,",
+      "\t\t\theight: screen.height,",
+      "\t\t\tcolorDepth: screen.colorDepth",
+      "\t\t},",
+      "\t\tviewport: {",
+      "\t\t\twidth: window.innerWidth,",
+      "\t\t\theight: window.innerHeight",
+      "\t\t},",
+      "\t\ttimestamp: Date.now()",
+      "\t};",
+      "`) {",
+      "\tvalue",
+      "}$0"
+    ],
+    "description": "Comprehensive debugging information collection"
+  },
+  "Query Complete": {
+    "prefix": ["query-complete", "query-full"],
+    "body": [
+      "query ${1:SystemInfo} {",
+      "\t# Get browser version",
+      "\tbrowser",
+      "\t",
+      "\t# Get server version", 
+      "\tversion",
+      "\t$0",
+      "}"
+    ],
+    "description": "Complete query template with both browser and version"
+  }
+} 

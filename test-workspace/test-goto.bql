@@ -1,0 +1,185 @@
+mutation GotoOperationTest {
+  # Basic goto with just URL (uses defaults: timeout=30000, waitUntil=load)
+  basicGoto: goto(url: "https://example.com") {
+    status
+  }
+  
+  # Goto with timeout parameter (uses default waitUntil=load)
+  gotoWithTimeout: goto(
+    url: "https://browserless.io"
+    timeout: 45000
+  ) {
+    status
+    time
+    url
+  }
+  
+  # Goto with waitUntil parameter (uses default timeout=30000)
+  gotoWithWaitUntil: goto(
+    url: "https://github.com"
+    waitUntil: firstMeaningfulPaint
+  ) {
+    status
+    time
+    text
+    url
+  }
+  
+  # Goto with both timeout and waitUntil parameters
+  gotoComplete: goto(
+    url: "https://docs.browserless.io"
+    timeout: 60000
+    waitUntil: domContentLoaded
+  ) {
+    status
+    time
+    text
+    url
+  }
+  
+  # Test all WaitUntilGoto enum values
+  gotoCommit: goto(
+    url: "https://news.ycombinator.com"
+    waitUntil: commit
+  ) {
+    status
+    time
+  }
+  
+  gotoLoad: goto(
+    url: "https://stackoverflow.com"
+    waitUntil: load
+  ) {
+    status
+    time
+    url
+  }
+  
+  gotoDomContentLoaded: goto(
+    url: "https://developer.mozilla.org"
+    waitUntil: domContentLoaded
+  ) {
+    status
+    time
+  }
+  
+  gotoNetworkIdle0: goto(
+    url: "https://web.dev"
+    waitUntil: networkidle0
+  ) {
+    status
+    time
+    text
+    url
+  }
+  
+  gotoNetworkIdle2: goto(
+    url: "https://caniuse.com"
+    waitUntil: networkidle2
+  ) {
+    status
+    url
+  }
+  
+  gotoFirstMeaningfulPaint: goto(
+    url: "https://css-tricks.com"
+    waitUntil: firstMeaningfulPaint
+  ) {
+    status
+    time
+    url
+  }
+  
+  # Test with different timeout values
+  quickTimeout: goto(
+    url: "https://httpbin.org/delay/2"
+    timeout: 5000
+    waitUntil: load
+  ) {
+    status
+    time
+  }
+  
+  longTimeout: goto(
+    url: "https://httpbin.org/delay/1"
+    timeout: 120000
+    waitUntil: networkidle0
+  ) {
+    status
+    time
+    text
+    url
+  }
+  
+  # Goto with conditional directives
+  gotoWithDirectives: goto(
+    url: "https://example.org"
+    timeout: 30000
+    waitUntil: load
+  ) {
+    status @include(if: true)
+    time @include(if: true)
+    text @skip(if: false)
+    url @skip(if: true)
+  }
+  
+  # Test navigation to various URL types
+  httpsUrl: goto(url: "https://secure.example.com") {
+    status
+    url
+  }
+  
+  httpUrl: goto(url: "http://insecure.example.com") {
+    status
+    url
+  }
+  
+  urlWithPath: goto(url: "https://example.com/path/to/page") {
+    status
+    url
+  }
+  
+  urlWithQuery: goto(url: "https://example.com/search?q=browserql") {
+    status
+    url
+  }
+  
+  urlWithFragment: goto(url: "https://example.com/docs#section1") {
+    status
+    url
+  }
+  
+  # Complex navigation sequence 
+  sequence1: goto(
+    url: "https://first.example.com"
+    timeout: 30000
+    waitUntil: domContentLoaded
+  ) {
+    status
+    time
+    url
+  }
+  
+  sequence2: goto(
+    url: "https://second.example.com"
+    timeout: 45000
+    waitUntil: firstMeaningfulPaint  
+  ) {
+    status
+    time
+    text
+    url
+  }
+  
+  # Test all return fields
+  fullResponse: goto(
+    url: "https://complete.example.com"
+    timeout: 30000
+    waitUntil: load
+  ) {
+    status
+    time
+    text
+    url
+  }
+} 

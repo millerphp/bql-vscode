@@ -1,0 +1,587 @@
+# BrowserQL Scroll Operation Test File
+# Testing comprehensive scrolling capabilities with element targeting and coordinate positioning
+
+mutation ScrollOperationTests {
+  # Navigate to test page
+  goto(url: "https://example.com", waitUntil: load) {
+    status
+    url
+  }
+
+  # ========================================
+  # BASIC SCROLL OPERATIONS
+  # ========================================
+
+  # Basic element scroll - header
+  scrollToHeader: scroll(selector: "header") {
+    time
+  }
+
+  # Basic element scroll - navigation
+  scrollToNav: scroll(selector: "nav, .navigation") {
+    time
+  }
+
+  # Basic element scroll - main content
+  scrollToMain: scroll(selector: "main, .content, article") {
+    time
+  }
+
+  # Basic element scroll - footer
+  scrollToFooter: scroll(selector: "footer") {
+    time
+  }
+
+  # Basic element scroll - form
+  scrollToForm: scroll(selector: "form") {
+    time
+  }
+
+  # ========================================
+  # COORDINATE-BASED SCROLLING
+  # ========================================
+
+  # Scroll to top of page
+  scrollToTop: scroll(x: 0, y: 0) {
+    time
+  }
+
+  # Scroll to specific coordinates
+  scrollToCoordinates: scroll(x: 500, y: 1000) {
+    time
+  }
+
+  # Scroll to bottom of page
+  scrollToBottom: scroll(y: 9999) {
+    time
+  }
+
+  # Scroll horizontally only
+  scrollHorizontal: scroll(x: 800, y: 0) {
+    time
+  }
+
+  # Scroll vertically only
+  scrollVertical: scroll(x: 0, y: 1500) {
+    time
+  }
+
+  # Center viewport scroll
+  scrollToCenter: scroll(x: 400, y: 600) {
+    time
+  }
+
+  # Right side scroll
+  scrollToRight: scroll(x: 1200, y: 500) {
+    time
+  }
+
+  # Precise coordinate positioning
+  preciseScroll: scroll(x: 250, y: 750) {
+    time
+  }
+
+  # ========================================
+  # ELEMENT-SPECIFIC SCROLLING
+  # ========================================
+
+  # Scroll to specific headings
+  scrollToH1: scroll(selector: "h1") {
+    time
+  }
+
+  scrollToH2: scroll(selector: "h2") {
+    time
+  }
+
+  scrollToH3: scroll(selector: "h3") {
+    time
+  }
+
+  # Scroll to interactive elements
+  scrollToButton: scroll(selector: "button, .btn") {
+    time
+  }
+
+  scrollToLink: scroll(selector: "a[href]") {
+    time
+  }
+
+  scrollToInput: scroll(selector: "input, textarea") {
+    time
+  }
+
+  # Scroll to content sections
+  scrollToArticle: scroll(selector: "article") {
+    time
+  }
+
+  scrollToSection: scroll(selector: "section") {
+    time
+  }
+
+  scrollToAside: scroll(selector: "aside, .sidebar") {
+    time
+  }
+
+  # Scroll to media elements
+  scrollToImage: scroll(selector: "img") {
+    time
+  }
+
+  scrollToVideo: scroll(selector: "video") {
+    time
+  }
+
+  # Scroll to table elements
+  scrollToTable: scroll(selector: "table") {
+    time
+  }
+
+  # ========================================
+  # VISIBILITY-BASED SCROLLING
+  # ========================================
+
+  # Scroll to visible elements only
+  scrollToVisibleContent: scroll(
+    selector: ".content"
+    visible: true
+  ) {
+    time
+  }
+
+  # Scroll to visible form
+  scrollToVisibleForm: scroll(
+    selector: "form"
+    visible: true
+  ) {
+    time
+  }
+
+  # Scroll to visible button
+  scrollToVisibleButton: scroll(
+    selector: "button"
+    visible: true
+  ) {
+    time
+  }
+
+  # Scroll to visible image
+  scrollToVisibleImage: scroll(
+    selector: "img"
+    visible: true
+  ) {
+    time
+  }
+
+  # Scroll to visible navigation
+  scrollToVisibleNav: scroll(
+    selector: "nav"
+    visible: true
+  ) {
+    time
+  }
+
+  # ========================================
+  # TIMEOUT SCENARIOS
+  # ========================================
+
+  # Quick timeout scroll
+  quickTimeoutScroll: scroll(
+    selector: ".fast-element"
+    timeout: 5000
+  ) {
+    time
+  }
+
+  # Standard timeout scroll
+  standardTimeoutScroll: scroll(
+    selector: ".standard-element"
+    timeout: 15000
+  ) {
+    time
+  }
+
+  # Extended timeout scroll
+  extendedTimeoutScroll: scroll(
+    selector: ".slow-loading-element"
+    timeout: 45000
+  ) {
+    time
+  }
+
+  # Mobile element timeout
+  mobileTimeoutScroll: scroll(
+    selector: ".mobile-menu"
+    timeout: 12000
+  ) {
+    time
+  }
+
+  # Dynamic content timeout
+  dynamicTimeoutScroll: scroll(
+    selector: ".dynamic-content"
+    timeout: 20000
+  ) {
+    time
+  }
+
+  # ========================================
+  # WAIT BEHAVIOR CONTROL
+  # ========================================
+
+  # Scroll with waiting (default)
+  scrollWithWait: scroll(
+    selector: ".target-element"
+    wait: true
+  ) {
+    time
+  }
+
+  # Scroll without waiting
+  scrollWithoutWait: scroll(
+    selector: ".immediate-element"
+    wait: false
+  ) {
+    time
+  }
+
+  # No wait coordinate scroll
+  noWaitCoordScroll: scroll(
+    x: 600
+    y: 800
+    wait: false
+  ) {
+    time
+  }
+
+  # Wait for element with timeout
+  waitElementScroll: scroll(
+    selector: ".delayed-element"
+    wait: true
+    timeout: 10000
+  ) {
+    time
+  }
+
+  # ========================================
+  # COMBINED PARAMETER SCENARIOS
+  # ========================================
+
+  # Visible element with timeout
+  visibleTimeoutScroll: scroll(
+    selector: ".visible-target"
+    visible: true
+    timeout: 8000
+  ) {
+    time
+  }
+
+  # Visible element without wait
+  visibleNoWaitScroll: scroll(
+    selector: ".visible-immediate"
+    visible: true
+    wait: false
+  ) {
+    time
+  }
+
+  # Wait with timeout and visibility
+  waitVisibleTimeoutScroll: scroll(
+    selector: ".conditional-element"
+    wait: true
+    visible: true
+    timeout: 15000
+  ) {
+    time
+  }
+
+  # Complex combination scroll
+  complexScroll: scroll(
+    selector: ".complex-target"
+    visible: true
+    wait: true
+    timeout: 25000
+  ) {
+    time
+  }
+
+  # ========================================
+  # PAGE NAVIGATION SCROLLING
+  # ========================================
+
+  # Scroll to page sections
+  scrollToIntro: scroll(selector: ".intro, #introduction") {
+    time
+  }
+
+  scrollToAbout: scroll(selector: ".about, #about") {
+    time
+  }
+
+  scrollToServices: scroll(selector: ".services, #services") {
+    time
+  }
+
+  scrollToContact: scroll(selector: ".contact, #contact") {
+    time
+  }
+
+  # Scroll to navigation anchors
+  scrollToNavLink: scroll(selector: "nav a[href^='#']") {
+    time
+  }
+
+  # Scroll to breadcrumbs
+  scrollToBreadcrumbs: scroll(selector: ".breadcrumbs") {
+    time
+  }
+
+  # ========================================
+  # RESPONSIVE AND MOBILE SCROLLING
+  # ========================================
+
+  # Mobile navigation scroll
+  mobileNavScroll: scroll(
+    selector: ".mobile-nav, .hamburger-menu"
+    visible: true
+    timeout: 10000
+  ) {
+    time
+  }
+
+  # Mobile form scroll
+  mobileFormScroll: scroll(
+    selector: ".mobile-form"
+    timeout: 8000
+  ) {
+    time
+  }
+
+  # Touch interface scroll
+  touchInterfaceScroll: scroll(
+    selector: ".touch-controls"
+    visible: true
+    timeout: 12000
+  ) {
+    time
+  }
+
+  # Responsive card scroll
+  responsiveCardScroll: scroll(
+    selector: ".responsive-card"
+    visible: true
+  ) {
+    time
+  }
+
+  # ========================================
+  # CONTENT-SPECIFIC SCROLLING
+  # ========================================
+
+  # Article content scroll
+  articleContentScroll: scroll(
+    selector: "article, .article-content"
+    timeout: 15000
+  ) {
+    time
+  }
+
+  # Code block scroll
+  codeBlockScroll: scroll(
+    selector: "pre, code, .code-block"
+    timeout: 8000
+  ) {
+    time
+  }
+
+  # Data visualization scroll
+  dataVizScroll: scroll(
+    selector: ".chart, .graph, svg"
+    timeout: 12000
+  ) {
+    time
+  }
+
+  # Media gallery scroll
+  mediaGalleryScroll: scroll(
+    selector: ".gallery, .carousel"
+    timeout: 10000
+  ) {
+    time
+  }
+
+  # Comments section scroll
+  commentsScroll: scroll(
+    selector: ".comments, #comments"
+  ) {
+    time
+  }
+
+  # ========================================
+  # UI COMPONENT SCROLLING
+  # ========================================
+
+  # Modal scroll
+  modalScroll: scroll(
+    selector: ".modal, .popup"
+    visible: true
+    timeout: 8000
+  ) {
+    time
+  }
+
+  # Card component scroll
+  cardScroll: scroll(selector: ".card, .panel") {
+    time
+  }
+
+  # Hero section scroll
+  heroScroll: scroll(
+    selector: ".hero, .banner, .jumbotron"
+    timeout: 10000
+  ) {
+    time
+  }
+
+  # Tab content scroll
+  tabContentScroll: scroll(
+    selector: ".tab-content, .tab-panel"
+    visible: true
+  ) {
+    time
+  }
+
+  # Accordion scroll
+  accordionScroll: scroll(
+    selector: ".accordion, .collapsible"
+    visible: true
+  ) {
+    time
+  }
+
+  # ========================================
+  # ERROR AND EDGE CASES
+  # ========================================
+
+  # Scroll to non-existent element (should timeout)
+  nonExistentScroll: scroll(
+    selector: ".non-existent-element"
+    timeout: 2000
+    wait: true
+  ) {
+    time
+  }
+
+  # Scroll to hidden element
+  hiddenElementScroll: scroll(
+    selector: ".hidden-element"
+    visible: false
+    wait: true
+  ) {
+    time
+  }
+
+  # Invalid coordinates (large values)
+  largeCoordScroll: scroll(x: 50000, y: 50000) {
+    time
+  }
+
+  # Negative coordinates
+  negativeCoordScroll: scroll(x: -100, y: -100) {
+    time
+  }
+
+  # ========================================
+  # PERFORMANCE AND ACCESSIBILITY
+  # ========================================
+
+  # Skip link scroll
+  skipLinkScroll: scroll(selector: ".skip-link, #skip") {
+    time
+  }
+
+  # Focus element scroll
+  focusElementScroll: scroll(
+    selector: ":focus, .focused"
+    visible: true
+    timeout: 5000
+  ) {
+    time
+  }
+
+  # Landmark scroll
+  landmarkScroll: scroll(
+    selector: "[role='main'], [role='navigation']"
+    timeout: 8000
+  ) {
+    time
+  }
+
+  # Aria label scroll
+  ariaLabelScroll: scroll(
+    selector: "[aria-label], [aria-labelledby]"
+    visible: true
+  ) {
+    time
+  }
+
+  # ========================================
+  # SEQUENTIAL SCROLLING WORKFLOW
+  # ========================================
+
+  # Progressive page scroll
+  progressiveScroll1: scroll(y: 500) {
+    time
+  }
+
+  progressiveScroll2: scroll(y: 1000) {
+    time
+  }
+
+  progressiveScroll3: scroll(y: 1500) {
+    time
+  }
+
+  # Element chain scrolling
+  chainScroll1: scroll(selector: "h1") {
+    time
+  }
+
+  chainScroll2: scroll(selector: "h2") {
+    time
+  }
+
+  chainScroll3: scroll(selector: "h3") {
+    time
+  }
+
+  # ========================================
+  # COMPREHENSIVE SCROLLING SCENARIOS
+  # ========================================
+
+  # Complete page tour
+  pageTourStart: scroll(x: 0, y: 0) {
+    time
+  }
+
+  pageTourHeader: scroll(selector: "header") {
+    time
+  }
+
+  pageTourNav: scroll(selector: "nav") {
+    time
+  }
+
+  pageTourMain: scroll(selector: "main") {
+    time
+  }
+
+  pageTourFooter: scroll(selector: "footer") {
+    time
+  }
+
+  pageTourEnd: scroll(y: 9999) {
+    time
+  }
+} 

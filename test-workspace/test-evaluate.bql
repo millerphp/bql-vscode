@@ -1,0 +1,242 @@
+mutation EvaluateExamples {
+  # Navigate to test page first
+  goto(url: "https://example.com") {
+    status
+    time
+    url
+  }
+
+  # Simple JavaScript evaluation
+  simpleArithmetic: evaluate(content: "2 + 2") {
+    value
+  }
+
+  # Mathematical calculations
+  complexMath: evaluate(content: "Math.sqrt(16) * Math.PI") {
+    value
+  }
+
+  # DOM manipulation with complex JavaScript
+  domInteraction: evaluate(content: `
+    // Get page information
+    const title = document.title;
+    const url = window.location.href;
+    const bodyClasses = Array.from(document.body.classList);
+    
+    // Find all links on the page
+    const links = Array.from(document.querySelectorAll('a')).map(link => ({
+      text: link.textContent.trim(),
+      href: link.href,
+      target: link.target || '_self'
+    }));
+    
+    // Calculate page metrics
+    const metrics = {
+      totalElements: document.querySelectorAll('*').length,
+      totalImages: document.querySelectorAll('img').length,
+      totalForms: document.querySelectorAll('form').length,
+      viewportWidth: window.innerWidth,
+      viewportHeight: window.innerHeight
+    };
+    
+    // Return comprehensive page data
+    return {
+      pageInfo: { title, url, bodyClasses },
+      links: links.slice(0, 10), // First 10 links
+      metrics,
+      timestamp: new Date().toISOString()
+    };
+  `) {
+    value
+  }
+
+  # Async operation with Promise handling
+  asyncElementWait: evaluate(content: `
+    // Wait for a specific element to appear
+    const waitForElement = (selector, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        const startTime = Date.now();
+        
+        const checkElement = () => {
+          const element = document.querySelector(selector);
+          
+          if (element) {
+            resolve(element);
+          } else if (Date.now() - startTime > timeout) {
+            reject(new Error(\`Element "\${selector}" not found within \${timeout}ms\`));
+          } else {
+            setTimeout(checkElement, 100);
+          }
+        };
+        
+        checkElement();
+      });
+    };
+    
+    try {
+      // Wait for main content to load
+      const mainElement = await waitForElement('main, #main, .main-content');
+      
+      // Extract content information
+      const textContent = mainElement.textContent.trim();
+      const childElements = mainElement.children.length;
+      const boundingRect = mainElement.getBoundingClientRect();
+      
+      return {
+        success: true,
+        element: {
+          tagName: mainElement.tagName,
+          id: mainElement.id,
+          classes: Array.from(mainElement.classList),
+          childCount: childElements,
+          textLength: textContent.length,
+          dimensions: {
+            width: boundingRect.width,
+            height: boundingRect.height,
+            top: boundingRect.top,
+            left: boundingRect.left
+          }
+        }
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: error.message,
+        fallback: {
+          bodyText: document.body.textContent.substring(0, 200) + '...',
+          elementCount: document.querySelectorAll('*').length
+        }
+      };
+    }
+  `, timeout: 10000) {
+    value
+  }
+
+  # Form interaction and data extraction
+  formAnalysis: evaluate(content: `
+    // Find all forms on the page
+    const forms = Array.from(document.querySelectorAll('form'));
+    
+    const formData = forms.map((form, index) => {
+      // Get form attributes
+      const formInfo = {
+        index,
+        id: form.id,
+        name: form.name,
+        method: form.method || 'GET',
+        action: form.action,
+        encoding: form.enctype || 'application/x-www-form-urlencoded'
+      };
+      
+      // Analyze form fields
+      const inputs = Array.from(form.querySelectorAll('input, select, textarea'));
+      const fields = inputs.map(input => ({
+        name: input.name,
+        type: input.type || input.tagName.toLowerCase(),
+        required: input.required,
+        placeholder: input.placeholder,
+        value: input.value,
+        disabled: input.disabled
+      }));
+      
+      // Check for validation
+      const hasValidation = inputs.some(input => 
+        input.required || input.pattern || input.minLength || input.maxLength
+      );
+      
+      return {
+        ...formInfo,
+        fieldCount: fields.length,
+        fields,
+        hasValidation,
+        isVisible: form.offsetParent !== null
+      };
+    });
+    
+    return {
+      totalForms: forms.length,
+      forms: formData,
+      hasAnyForm: forms.length > 0,
+      analysisTimestamp: Date.now()
+    };
+  `) {
+    value
+  }
+
+  # Cookie and localStorage inspection
+  storageAnalysis: evaluate(content: `
+    // Analyze cookies
+    const cookies = document.cookie.split(';').map(cookie => {
+      const [name, value] = cookie.trim().split('=');
+      return { name, value: value || '' };
+    }).filter(cookie => cookie.name);
+    
+    // Check localStorage
+    const localStorage = {};
+    try {
+      for (let i = 0; i < window.localStorage.length; i++) {
+        const key = window.localStorage.key(i);
+        localStorage[key] = window.localStorage.getItem(key);
+      }
+    } catch (e) {
+      // localStorage might be disabled
+    }
+    
+    // Check sessionStorage
+    const sessionStorage = {};
+    try {
+      for (let i = 0; i < window.sessionStorage.length; i++) {
+        const key = window.sessionStorage.key(i);
+        sessionStorage[key] = window.sessionStorage.getItem(key);
+      }
+    } catch (e) {
+      // sessionStorage might be disabled
+    }
+    
+    // Performance metrics
+    const performance = window.performance ? {
+      navigationStart: window.performance.timing.navigationStart,
+      loadEventEnd: window.performance.timing.loadEventEnd,
+      domContentLoaded: window.performance.timing.domContentLoadedEventEnd,
+      loadTime: window.performance.timing.loadEventEnd - window.performance.timing.navigationStart
+    } : null;
+    
+    return {
+      cookies: {
+        count: cookies.length,
+        items: cookies
+      },
+      localStorage: {
+        count: Object.keys(localStorage).length,
+        keys: Object.keys(localStorage)
+      },
+      sessionStorage: {
+        count: Object.keys(sessionStorage).length,
+        keys: Object.keys(sessionStorage)
+      },
+      performance,
+      userAgent: navigator.userAgent,
+      language: navigator.language
+    };
+  `) {
+    value
+  }
+
+  # Load external JavaScript from URL
+  externalScript: evaluate(url: "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js") {
+    value
+  }
+  
+  # Simple string evaluation with single quotes
+  stringEval: evaluate(content: 'window.location.hostname') {
+    value
+  }
+  
+  # Test timeout handling
+  timeoutTest: evaluate(
+    content: "new Promise(resolve => setTimeout(() => resolve('success'), 1000))"
+    timeout: 5000
+  ) {
+    value
+  }
+} 

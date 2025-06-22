@@ -1,0 +1,71 @@
+query BrowserExamples {
+  # Basic browser query
+  browser
+
+  # Browser with alias
+  browserVersion: browser
+
+  # Browser in system info context
+  systemInfo: {
+    browser
+  }
+
+  # Browser compatibility check
+  browserInfo: browser
+}
+
+# Browser feature detection workflow
+query BrowserFeatureDetection {
+  # Get browser version
+  browserVersion: browser
+
+  # Feature detection logic
+  featureSupport: evaluate(expression: `
+    const browser = "${browserVersion}";
+    
+    // Extract version numbers
+    const chromeMatch = browser.match(/Chrome\/(\d+)/);
+    const safariMatch = browser.match(/Safari\/(\d+)/);
+    const firefoxMatch = browser.match(/Firefox\/(\d+)/);
+    
+    const version = chromeMatch ? parseInt(chromeMatch[1]) : 
+                    safariMatch ? parseInt(safariMatch[1]) : 
+                    firefoxMatch ? parseInt(firefoxMatch[1]) : 0;
+    
+    return {
+      browser,
+      version,
+      supportsWebGL: version > 50,
+      supportsES6: version > 45,
+      supportsModules: version > 60,
+      supportsWebAssembly: version > 57
+    };
+  `) {
+    value
+  }
+}
+
+# Browser compatibility checking
+query BrowserCompatibility {
+  # Get browser info
+  browserVersion: browser
+
+  # Compatibility analysis  
+  compatibilityCheck: evaluate(expression: `
+    const browserVersion = "${browserVersion}";
+    const isChrome = browserVersion.includes('Chrome');
+    const isSafari = browserVersion.includes('Safari');
+    const isFirefox = browserVersion.includes('Firefox');
+    
+    return {
+      browserVersion,
+      isChrome,
+      isSafari,
+      isFirefox,
+      supported: isChrome || isSafari || isFirefox,
+      recommendedBrowser: isChrome ? 'current' : 'Chrome'
+    };
+  `) {
+    value
+  }
+}

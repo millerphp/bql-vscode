@@ -1,0 +1,10 @@
+# This is a test BrowserQL file
+mutation TestQuery {
+  goto(url: "https://example.com", waitUntil: firstMeaningfulPaint) {
+    status
+    time
+  }
+  text(selector: "h1") {
+    text
+  }
+} 

@@ -1,0 +1,718 @@
+# BrowserQL Title Operation Test File
+# Tests for page title extraction functionality
+
+# =============================================================================
+# BASIC TITLE EXTRACTION
+# =============================================================================
+
+# Simple title extraction
+mutation BasicTitle {
+  title {
+    title
+  }
+}
+
+# Title with alias
+mutation AliasedTitle {
+  pageTitle: title {
+    title
+  }
+}
+
+# Multiple title references
+mutation MultipleTitles {
+  currentTitle: title {
+    title
+  }
+}
+
+# =============================================================================
+# NAVIGATION AND TITLE EXTRACTION
+# =============================================================================
+
+# Navigate and get title
+mutation NavigateAndTitle {
+  goto(url: "https://example.com") {
+    status
+  }
+
+  pageTitle: title {
+    title
+  }
+}
+
+# Sequential navigation with titles
+mutation SequentialTitles {
+  goto(url: "https://page1.com") {
+    status
+  }
+
+  firstTitle: title {
+    title
+  }
+
+  goto(url: "https://page2.com") {
+    status
+  }
+
+  secondTitle: title {
+    title
+  }
+}
+
+# Navigation with wait conditions
+mutation NavigationWithWait {
+  goto(url: "https://example.com", waitUntil: load) {
+    status
+    url
+  }
+
+  loadedTitle: title {
+    title
+  }
+}
+
+# =============================================================================
+# TITLE VERIFICATION PATTERNS
+# =============================================================================
+
+# Title verification workflow
+mutation TitleVerification {
+  goto(url: "https://example.com") {
+    status
+  }
+
+  pageTitle: title {
+    title
+  }
+
+  # Use with conditional operations
+  if(expression: "pageTitle.title.includes('Example')") {
+    verify(expression: "true") {
+      success
+    }
+  }
+}
+
+# Title comparison between pages
+mutation TitleComparison {
+  goto(url: "https://page1.com") {
+    status
+  }
+
+  page1Title: title {
+    title
+  }
+
+  goto(url: "https://page2.com") {
+    status
+  }
+
+  page2Title: title {
+    title
+  }
+
+  # Compare titles
+  if(expression: "page1Title.title !== page2Title.title") {
+    verify(expression: "true") {
+      success
+    }
+  }
+}
+
+# =============================================================================
+# METADATA EXTRACTION WITH TITLE
+# =============================================================================
+
+# Page metadata extraction
+mutation MetadataExtraction {
+  goto(url: "https://example.com") {
+    status
+    url
+  }
+
+  pageTitle: title {
+    title
+  }
+
+  # Get additional metadata
+  metaDescription: text(selector: "meta[name='description']") {
+    text
+  }
+
+  canonical: text(selector: "link[rel='canonical']") {
+    text
+  }
+}
+
+# Complete page analysis
+mutation CompletePageAnalysis {
+  goto(url: "https://example.com") {
+    status
+    url
+  }
+
+  pageTitle: title {
+    title
+  }
+
+  # Extract various page elements
+  headings: text(selector: "h1, h2, h3") {
+    text
+  }
+
+  description: text(selector: "meta[name='description']") {
+    text
+  }
+}
+
+# =============================================================================
+# SEO ANALYSIS PATTERNS
+# =============================================================================
+
+# SEO title analysis
+mutation SEOTitleAnalysis {
+  goto(url: "https://example.com") {
+    status
+  }
+
+  pageTitle: title {
+    title
+  }
+
+  # Check title length for SEO (should be 50-60 characters)
+  titleLength: evaluate(expression: "document.title.length") {
+    result
+  }
+
+  # Check if title is unique and descriptive
+  hasKeywords: evaluate(expression: "document.title.toLowerCase().includes('keyword')") {
+    result
+  }
+}
+
+# Title optimization check
+mutation TitleOptimization {
+  goto(url: "https://example.com") {
+    status
+  }
+
+  pageTitle: title {
+    title
+  }
+
+  # Analyze title characteristics
+  titleAnalysis: evaluate(expression: `
+    const title = document.title;
+    return {
+      length: title.length,
+      wordCount: title.split(' ').length,
+      isOptimalLength: title.length >= 30 && title.length <= 60,
+      hasNumbers: /\d/.test(title),
+      hasSpecialChars: /[^a-zA-Z0-9\s]/.test(title)
+    };
+  `) {
+    result
+  }
+}
+
+# =============================================================================
+# DYNAMIC TITLE TESTING
+# =============================================================================
+
+# Test title changes
+mutation TitleChangeTest {
+  goto(url: "https://example.com") {
+    status
+  }
+
+  initialTitle: title {
+    title
+  }
+
+  # Perform action that might change title
+  click(selector: ".change-title-btn") {
+    clicked
+  }
+
+  # Check if title changed
+  updatedTitle: title {
+    title
+  }
+}
+
+# Form interaction title testing
+mutation FormTitleTest {
+  goto(url: "https://form.example.com") {
+    status
+  }
+
+  beforeFormTitle: title {
+    title
+  }
+
+  # Fill form
+  type(selector: "input[name='name']", text: "Test User") {
+    time
+  }
+
+  # Submit form
+  click(selector: "button[type='submit']") {
+    clicked
+  }
+
+  afterFormTitle: title {
+    title
+  }
+}
+
+# =============================================================================
+# NAVIGATION MONITORING
+# =============================================================================
+
+# Monitor title changes during navigation
+mutation NavigationMonitoring {
+  goto(url: "https://page1.com") {
+    status
+  }
+
+  page1Title: title {
+    title
+  }
+
+  # Navigate to different section
+  click(selector: "a[href*='section']") {
+    clicked
+  }
+
+  sectionTitle: title {
+    title
+  }
+
+  # Back navigation
+  back {
+    status
+  }
+
+  backTitle: title {
+    title
+  }
+}
+
+# Multi-step navigation with titles
+mutation MultiStepNavigation {
+  # Step 1: Home page
+  goto(url: "https://example.com") {
+    status
+  }
+
+  homeTitle: title {
+    title
+  }
+
+  # Step 2: About page
+  click(selector: "a[href='/about']") {
+    clicked
+  }
+
+  aboutTitle: title {
+    title
+  }
+
+  # Step 3: Contact page
+  click(selector: "a[href='/contact']") {
+    clicked
+  }
+
+  contactTitle: title {
+    title
+  }
+
+  # Step 4: Back to home
+  click(selector: "a[href='/']") {
+    clicked
+  }
+
+  finalTitle: title {
+    title
+  }
+}
+
+# =============================================================================
+# E-COMMERCE TITLE PATTERNS
+# =============================================================================
+
+# Product page title extraction
+mutation ProductTitleExtraction {
+  goto(url: "https://shop.example.com/product/123") {
+    status
+  }
+
+  productPageTitle: title {
+    title
+  }
+
+  productName: text(selector: "h1.product-name") {
+    text
+  }
+
+  # Add to cart
+  click(selector: ".add-to-cart") {
+    clicked
+  }
+
+  cartTitle: title {
+    title
+  }
+}
+
+# Checkout flow title monitoring
+mutation CheckoutTitleFlow {
+  goto(url: "https://shop.example.com/cart") {
+    status
+  }
+
+  cartTitle: title {
+    title
+  }
+
+  # Proceed to checkout
+  click(selector: ".checkout-btn") {
+    clicked
+  }
+
+  checkoutTitle: title {
+    title
+  }
+
+  # Complete purchase
+  click(selector: ".complete-order") {
+    clicked
+  }
+
+  confirmationTitle: title {
+    title
+  }
+}
+
+# =============================================================================
+# SEARCH AND FILTER TITLES
+# =============================================================================
+
+# Search results title monitoring
+mutation SearchTitleMonitoring {
+  goto(url: "https://example.com") {
+    status
+  }
+
+  homeTitle: title {
+    title
+  }
+
+  # Perform search
+  type(selector: "input[name='search']", text: "test query") {
+    time
+  }
+
+  click(selector: "button[type='search']") {
+    clicked
+  }
+
+  searchResultsTitle: title {
+    title
+  }
+}
+
+# Filter application title changes
+mutation FilterTitleChanges {
+  goto(url: "https://catalog.example.com") {
+    status
+  }
+
+  catalogTitle: title {
+    title
+  }
+
+  # Apply filter
+  click(selector: ".filter-category") {
+    clicked
+  }
+
+  filteredTitle: title {
+    title
+  }
+}
+
+# =============================================================================
+# ERROR AND EDGE CASES
+# =============================================================================
+
+# Title on error page
+mutation ErrorPageTitle {
+  goto(url: "https://example.com/nonexistent") {
+    status
+  }
+
+  errorTitle: title {
+    title
+  }
+}
+
+# Title with special characters
+mutation SpecialCharacterTitle {
+  goto(url: "https://example.com/special-chars") {
+    status
+  }
+
+  specialTitle: title {
+    title
+  }
+
+  # Verify title handling
+  titleCheck: evaluate(expression: "document.title.length > 0") {
+    result
+  }
+}
+
+# =============================================================================
+# PERFORMANCE AND TIMING
+# =============================================================================
+
+# Multiple title extractions for performance testing
+mutation PerformanceTitleTest {
+  goto(url: "https://example.com") {
+    status
+  }
+
+  # Multiple title calls
+  title1: title {
+    title
+  }
+
+  title2: title {
+    title
+  }
+
+  title3: title {
+    title
+  }
+
+  title4: title {
+    title
+  }
+
+  title5: title {
+    title
+  }
+}
+
+# =============================================================================
+# INTEGRATION WITH OTHER OPERATIONS
+# =============================================================================
+
+# Title with screenshot
+mutation TitleWithScreenshot {
+  goto(url: "https://example.com") {
+    status
+  }
+
+  pageTitle: title {
+    title
+  }
+
+  screenshot(type: png) {
+    data
+  }
+}
+
+# Title with HTML extraction
+mutation TitleWithHTML {
+  goto(url: "https://example.com") {
+    status
+  }
+
+  pageTitle: title {
+    title
+  }
+
+  pageHTML: html(selector: "body") {
+    html
+  }
+}
+
+# Title with text extraction
+mutation TitleWithText {
+  goto(url: "https://example.com") {
+    status
+  }
+
+  pageTitle: title {
+    title
+  }
+
+  pageText: text(selector: "body") {
+    text
+  }
+}
+
+# =============================================================================
+# PROFESSIONAL WORKFLOWS
+# =============================================================================
+
+# Complete page audit workflow
+mutation PageAuditWorkflow {
+  # Navigate to target page
+  goto(url: "https://example.com", waitUntil: load) {
+    status
+    url
+  }
+
+  # Extract page title
+  pageTitle: title {
+    title
+  }
+
+  # Analyze title characteristics
+  titleAnalysis: evaluate(expression: `
+    const title = document.title;
+    return {
+      length: title.length,
+      wordCount: title.split(' ').length,
+      isOptimalLength: title.length >= 30 && title.length <= 60,
+      isEmpty: title.trim() === '',
+      startsWithSiteName: title.includes(' | Site Name'),
+      isUnique: !title.toLowerCase().includes('untitled')
+    };
+  `) {
+    result
+  }
+
+  # Get additional page data
+  metaDescription: text(selector: "meta[name='description']") {
+    text
+  }
+
+  # Screenshot for documentation
+  screenshot(type: png, quality: 90) {
+    data
+  }
+}
+
+# Multi-page title comparison workflow
+mutation MultiPageComparison {
+  # Page 1
+  goto(url: "https://page1.example.com") {
+    status
+  }
+
+  page1Title: title {
+    title
+  }
+
+  page1Analysis: evaluate(expression: "({ length: document.title.length, unique: true })") {
+    result
+  }
+
+  # Page 2
+  goto(url: "https://page2.example.com") {
+    status
+  }
+
+  page2Title: title {
+    title
+  }
+
+  page2Analysis: evaluate(expression: "({ length: document.title.length, unique: true })") {
+    result
+  }
+
+  # Page 3
+  goto(url: "https://page3.example.com") {
+    status
+  }
+
+  page3Title: title {
+    title
+  }
+
+  page3Analysis: evaluate(expression: "({ length: document.title.length, unique: true })") {
+    result
+  }
+
+  # Compare all titles
+  titleComparison: evaluate(expression: `
+    const titles = [
+      page1Title.title,
+      page2Title.title, 
+      page3Title.title
+    ];
+    return {
+      allUnique: new Set(titles).size === titles.length,
+      averageLength: titles.reduce((sum, t) => sum + t.length, 0) / titles.length,
+      totalTitles: titles.length
+    };
+  `) {
+    result
+  }
+}
+
+# Content management workflow
+mutation ContentManagementWorkflow {
+  # Login to CMS
+  goto(url: "https://cms.example.com/login") {
+    status
+  }
+
+  type(selector: "input[name='username']", text: "admin") {
+    time
+  }
+
+  type(selector: "input[name='password']", text: "password") {
+    time
+  }
+
+  click(selector: "button[type='submit']") {
+    clicked
+  }
+
+  # Navigate to page editor
+  click(selector: "a[href='/edit-page']") {
+    clicked
+  }
+
+  editorTitle: title {
+    title
+  }
+
+  # Edit page title
+  click(selector: "input[name='page-title']") {
+    clicked
+  }
+
+  type(selector: "input[name='page-title']", text: "New Page Title") {
+    time
+  }
+
+  # Save changes
+  click(selector: ".save-btn") {
+    clicked
+  }
+
+  # Preview page
+  click(selector: ".preview-btn") {
+    clicked
+  }
+
+  previewTitle: title {
+    title
+  }
+
+  # Publish page
+  click(selector: ".publish-btn") {
+    clicked
+  }
+
+  publishedTitle: title {
+    title
+  }
+} 

@@ -1,0 +1,435 @@
+mutation URLExamples {
+  # Basic URL extraction
+  basicURL: url {
+    url
+  }
+
+  # Navigate and get URL
+  goto(url: "https://example.com") {
+    status
+    url
+  }
+
+  currentPageURL: url {
+    url
+  }
+
+  # URL verification workflow
+  goto(url: "https://browserless.com") {
+    status
+  }
+
+  verifyURL: url {
+    url
+  }
+
+  # URL tracking during navigation
+  initialURL: url {
+    url
+  }
+
+  # Navigate to different page
+  goto(url: "https://docs.browserless.io") {
+    status
+  }
+
+  afterNavigationURL: url {
+    url
+  }
+
+  # URL comparison between pages
+  goto(url: "https://example.com/page1") {
+    status
+  }
+
+  page1URL: url {
+    url
+  }
+
+  goto(url: "https://example.com/page2") {
+    status
+  }
+
+  page2URL: url {
+    url
+  }
+
+  # History navigation URL tracking
+  back {
+    status
+  }
+
+  backURL: url {
+    url
+  }
+
+  forward {
+    status
+  }
+
+  forwardURL: url {
+    url
+  }
+
+  # URL with parameters
+  goto(url: "https://example.com/search?q=test&filter=active") {
+    status
+  }
+
+  parametrizedURL: url {
+    url
+  }
+
+  # URL during user interactions
+  goto(url: "https://example.com") {
+    status
+  }
+
+  beforeClickURL: url {
+    url
+  }
+
+  # Simulate click navigation
+  click(selector: "a[href='/about']") {
+    selector
+    time
+  }
+
+  afterClickURL: url {
+    url
+  }
+
+  # URL during form submission
+  goto(url: "https://example.com/contact") {
+    status
+  }
+
+  formPageURL: url {
+    url
+  }
+
+  type(selector: "input[name='email']", text: "user@example.com") {
+    time
+  }
+
+  click(selector: "button[type='submit']") {
+    selector
+    time
+  }
+
+  afterSubmitURL: url {
+    url
+  }
+
+  # URL with redirects
+  goto(url: "https://short-url.com/redirect") {
+    status
+    url
+  }
+
+  redirectedURL: url {
+    url
+  }
+
+  # URL during page reload
+  reload {
+    status
+  }
+
+  reloadedURL: url {
+    url
+  }
+
+  # Hash navigation URL tracking
+  goto(url: "https://example.com#section1") {
+    status
+  }
+
+  hashURL: url {
+    url
+  }
+
+  # JavaScript navigation URL tracking
+  evaluate(content: "window.location.hash = '#section2'") {
+    value
+  }
+
+  jsNavigationURL: url {
+    url
+  }
+
+  # URL during authentication flow
+  goto(url: "https://app.example.com/login") {
+    status
+  }
+
+  loginPageURL: url {
+    url
+  }
+
+  type(selector: "input[name='username']", text: "testuser") {
+    time
+  }
+
+  type(selector: "input[name='password']", text: "password123") {
+    time
+  }
+
+  click(selector: "button[type='submit']") {
+    selector
+    time
+  }
+
+  dashboardURL: url {
+    url
+  }
+
+  # URL during e-commerce workflow
+  goto(url: "https://shop.example.com") {
+    status
+  }
+
+  shopHomeURL: url {
+    url
+  }
+
+  click(selector: ".product-card:first-child a") {
+    selector
+    time
+  }
+
+  productPageURL: url {
+    url
+  }
+
+  click(selector: ".add-to-cart") {
+    selector
+    time
+  }
+
+  cartURL: url {
+    url
+  }
+
+  click(selector: ".checkout-button") {
+    selector
+    time
+  }
+
+  checkoutURL: url {
+    url
+  }
+
+  # URL validation patterns
+  goto(url: "https://secure.example.com") {
+    status
+  }
+
+  secureURL: url {
+    url
+  }
+
+  # Complex navigation workflow
+  goto(url: "https://portal.example.com") {
+    status
+  }
+
+  portalURL: url {
+    url
+  }
+
+  # Navigate through menu
+  click(selector: "nav .menu-item[data-section='reports']") {
+    selector
+    time
+  }
+
+  reportsURL: url {
+    url
+  }
+
+  # Navigate to specific report
+  click(selector: ".report-list .report-item:nth-child(2)") {
+    selector
+    time
+  }
+
+  reportURL: url {
+    url
+  }
+
+  # URL during search workflow
+  goto(url: "https://search.example.com") {
+    status
+  }
+
+  searchHomeURL: url {
+    url
+  }
+
+  type(selector: "input[type='search']", text: "browser automation") {
+    time
+  }
+
+  click(selector: "button[type='submit']") {
+    selector
+    time
+  }
+
+  searchResultsURL: url {
+    url
+  }
+
+  # Click on search result
+  click(selector: ".search-result:first-child a") {
+    selector
+    time
+  }
+
+  searchResultPageURL: url {
+    url
+  }
+
+  # URL during dynamic content loading
+  goto(url: "https://spa.example.com") {
+    status
+  }
+
+  spaHomeURL: url {
+    url
+  }
+
+  # Navigate in SPA
+  click(selector: "[data-route='/dashboard']") {
+    selector
+    time
+  }
+
+  wait(duration: 1000) {
+    duration
+  }
+
+  spaDashboardURL: url {
+    url
+  }
+
+  # URL with API integration
+  goto(url: "https://api-client.example.com") {
+    status
+  }
+
+  apiClientURL: url {
+    url
+  }
+
+  # Trigger API call
+  click(selector: ".load-data-btn") {
+    selector
+    time
+  }
+
+  apiLoadedURL: url {
+    url
+  }
+
+  # URL during file operations
+  goto(url: "https://files.example.com") {
+    status
+  }
+
+  filesHomeURL: url {
+    url
+  }
+
+  # Upload file
+  click(selector: ".upload-btn") {
+    selector
+    time
+  }
+
+  uploadPageURL: url {
+    url
+  }
+
+  # URL during media content
+  goto(url: "https://media.example.com/video/123") {
+    status
+  }
+
+  mediaURL: url {
+    url
+  }
+
+  # Play video
+  click(selector: ".play-button") {
+    selector
+    time
+  }
+
+  videoPlayingURL: url {
+    url
+  }
+
+  # URL during internationalization
+  goto(url: "https://i18n.example.com") {
+    status
+  }
+
+  defaultLangURL: url {
+    url
+  }
+
+  # Switch language
+  click(selector: ".language-switcher option[value='es']") {
+    selector
+    time
+  }
+
+  spanishURL: url {
+    url
+  }
+
+  # URL during mobile navigation
+  goto(url: "https://mobile.example.com") {
+    status
+    url
+  }
+
+  mobileHomeURL: url {
+    url
+  }
+
+  # Open mobile menu
+  click(selector: ".mobile-menu-toggle") {
+    selector
+    time
+  }
+
+  mobileMenuURL: url {
+    url
+  }
+
+  # URL during error handling
+  goto(url: "https://example.com/nonexistent-page") {
+    status
+  }
+
+  errorPageURL: url {
+    url
+  }
+
+  # Navigate to valid page from error
+  click(selector: ".home-link") {
+    selector
+    time
+  }
+
+  recoveredURL: url {
+    url
+  }
+
+  # Final URL verification
+  finalCurrentURL: url {
+    url
+  }
+} 

@@ -1,0 +1,758 @@
+# BrowserQL Select Operation Test File
+# Testing comprehensive dropdown and multi-select functionality with various option selection scenarios
+
+mutation SelectOperationTests {
+  # Navigate to test page
+  goto(url: "https://example.com/form", waitUntil: load) {
+    status
+    url
+  }
+
+  # ========================================
+  # BASIC SINGLE SELECTION OPERATIONS
+  # ========================================
+
+  # Basic single value selection
+  basicSelect: select(
+    selector: "select[name='basic']"
+    value: "option1"
+  ) {
+    time
+  }
+
+  # Country selection
+  countrySelect: select(
+    selector: "select[name='country']"
+    value: "US"
+  ) {
+    time
+  }
+
+  # Language selection
+  languageSelect: select(
+    selector: "select#language"
+    value: "en"
+  ) {
+    time
+  }
+
+  # Currency selection
+  currencySelect: select(
+    selector: "select[name='currency']"
+    value: "USD"
+  ) {
+    time
+  }
+
+  # Category selection
+  categorySelect: select(
+    selector: "select.category"
+    value: "technology"
+  ) {
+    time
+  }
+
+  # ========================================
+  # MULTIPLE SELECTION OPERATIONS
+  # ========================================
+
+  # Multiple skills selection
+  skillsSelect: select(
+    selector: "select[multiple][name='skills']"
+    value: ["javascript", "typescript", "react", "node"]
+  ) {
+    time
+  }
+
+  # Multiple regions selection
+  regionsSelect: select(
+    selector: "select[multiple][name='regions']"
+    value: ["north-america", "europe", "asia-pacific"]
+  ) {
+    time
+  }
+
+  # Multiple interests selection
+  interestsSelect: select(
+    selector: "select[multiple].interests"
+    value: ["sports", "music", "travel", "technology"]
+  ) {
+    time
+  }
+
+  # Multiple tags selection
+  tagsSelect: select(
+    selector: "select[multiple][name='tags']"
+    value: ["web", "mobile", "desktop", "cloud"]
+  ) {
+    time
+  }
+
+  # Multiple preferences selection
+  preferencesSelect: select(
+    selector: "select[multiple]#preferences"
+    value: ["email", "sms", "push"]
+  ) {
+    time
+  }
+
+  # ========================================
+  # FORM-SPECIFIC SELECTIONS
+  # ========================================
+
+  # Registration form selections
+  registrationCountry: select(
+    selector: "form#registration select[name='country']"
+    value: "CA"
+  ) {
+    time
+  }
+
+  # Profile form industry
+  profileIndustry: select(
+    selector: "form.profile select[name='industry']"
+    value: "software"
+  ) {
+    time
+  }
+
+  # Contact form subject
+  contactSubject: select(
+    selector: "form#contact select[name='subject']"
+    value: "support"
+  ) {
+    time
+  }
+
+  # Survey form rating
+  surveyRating: select(
+    selector: "form.survey select[name='rating']"
+    value: "excellent"
+  ) {
+    time
+  }
+
+  # Application form position
+  applicationPosition: select(
+    selector: "form.application select[name='position']"
+    value: "developer"
+  ) {
+    time
+  }
+
+  # ========================================
+  # VISIBILITY-BASED SELECTIONS
+  # ========================================
+
+  # Select visible dropdown only
+  visibleDropdown: select(
+    selector: "select.visible-only"
+    value: "visible-option"
+    visible: true
+  ) {
+    time
+  }
+
+  # Visible form field
+  visibleFormField: select(
+    selector: "select[name='visible-field']"
+    value: "field-value"
+    visible: true
+  ) {
+    time
+  }
+
+  # Visible navigation select
+  visibleNavSelect: select(
+    selector: "nav select.language"
+    value: "es"
+    visible: true
+  ) {
+    time
+  }
+
+  # Visible modal select
+  visibleModalSelect: select(
+    selector: ".modal select[name='modal-option']"
+    value: "modal-value"
+    visible: true
+  ) {
+    time
+  }
+
+  # Visible sidebar select
+  visibleSidebarSelect: select(
+    selector: ".sidebar select[name='filter']"
+    value: "filter-value"
+    visible: true
+  ) {
+    time
+  }
+
+  # ========================================
+  # TIMEOUT SCENARIOS
+  # ========================================
+
+  # Quick timeout selection
+  quickTimeoutSelect: select(
+    selector: "select.fast-loading"
+    value: "quick-option"
+    timeout: 5000
+  ) {
+    time
+  }
+
+  # Standard timeout selection
+  standardTimeoutSelect: select(
+    selector: "select.standard-loading"
+    value: "standard-option"
+    timeout: 15000
+  ) {
+    time
+  }
+
+  # Extended timeout selection
+  extendedTimeoutSelect: select(
+    selector: "select.slow-loading"
+    value: "slow-option"
+    timeout: 45000
+  ) {
+    time
+  }
+
+  # Ajax loaded select
+  ajaxSelect: select(
+    selector: "select.ajax-loaded"
+    value: "ajax-option"
+    timeout: 20000
+  ) {
+    time
+  }
+
+  # Dynamic select timeout
+  dynamicSelect: select(
+    selector: "select.dynamic-content"
+    value: "dynamic-option"
+    timeout: 25000
+  ) {
+    time
+  }
+
+  # ========================================
+  # SCROLL BEHAVIOR CONTROL
+  # ========================================
+
+  # Select with scrolling (default)
+  scrollSelect: select(
+    selector: "select.needs-scroll"
+    value: "scroll-option"
+    scroll: true
+  ) {
+    time
+  }
+
+  # Select without scrolling
+  noScrollSelect: select(
+    selector: "select.no-scroll-needed"
+    value: "no-scroll-option"
+    scroll: false
+  ) {
+    time
+  }
+
+  # Footer select with scroll
+  footerScrollSelect: select(
+    selector: "footer select[name='footer-option']"
+    value: "footer-value"
+    scroll: true
+  ) {
+    time
+  }
+
+  # Header select without scroll
+  headerNoScrollSelect: select(
+    selector: "header select[name='header-option']"
+    value: "header-value"
+    scroll: false
+  ) {
+    time
+  }
+
+  # Sidebar select with scroll control
+  sidebarScrollSelect: select(
+    selector: ".sidebar select[name='sidebar-filter']"
+    value: "sidebar-value"
+    scroll: true
+  ) {
+    time
+  }
+
+  # ========================================
+  # WAIT BEHAVIOR CONTROL
+  # ========================================
+
+  # Select with waiting (default)
+  waitSelect: select(
+    selector: "select.wait-for-element"
+    value: "wait-option"
+    wait: true
+  ) {
+    time
+  }
+
+  # Select without waiting
+  noWaitSelect: select(
+    selector: "select.immediate-select"
+    value: "immediate-option"
+    wait: false
+  ) {
+    time
+  }
+
+  # Conditional wait select
+  conditionalWaitSelect: select(
+    selector: "select.conditional"
+    value: "conditional-option"
+    wait: true
+  ) {
+    time
+  }
+
+  # Immediate form select
+  immediateFormSelect: select(
+    selector: "form select[name='immediate']"
+    value: "immediate-value"
+    wait: false
+  ) {
+    time
+  }
+
+  # Background select without wait
+  backgroundSelect: select(
+    selector: "select.background-element"
+    value: "background-option"
+    wait: false
+  ) {
+    time
+  }
+
+  # ========================================
+  # COMBINED PARAMETER SCENARIOS
+  # ========================================
+
+  # Visible select with timeout
+  visibleTimeoutSelect: select(
+    selector: "select.visible-timeout"
+    value: "visible-timeout-option"
+    visible: true
+    timeout: 12000
+  ) {
+    time
+  }
+
+  # Visible select without scroll
+  visibleNoScrollSelect: select(
+    selector: "select.visible-no-scroll"
+    value: "visible-no-scroll-option"
+    visible: true
+    scroll: false
+  ) {
+    time
+  }
+
+  # No wait with timeout select
+  noWaitTimeoutSelect: select(
+    selector: "select.no-wait-timeout"
+    value: "no-wait-timeout-option"
+    wait: false
+    timeout: 8000
+  ) {
+    time
+  }
+
+  # Complex combination select
+  complexSelect: select(
+    selector: "select.complex-combination"
+    value: "complex-option"
+    visible: true
+    scroll: true
+    wait: true
+    timeout: 18000
+  ) {
+    time
+  }
+
+  # Complete parameter select
+  completeParamSelect: select(
+    selector: "select.all-parameters"
+    value: "complete-option"
+    timeout: 20000
+    scroll: false
+    visible: true
+    wait: true
+  ) {
+    time
+  }
+
+  # ========================================
+  # COMPLEX SELECTORS
+  # ========================================
+
+  # Attribute selector
+  attributeSelect: select(
+    selector: "select[data-type='attribute']"
+    value: "attribute-value"
+  ) {
+    time
+  }
+
+  # Class and attribute selector
+  classAttributeSelect: select(
+    selector: "select.advanced[data-role='selection']"
+    value: "class-attribute-value"
+  ) {
+    time
+  }
+
+  # Descendant selector
+  descendantSelect: select(
+    selector: ".container form select[name='descendant']"
+    value: "descendant-value"
+  ) {
+    time
+  }
+
+  # Pseudo-class selector
+  pseudoClassSelect: select(
+    selector: "select:not([disabled])"
+    value: "pseudo-class-value"
+  ) {
+    time
+  }
+
+  # Multiple class selector
+  multipleClassSelect: select(
+    selector: "select.primary.enabled.dropdown"
+    value: "multiple-class-value"
+  ) {
+    time
+  }
+
+  # ========================================
+  # SPECIFIC USE CASE SELECTIONS
+  # ========================================
+
+  # Priority level selection
+  prioritySelect: select(
+    selector: "select[name='priority']"
+    value: "high"
+  ) {
+    time
+  }
+
+  # Status selection
+  statusSelect: select(
+    selector: "select[name='status']"
+    value: "active"
+  ) {
+    time
+  }
+
+  # Theme selection
+  themeSelect: select(
+    selector: "select#theme"
+    value: "dark"
+  ) {
+    time
+  }
+
+  # Size selection
+  sizeSelect: select(
+    selector: "select[name='size']"
+    value: "large"
+  ) {
+    time
+  }
+
+  # Color selection
+  colorSelect: select(
+    selector: "select.color-picker"
+    value: "blue"
+  ) {
+    time
+  }
+
+  # ========================================
+  # CONDITIONAL AND CONTEXT-SPECIFIC
+  # ========================================
+
+  # Modal context select
+  modalContextSelect: select(
+    selector: ".modal-dialog select[name='modal-field']"
+    value: "modal-context-value"
+    visible: true
+    timeout: 10000
+  ) {
+    time
+  }
+
+  # Tab context select
+  tabContextSelect: select(
+    selector: ".tab-content select[name='tab-field']"
+    value: "tab-context-value"
+    visible: true
+  ) {
+    time
+  }
+
+  # Accordion context select
+  accordionContextSelect: select(
+    selector: ".accordion-panel select[name='accordion-field']"
+    value: "accordion-context-value"
+    visible: true
+    scroll: true
+  ) {
+    time
+  }
+
+  # Dropdown menu context select
+  dropdownMenuSelect: select(
+    selector: ".dropdown-menu select[name='menu-field']"
+    value: "dropdown-menu-value"
+    visible: true
+    wait: true
+  ) {
+    time
+  }
+
+  # Sidebar context select
+  sidebarContextSelect: select(
+    selector: ".sidebar-panel select[name='sidebar-field']"
+    value: "sidebar-context-value"
+    scroll: true
+    timeout: 15000
+  ) {
+    time
+  }
+
+  # ========================================
+  # MULTI-SELECT ADVANCED SCENARIOS
+  # ========================================
+
+  # Large multi-select
+  largeMultiSelect: select(
+    selector: "select[multiple][name='large-list']"
+    value: ["item1", "item2", "item3", "item4", "item5", "item6"]
+  ) {
+    time
+  }
+
+  # Multi-select with timeout
+  multiSelectTimeout: select(
+    selector: "select[multiple].timeout-list"
+    value: ["timeout1", "timeout2", "timeout3"]
+    timeout: 15000
+  ) {
+    time
+  }
+
+  # Visible multi-select
+  visibleMultiSelect: select(
+    selector: "select[multiple].visible-list"
+    value: ["visible1", "visible2"]
+    visible: true
+  ) {
+    time
+  }
+
+  # Complex multi-select
+  complexMultiSelect: select(
+    selector: "select[multiple][data-complex='true']"
+    value: ["complex1", "complex2", "complex3"]
+    visible: true
+    scroll: true
+    timeout: 20000
+  ) {
+    time
+  }
+
+  # ========================================
+  # ERROR AND EDGE CASES
+  # ========================================
+
+  # Select non-existent option (should handle gracefully)
+  nonExistentOption: select(
+    selector: "select[name='existing-select']"
+    value: "non-existent-option"
+    timeout: 3000
+  ) {
+    time
+  }
+
+  # Select from non-existent element (should timeout)
+  nonExistentSelect: select(
+    selector: "select.non-existent-selector"
+    value: "any-option"
+    timeout: 2000
+  ) {
+    time
+  }
+
+  # Select hidden element
+  hiddenElementSelect: select(
+    selector: "select.hidden-element"
+    value: "hidden-option"
+    visible: false
+    wait: true
+  ) {
+    time
+  }
+
+  # Select disabled element (should handle gracefully)
+  disabledElementSelect: select(
+    selector: "select[disabled]"
+    value: "disabled-option"
+    timeout: 1000
+  ) {
+    time
+  }
+
+  # ========================================
+  # PERFORMANCE AND OPTIMIZATION
+  # ========================================
+
+  # Fast select without wait
+  fastNoWaitSelect: select(
+    selector: "select.fast-select"
+    value: "fast-option"
+    wait: false
+    scroll: false
+  ) {
+    time
+  }
+
+  # Optimized select
+  optimizedSelect: select(
+    selector: "select.optimized"
+    value: "optimized-option"
+    visible: false
+    wait: false
+    scroll: false
+    timeout: 5000
+  ) {
+    time
+  }
+
+  # Bulk selection optimization
+  bulkSelect: select(
+    selector: "select[multiple].bulk-options"
+    value: ["bulk1", "bulk2", "bulk3", "bulk4", "bulk5"]
+    wait: false
+    timeout: 10000
+  ) {
+    time
+  }
+
+  # ========================================
+  # WORKFLOW AND AUTOMATION SCENARIOS
+  # ========================================
+
+  # Registration workflow select
+  registrationWorkflowSelect: select(
+    selector: "form#registration select[name='workflow-country']"
+    value: "GB"
+    visible: true
+    timeout: 12000
+  ) {
+    time
+  }
+
+  # E-commerce workflow select
+  ecommerceWorkflowSelect: select(
+    selector: "form.checkout select[name='shipping-method']"
+    value: "express"
+    scroll: true
+    timeout: 15000
+  ) {
+    time
+  }
+
+  # Survey workflow select
+  surveyWorkflowSelect: select(
+    selector: "form.survey select[name='satisfaction']"
+    value: "very-satisfied"
+    visible: true
+  ) {
+    time
+  }
+
+  # Profile setup workflow
+  profileSetupSelect: select(
+    selector: "form.profile-setup select[name='experience-level']"
+    value: "expert"
+    scroll: true
+    wait: true
+  ) {
+    time
+  }
+
+  # Application workflow select
+  applicationWorkflowSelect: select(
+    selector: "form.application select[name='desired-role']"
+    value: "senior-developer"
+    visible: true
+    timeout: 18000
+  ) {
+    time
+  }
+
+  # ========================================
+  # ACCESSIBILITY AND USABILITY
+  # ========================================
+
+  # ARIA labeled select
+  ariaLabeledSelect: select(
+    selector: "select[aria-label='Accessibility Select']"
+    value: "accessible-option"
+    visible: true
+  ) {
+    time
+  }
+
+  # Screen reader friendly select
+  screenReaderSelect: select(
+    selector: "select[aria-describedby='select-help']"
+    value: "screen-reader-option"
+    timeout: 10000
+  ) {
+    time
+  }
+
+  # High contrast select
+  highContrastSelect: select(
+    selector: "select.high-contrast"
+    value: "high-contrast-option"
+    visible: true
+  ) {
+    time
+  }
+
+  # Keyboard accessible select
+  keyboardAccessibleSelect: select(
+    selector: "select[tabindex='0']"
+    value: "keyboard-accessible-option"
+    wait: true
+  ) {
+    time
+  }
+
+  # Focus management select
+  focusManagementSelect: select(
+    selector: "select.focus-management"
+    value: "focus-option"
+    visible: true
+    scroll: true
+  ) {
+    time
+  }
+} 

@@ -1,0 +1,541 @@
+mutation BasicQuerySelectorAll {
+  # Navigate to a test page
+  goto(url: "https://example.com") {
+    status
+  }
+
+  # 1. Basic querySelectorAll - get all h1 elements
+  headlines: querySelectorAll(selector: "h1") {
+    innerHTML
+    innerText
+    tagName
+  }
+
+  # 2. Get all paragraphs
+  paragraphs: querySelectorAll(selector: "p") {
+    innerText
+    innerHTML
+    tagName
+  }
+
+  # 3. Get all divs
+  divElements: querySelectorAll(selector: "div") {
+    innerHTML
+    tagName
+    outerHTML
+  }
+}
+
+mutation LinksAndNavigation {
+  # Navigate to test page
+  goto(url: "https://example.com") {
+    status
+  }
+
+  # 4. Get all links with attributes
+  allLinks: querySelectorAll(selector: "a") {
+    innerHTML
+    innerText
+    outerHTML
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # 5. Get only links with href attributes
+  validLinks: querySelectorAll(selector: "a[href]") {
+    innerText
+    attributes {
+      name
+      value
+    }
+  }
+
+  # 6. Get navigation links specifically
+  navigationLinks: querySelectorAll(selector: "nav a, .nav a, [role='navigation'] a") {
+    innerText
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+}
+
+mutation FormElements {
+  # Navigate to a form page
+  goto(url: "https://httpbin.org/forms/post") {
+    status
+  }
+
+  # 7. Get all form inputs
+  formInputs: querySelectorAll(selector: "input") {
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # 8. Get all form elements including textareas and selects
+  allFormElements: querySelectorAll(selector: "input, textarea, select, button") {
+    tagName
+    innerHTML
+    attributes {
+      name
+      value
+    }
+  }
+
+  # 9. Get only visible form elements with timeout
+  visibleFormElements: querySelectorAll(
+    selector: "input, textarea, select"
+    timeout: 5000
+    visible: true
+  ) {
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # 10. Get form buttons specifically
+  formButtons: querySelectorAll(selector: "button, input[type='button'], input[type='submit']") {
+    innerHTML
+    innerText
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+}
+
+mutation MediaElements {
+  # Navigate to page with media
+  goto(url: "https://example.com") {
+    status
+  }
+
+  # 11. Get all images
+  allImages: querySelectorAll(selector: "img") {
+    tagName
+    outerHTML
+    attributes {
+      name
+      value
+    }
+  }
+
+  # 12. Get only visible images
+  visibleImages: querySelectorAll(
+    selector: "img"
+    visible: true
+    timeout: 3000
+  ) {
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # 13. Get video elements
+  videoElements: querySelectorAll(selector: "video") {
+    tagName
+    outerHTML
+    attributes {
+      name
+      value
+    }
+  }
+
+  # 14. Get audio elements
+  audioElements: querySelectorAll(selector: "audio") {
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+}
+
+mutation TableStructures {
+  # Navigate to page with tables
+  goto(url: "https://example.com") {
+    status
+  }
+
+  # 15. Get all table headers
+  tableHeaders: querySelectorAll(selector: "th") {
+    innerText
+    innerHTML
+    tagName
+  }
+
+  # 16. Get all table cells
+  tableCells: querySelectorAll(selector: "td") {
+    innerText
+    innerHTML
+    tagName
+  }
+
+  # 17. Get all table rows
+  tableRows: querySelectorAll(selector: "tr") {
+    innerHTML
+    tagName
+  }
+
+  # 18. Get complete table structure
+  tableElements: querySelectorAll(selector: "table, thead, tbody, tr, th, td") {
+    tagName
+    innerText
+    attributes {
+      name
+      value
+    }
+  }
+}
+
+mutation HeadingsAndStructure {
+  # Navigate to content page
+  goto(url: "https://example.com") {
+    status
+  }
+
+  # 19. Get all headings
+  allHeadings: querySelectorAll(selector: "h1, h2, h3, h4, h5, h6") {
+    innerText
+    tagName
+    outerHTML
+  }
+
+  # 20. Get main content headings only
+  mainHeadings: querySelectorAll(selector: "main h1, main h2, main h3, article h1, article h2, article h3") {
+    innerText
+    tagName
+  }
+
+  # 21. Get section elements
+  sections: querySelectorAll(selector: "section, article, aside, header, footer") {
+    tagName
+    innerHTML
+    attributes {
+      name
+      value
+    }
+  }
+}
+
+mutation ClassAndIdSelectors {
+  # Navigate to styled page
+  goto(url: "https://example.com") {
+    status
+  }
+
+  # 22. Get elements with specific classes
+  highlightedElements: querySelectorAll(selector: ".highlight, .featured, .important") {
+    innerHTML
+    innerText
+    tagName
+    outerHTML
+    attributes {
+      name
+      value
+    }
+  }
+
+  # 23. Get elements with multiple class combinations
+  styledElements: querySelectorAll(selector: ".btn, .button, .link-button") {
+    innerHTML
+    innerText
+    tagName
+  }
+
+  # 24. Get elements with specific IDs (though querySelector might be better for single IDs)
+  specificElements: querySelectorAll(selector: "#header, #footer, #main") {
+    tagName
+    innerHTML
+  }
+}
+
+mutation DataAttributes {
+  # Navigate to modern web app
+  goto(url: "https://example.com") {
+    status
+  }
+
+  # 25. Get elements with data-id attributes
+  dataIdElements: querySelectorAll(selector: "[data-id]") {
+    tagName
+    innerText
+    attributes {
+      name
+      value
+    }
+  }
+
+  # 26. Get elements with any data attributes
+  dataElements: querySelectorAll(selector: "[data-id], [data-value], [data-type], [data-role]") {
+    tagName
+    innerHTML
+    attributes {
+      name
+      value
+    }
+  }
+
+  # 27. Get elements with specific data values
+  specificDataElements: querySelectorAll(selector: "[data-role='button'], [data-type='primary']") {
+    tagName
+    innerText
+    attributes {
+      name
+      value
+    }
+  }
+}
+
+mutation ComplexSelectors {
+  # Navigate to complex page
+  goto(url: "https://example.com") {
+    status
+  }
+
+  # 28. Complex descendant selectors
+  nestedElements: querySelectorAll(selector: ".container .content .item") {
+    innerHTML
+    innerText
+    tagName
+  }
+
+  # 29. Adjacent sibling selectors
+  adjacentElements: querySelectorAll(selector: "h2 + p") {
+    innerText
+    tagName
+  }
+
+  # 30. Attribute selectors with operators
+  attributeElements: querySelectorAll(selector: "a[href^='https'], img[src*='cdn'], input[name$='_id']") {
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # 31. Pseudo-class selectors
+  pseudoElements: querySelectorAll(selector: "input:checked, option:selected, a:not([href])") {
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+}
+
+mutation VisibilityTesting {
+  # Navigate to page with hidden elements
+  goto(url: "https://example.com") {
+    status
+  }
+
+  # 32. Get all elements (including hidden)
+  allElements: querySelectorAll(selector: ".test-element") {
+    innerHTML
+    innerText
+    tagName
+  }
+
+  # 33. Get only visible elements
+  visibleElements: querySelectorAll(
+    selector: ".test-element"
+    visible: true
+  ) {
+    innerHTML
+    innerText
+    tagName
+  }
+
+  # 34. Get visible elements with timeout
+  visibleWithTimeout: querySelectorAll(
+    selector: ".dynamic-element"
+    visible: true
+    timeout: 10000
+  ) {
+    innerHTML
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+}
+
+mutation TimeoutTesting {
+  # Navigate to dynamic page
+  goto(url: "https://httpbin.org/delay/2") {
+    status
+  }
+
+  # 35. Quick timeout for immediate elements
+  immediateElements: querySelectorAll(
+    selector: "body"
+    timeout: 1000
+  ) {
+    tagName
+  }
+
+  # 36. Longer timeout for dynamic content
+  dynamicElements: querySelectorAll(
+    selector: ".loaded-content"
+    timeout: 15000
+  ) {
+    innerHTML
+    innerText
+    tagName
+  }
+
+  # 37. Very long timeout for slow-loading elements
+  slowElements: querySelectorAll(
+    selector: ".slow-content"
+    timeout: 30000
+    visible: true
+  ) {
+    innerHTML
+    tagName
+  }
+}
+
+mutation ComprehensivePageAnalysis {
+  # Navigate to complex page
+  goto(url: "https://example.com") {
+    status
+  }
+
+  # 38. Analyze page structure
+  pageStructure: querySelectorAll(selector: "html, head, body, main, header, nav, footer") {
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # 39. Get all interactive elements
+  interactiveElements: querySelectorAll(
+    selector: "a, button, input, select, textarea, [tabindex], [onclick], [role='button']"
+    visible: true
+  ) {
+    tagName
+    innerText
+    attributes {
+      name
+      value
+    }
+  }
+
+  # 40. Get all text content elements
+  textElements: querySelectorAll(selector: "p, span, div, h1, h2, h3, h4, h5, h6, li") {
+    innerText
+    tagName
+  }
+
+  # 41. Get all media and embedded content
+  mediaElements: querySelectorAll(selector: "img, video, audio, iframe, embed, object") {
+    tagName
+    outerHTML
+    attributes {
+      name
+      value
+    }
+  }
+}
+
+mutation E2ETestingScenarios {
+  # Navigate to e-commerce-like page
+  goto(url: "https://example.com/shop") {
+    status
+  }
+
+  # 42. Product listing analysis
+  products: querySelectorAll(
+    selector: ".product, .item, [data-product]"
+    visible: true
+    timeout: 5000
+  ) {
+    innerHTML
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # 43. Price elements
+  prices: querySelectorAll(selector: ".price, .cost, [data-price], .amount") {
+    innerText
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # 44. Add to cart buttons
+  addToCartButtons: querySelectorAll(
+    selector: ".add-to-cart, [data-action='add-cart'], button[type='submit']"
+    visible: true
+  ) {
+    innerHTML
+    innerText
+    tagName
+    attributes {
+      name
+      value
+    }
+  }
+
+  # 45. Navigation breadcrumbs
+  breadcrumbs: querySelectorAll(selector: ".breadcrumb a, .breadcrumbs a, nav[aria-label='breadcrumb'] a") {
+    innerText
+    attributes {
+      name
+      value
+    }
+  }
+}
+
+mutation ErrorHandlingScenarios {
+  # Navigate to test page
+  goto(url: "https://example.com") {
+    status
+  }
+
+  # 46. Try to get non-existent elements (should return empty array)
+  nonExistentElements: querySelectorAll(selector: ".this-class-does-not-exist") {
+    innerHTML
+    tagName
+  }
+
+  # 47. Try complex selector that might not match
+  complexNonMatch: querySelectorAll(
+    selector: ".specific-class .nested-class .deep-nested[data-specific='value']"
+    timeout: 2000
+  ) {
+    innerHTML
+    tagName
+  }
+
+  # 48. Try with very short timeout (might timeout)
+  shortTimeoutTest: querySelectorAll(
+    selector: ".might-not-load-quickly"
+    timeout: 100
+  ) {
+    innerHTML
+    tagName
+  }
+} 

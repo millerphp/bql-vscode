@@ -1,0 +1,68 @@
+# BrowserQL Extension Test File
+# This file tests various features of the BQL VSCode extension
+
+# Test 1: Basic mutation with goto operation
+mutation TestNavigation {
+  goto(url: "https://example.com", waitUntil: firstMeaningfulPaint) {
+    status
+    time
+    url
+  }
+}
+
+# Test 2: Query with multiple operations
+query TestInteractions {
+  # Click operation
+  click(selector: "#submit-button") {
+    status
+    element
+  }
+  
+  # Text extraction
+  text(selector: "h1.title") {
+    text
+    element
+  }
+  
+  # Type into input
+  type(selector: "input[name='email']", text: "test@example.com") {
+    status
+  }
+}
+
+# Test 3: Complex operations with variables
+mutation ComplexTest {
+  # Wait operation
+  wait(selector: ".loading", timeout: 5000) {
+    status
+  }
+  
+  # Select dropdown
+  select(selector: "select#country", value: "US") {
+    status
+    element
+  }
+  
+  # Evaluate JavaScript
+  evaluate(expression: "document.title") {
+    result
+    error
+  }
+  
+  # Take screenshot
+  screenshot(fullPage: true, type: "png") {
+    buffer
+    path
+  }
+}
+
+# Test 4: String variations and escapes
+mutation StringTests {
+  goto(url: "https://test.com/path?param=\"value\"") {
+    status
+  }
+  
+  type(selector: 'input[type="text"]', text: 'Hello "World"') {
+    status
+  }
+} 

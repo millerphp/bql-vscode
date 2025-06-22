@@ -1,0 +1,278 @@
+mutation HTMLOperationTest {
+  # Navigate to test page first
+  goto(url: "https://example.com") {
+    status
+    time
+    url
+  }
+
+  # Basic HTML extraction - entire page
+  fullPageHTML: html {
+    html
+  }
+  
+  # HTML with timing information
+  timedHTML: html {
+    html
+    time
+  }
+  
+  # HTML from specific element by selector
+  headerHTML: html(selector: "h1") {
+    html
+    time
+  }
+  
+  # HTML from multiple element types
+  navigationHTML: html(selector: "nav") {
+    html
+    time
+  }
+  
+  mainContentHTML: html(selector: "main") {
+    html
+    time
+  }
+  
+  footerHTML: html(selector: "footer") {
+    html
+    time
+  }
+  
+  # HTML with complex selectors
+  specificElementHTML: html(selector: ".content .article:first-child") {
+    html
+    time
+  }
+  
+  attributeSelectorHTML: html(selector: "div[data-component='carousel']") {
+    html
+    time
+  }
+  
+  # HTML with visibility requirement
+  visibleOnlyHTML: html(
+    selector: ".visible-content"
+    visible: true
+  ) {
+    html
+    time
+  }
+  
+  # HTML with custom timeout
+  slowLoadingHTML: html(
+    selector: ".lazy-loaded"
+    timeout: 15000
+  ) {
+    html
+    time
+  }
+  
+  # HTML with all basic options
+  completeBasicHTML: html(
+    selector: "article"
+    visible: true
+    timeout: 10000
+  ) {
+    html
+    time
+  }
+  
+  # Clean HTML for LLMs - basic cleaning
+  basicCleanHTML: html(clean: {
+    removeAttributes: true
+  }) {
+    html
+    time
+  }
+  
+  # Clean HTML - remove non-text nodes
+  noScriptsHTML: html(clean: {
+    removeNonTextNodes: true
+  }) {
+    html
+    time
+  }
+  
+  # Clean HTML - remove both attributes and non-text nodes
+  llmOptimizedHTML: html(clean: {
+    removeAttributes: true
+    removeNonTextNodes: true
+  }) {
+    html
+    time
+  }
+  
+  # Ultra-clean HTML - maximum size reduction
+  ultraCleanHTML: html(clean: {
+    removeAttributes: true
+    removeNonTextNodes: true
+    removeWhitespace: true
+    removeNewlines: true
+  }) {
+    html
+    time
+  }
+  
+  # Element-specific clean HTML
+  cleanElementHTML: html(
+    selector: ".blog-post"
+    clean: {
+      removeAttributes: true
+      removeNonTextNodes: true
+    }
+  ) {
+    html
+    time
+  }
+  
+  # Clean HTML with visibility and timeout
+  advancedCleanHTML: html(
+    selector: "main"
+    visible: true
+    timeout: 8000
+    clean: {
+      removeAttributes: true
+      removeNonTextNodes: true
+      removeWhitespace: true
+    }
+  ) {
+    html
+    time
+  }
+  
+  # HTML extraction for different use cases
+  
+  # For data analysis - minimal cleaning
+  dataAnalysisHTML: html(
+    selector: ".data-table"
+    clean: {
+      removeNonTextNodes: true
+    }
+  ) {
+    html
+    time
+  }
+  
+  # For LLM processing - comprehensive cleaning
+  llmProcessingHTML: html(
+    selector: ".article-content"
+    clean: {
+      removeAttributes: true
+      removeNonTextNodes: true
+      removeWhitespace: true
+      removeNewlines: true
+    }
+  ) {
+    html
+    time
+  }
+  
+  # For archival - preserve structure, remove scripts
+  archivalHTML: html(
+    selector: ".content"
+    clean: {
+      removeNonTextNodes: true
+    }
+  ) {
+    html
+    time
+  }
+  
+  # HTML with conditional directives
+  conditionalHTML: html(
+    selector: ".dynamic-content"
+    visible: true
+  ) {
+    html @include(if: true)
+    time @skip(if: false)
+  }
+  
+  # Multiple HTML extractions with different cleaning levels
+  rawHTML: html(selector: ".comparison") {
+    html
+    time
+  }
+  
+  attributesRemovedHTML: html(
+    selector: ".comparison"
+    clean: { removeAttributes: true }
+  ) {
+    html
+    time
+  }
+  
+  fullyCleanedHTML: html(
+    selector: ".comparison"
+    clean: {
+      removeAttributes: true
+      removeNonTextNodes: true
+      removeWhitespace: true
+      removeNewlines: true
+    }
+  ) {
+    html
+    time
+  }
+  
+  # HTML extraction with error handling scenarios
+  nonExistentElementHTML: html(
+    selector: ".does-not-exist"
+    timeout: 2000
+  ) {
+    html
+    time
+  }
+  
+  hiddenElementHTML: html(
+    selector: ".hidden-element"
+    visible: false
+  ) {
+    html
+    time
+  }
+  
+  # Performance testing - different selectors
+  byIdHTML: html(selector: "#main-content") {
+    html
+    time
+  }
+  
+  byClassHTML: html(selector: ".primary-content") {
+    html
+    time
+  }
+  
+  byTagHTML: html(selector: "article") {
+    html
+    time
+  }
+  
+  # Complex cleaning scenarios
+  partialCleanHTML: html(
+    selector: ".mixed-content"
+    clean: {
+      removeAttributes: false
+      removeNonTextNodes: true
+      removeWhitespace: true
+      removeNewlines: false
+    }
+  ) {
+    html
+    time
+  }
+  
+  # HTML for specific platforms
+  mobileOptimizedHTML: html(
+    selector: ".mobile-content"
+    clean: {
+      removeAttributes: true
+      removeNonTextNodes: true
+      removeWhitespace: true
+      removeNewlines: true
+    }
+  ) {
+    html
+    time
+  }
+} 

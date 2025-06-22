@@ -1,0 +1,101 @@
+{
+  "name": "browserql-vscode",
+  "displayName": "BrowserQL",
+  "description": "Advanced BrowserQL language support with intelligent autocomplete, syntax highlighting, hover documentation, and 400+ professional code snippets for web automation",
+  "version": "1.0.0",
+  "publisher": "browserless",
+  "author": {
+    "name": "Browserless",
+    "url": "https://browserless.io"
+  },
+  "license": "MIT",
+  "homepage": "https://docs.browserless.io/bql-schema",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/browserless/bql-vscode-plugin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/browserless/bql-vscode-plugin/issues"
+  },
+  "keywords": [
+    "browserql",
+    "bql",
+    "browser automation",
+    "web scraping",
+    "browserless",
+    "graphql",
+    "testing",
+    "automation",
+    "puppeteer",
+    "playwright"
+  ],
+  "galleryBanner": {
+    "color": "#1e1e1e",
+    "theme": "dark"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets",
+    "Themes"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "browserql",
+        "aliases": [
+          "BrowserQL",
+          "browserql"
+        ],
+        "extensions": [
+          ".bql"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "browserql",
+        "scopeName": "source.browserql",
+        "path": "./syntaxes/browserql.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "browserql",
+        "path": "./snippets/browserql.json"
+      }
+    ],
+    "themes": [
+      {
+        "label": "BrowserQL Dark Theme",
+        "uiTheme": "vs-dark",
+        "path": "./themes/browserql-dark-theme.json"
+      },
+      {
+        "label": "BrowserQL Light Theme",
+        "uiTheme": "vs",
+        "path": "./themes/browserql-light-theme.json"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "^20.11.0",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  }
+} 

@@ -1,0 +1,595 @@
+mutation WaitForResponseExamples {
+  # Navigate to page that receives responses
+  goto(url: "https://browserless.io") {
+    status
+    url
+  }
+
+  # Basic response waiting - any response
+  basicResponse: waitForResponse {
+    status
+    url
+    time
+  }
+
+  # Wait for successful 200 response
+  successResponse: waitForResponse(statuses: [200]) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # Wait for multiple success codes
+  multipleSuccess: waitForResponse(statuses: [200, 201, 202]) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # Wait for specific API endpoint response
+  apiResponse: waitForResponse(
+    statuses: [200, 201]
+    url: "**/api/users**"
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # Wait for error responses
+  errorResponse: waitForResponse(
+    statuses: [400, 404, 500]
+    url: "**/api/**"
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # Wait with custom timeout
+  timeoutResponse: waitForResponse(
+    statuses: [200]
+    timeout: 45000
+  ) {
+    status
+    url
+    time
+  }
+
+  # Wait for image responses
+  imageResponse: waitForResponse(
+    statuses: [200]
+    url: "**/*.{jpg,png,gif,webp}"
+  ) {
+    status
+    url
+    time
+  }
+
+  # Wait for JavaScript file responses
+  scriptResponse: waitForResponse(
+    statuses: [200]
+    url: "**/*.js"
+  ) {
+    status
+    url
+    headers
+    time
+  }
+
+  # Wait for CSS stylesheet responses
+  cssResponse: waitForResponse(
+    statuses: [200]
+    url: "**/*.css"
+  ) {
+    status
+    url
+    time
+  }
+
+  # Authentication response monitoring
+  goto(url: "https://login.example.com") {
+    status
+  }
+
+  type(selector: "input[name='username']", text: "testuser") {
+    time
+  }
+
+  type(selector: "input[name='password']", text: "password123") {
+    time
+  }
+
+  click(selector: "button[type='submit']") {
+    selector
+  }
+
+  # Wait for login response
+  loginResponse: waitForResponse(
+    statuses: [200, 401, 403]
+    url: "**/login**"
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # Form submission response monitoring
+  goto(url: "https://contact.example.com") {
+    status
+  }
+
+  type(selector: "input[name='email']", text: "user@example.com") {
+    time
+  }
+
+  type(selector: "textarea[name='message']", text: "Contact inquiry") {
+    time
+  }
+
+  click(selector: "button[type='submit']") {
+    selector
+  }
+
+  # Wait for form submission response
+  formResponse: waitForResponse(
+    statuses: [200, 400, 422]
+    url: "**/contact**"
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # AJAX response monitoring
+  goto(url: "https://spa-app.example.com") {
+    status
+  }
+
+  click(selector: "button.load-data") {
+    selector
+  }
+
+  # Wait for AJAX response
+  ajaxResponse: waitForResponse(
+    statuses: [200, 404, 500]
+    url: "**/api/data**"
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # GraphQL response monitoring
+  click(selector: "button.graphql-query") {
+    selector
+  }
+
+  graphqlResponse: waitForResponse(
+    statuses: [200, 400]
+    url: "**/graphql"
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # E-commerce response monitoring
+  goto(url: "https://shop.example.com") {
+    status
+  }
+
+  click(selector: "button.add-to-cart") {
+    selector
+  }
+
+  # Wait for cart API response
+  cartResponse: waitForResponse(
+    statuses: [200, 400]
+    url: "**/cart**"
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # Payment processing response
+  goto(url: "https://checkout.example.com") {
+    status
+  }
+
+  type(selector: "input[name='card_number']", text: "4111111111111111") {
+    time
+  }
+
+  click(selector: "button.process-payment") {
+    selector
+  }
+
+  # Wait for payment response
+  paymentResponse: waitForResponse(
+    statuses: [200, 402, 422]
+    url: "**/payment**"
+    timeout: 60000
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # File upload response monitoring
+  goto(url: "https://upload.example.com") {
+    status
+  }
+
+  type(selector: "input[type='file']", text: "/path/to/file.jpg") {
+    time
+  }
+
+  click(selector: "button[type='submit']") {
+    selector
+  }
+
+  # Wait for upload response
+  uploadResponse: waitForResponse(
+    statuses: [200, 413, 422]
+    url: "**/upload**"
+    timeout: 120000
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # Search API response monitoring
+  goto(url: "https://search.example.com") {
+    status
+  }
+
+  type(selector: "input[type='search']", text: "search query") {
+    time
+  }
+
+  click(selector: "button[type='submit']") {
+    selector
+  }
+
+  # Wait for search response
+  searchResponse: waitForResponse(
+    statuses: [200, 404]
+    url: "**/search**"
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # Third-party API response monitoring
+  thirdPartyResponse: waitForResponse(
+    statuses: [200, 403, 429]
+    url: "https://api.external.com/**"
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # CDN response monitoring
+  cdnResponse: waitForResponse(
+    statuses: [200, 404]
+    url: "https://cdn.example.com/**"
+  ) {
+    status
+    url
+    time
+  }
+
+  # Analytics response monitoring
+  analyticsResponse: waitForResponse(
+    statuses: [200, 204]
+    url: "**/analytics/**"
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # Social media API response
+  goto(url: "https://social.example.com") {
+    status
+  }
+
+  click(selector: "button.share-post") {
+    selector
+  }
+
+  socialResponse: waitForResponse(
+    statuses: [200, 401, 429]
+    url: "**/posts**"
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # Authentication token refresh response
+  authRefreshResponse: waitForResponse(
+    statuses: [200, 401]
+    url: "**/refresh-token**"
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # Webhook response monitoring
+  webhookResponse: waitForResponse(
+    statuses: [200, 400, 422]
+    url: "**/webhook**"
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # Newsletter subscription response
+  goto(url: "https://newsletter.example.com") {
+    status
+  }
+
+  type(selector: "input[name='email']", text: "subscriber@example.com") {
+    time
+  }
+
+  click(selector: "button.subscribe") {
+    selector
+  }
+
+  newsletterResponse: waitForResponse(
+    statuses: [200, 400, 409]
+    url: "**/subscribe**"
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # Admin API response monitoring
+  goto(url: "https://admin.example.com") {
+    status
+  }
+
+  adminResponse: waitForResponse(
+    statuses: [200, 401, 403]
+    url: "**/admin/api/**"
+    timeout: 35000
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # Configuration API response
+  configResponse: waitForResponse(
+    statuses: [200, 404]
+    url: "**/config**"
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # Health check response
+  healthResponse: waitForResponse(
+    statuses: [200, 503]
+    url: "**/health**"
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # Metrics API response
+  metricsResponse: waitForResponse(
+    statuses: [200, 403]
+    url: "**/metrics**"
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # Session management response
+  sessionResponse: waitForResponse(
+    statuses: [200, 401]
+    url: "**/session**"
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # Cache validation response
+  cacheResponse: waitForResponse(
+    statuses: [200, 304, 404]
+    url: "**/cache/**"
+  ) {
+    status
+    url
+    headers
+    time
+  }
+
+  # Font loading response
+  fontResponse: waitForResponse(
+    statuses: [200, 404]
+    url: "**/*.{woff,woff2,ttf}"
+  ) {
+    status
+    url
+    time
+  }
+
+  # Video/media response
+  mediaResponse: waitForResponse(
+    statuses: [200, 206, 404]
+    url: "**/*.{mp4,webm,mp3}"
+  ) {
+    status
+    url
+    time
+  }
+
+  # API versioning response
+  versionedResponse: waitForResponse(
+    statuses: [200, 410]
+    url: "**/v1/api/**"
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # Microservice response
+  microserviceResponse: waitForResponse(
+    statuses: [200, 503, 504]
+    url: "**/service/**"
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # Rate limiting response
+  rateLimitResponse: waitForResponse(
+    statuses: [200, 429]
+    url: "**/api/**"
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # Server error response monitoring
+  serverErrorResponse: waitForResponse(
+    statuses: [500, 502, 503, 504]
+    url: "**/api/**"
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # Client error response monitoring
+  clientErrorResponse: waitForResponse(
+    statuses: [400, 401, 403, 404, 422]
+    url: "**/api/**"
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # Redirect response monitoring
+  redirectResponse: waitForResponse(
+    statuses: [301, 302, 307, 308]
+    url: "**/redirect**"
+  ) {
+    status
+    url
+    headers
+    time
+  }
+
+  # Deprecated codes parameter (for backwards compatibility)
+  deprecatedCodesResponse: waitForResponse(codes: [200]) {
+    status
+    url
+    time
+  }
+
+  # Final comprehensive response monitoring
+  finalResponse: waitForResponse(
+    statuses: [200, 400, 500]
+    timeout: 30000
+  ) {
+    status
+    url
+    headers
+    body
+    time
+  }
+
+  # Response monitoring status check
+  responseStatus: evaluate(expression: `
+    return {
+      currentUrl: window.location.href,
+      timestamp: Date.now(),
+      userAgent: navigator.userAgent,
+      onlineStatus: navigator.onLine,
+      responseCount: performance.getEntriesByType('resource').length,
+      performanceTiming: {
+        loadEventEnd: performance.timing.loadEventEnd,
+        navigationStart: performance.timing.navigationStart
+      }
+    };
+  `) {
+    value
+  }
+} 

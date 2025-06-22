@@ -1,0 +1,390 @@
+mutation WaitForNavigationExamples {
+  # Basic wait for navigation
+  basicWait: waitForNavigation {
+    status
+    url
+    time
+  }
+
+  # Initial page navigation
+  goto(url: "https://example.com") {
+    status
+    url
+  }
+
+  # Wait for page load completion
+  pageLoad: waitForNavigation(waitUntil: load) {
+    status
+    url
+    headers
+    time
+  }
+
+  # Click navigation link
+  click(selector: "a[href='/products']") {
+    selector
+    time
+  }
+
+  # Wait for link navigation
+  linkNavigation: waitForNavigation {
+    status
+    url
+    time
+  }
+
+  # Form submission navigation
+  type(selector: "input[name='search']", text: "search query") {
+    time
+  }
+
+  click(selector: "button[type='submit']") {
+    selector
+  }
+
+  # Wait for form submission navigation
+  formNavigation: waitForNavigation(
+    timeout: 30000
+    waitUntil: load
+  ) {
+    status
+    url
+    time
+  }
+
+  # Navigation with custom timeout
+  timeoutNavigation: waitForNavigation(timeout: 45000) {
+    status
+    url
+    time
+  }
+
+  # Wait for DOM content loaded
+  domNavigation: waitForNavigation(waitUntil: domcontentloaded) {
+    status
+    url
+    time
+  }
+
+  # Wait for network idle
+  networkIdleNavigation: waitForNavigation(waitUntil: networkidle) {
+    status
+    url
+    time
+  }
+
+  # Authentication flow navigation
+  goto(url: "https://auth.example.com/login") {
+    status
+  }
+
+  type(selector: "input[name='username']", text: "testuser") {
+    time
+  }
+
+  type(selector: "input[name='password']", text: "password123") {
+    time
+  }
+
+  click(selector: "button[type='submit']") {
+    selector
+  }
+
+  # Wait for authentication redirect
+  authNavigation: waitForNavigation(
+    timeout: 30000
+    waitUntil: load
+  ) {
+    status
+    url
+    headers
+    time
+  }
+
+  # Single Page Application navigation
+  click(selector: ".nav-link[data-route='/dashboard']") {
+    selector
+  }
+
+  # Wait for SPA route change
+  spaNavigation: waitForNavigation(
+    timeout: 15000
+    waitUntil: domcontentloaded
+  ) {
+    status
+    url
+    time
+  }
+
+  # Redirect navigation
+  goto(url: "https://redirect.example.com") {
+    status
+  }
+
+  # Wait for redirect completion
+  redirectNavigation: waitForNavigation(
+    timeout: 45000
+    waitUntil: networkidle
+  ) {
+    status
+    url
+    headers
+    time
+  }
+
+  # E-commerce navigation
+  click(selector: "button.add-to-cart") {
+    selector
+  }
+
+  # Wait for cart page navigation
+  cartNavigation: waitForNavigation(
+    timeout: 25000
+    waitUntil: load
+  ) {
+    status
+    url
+    time
+  }
+
+  # Programmatic navigation
+  evaluate(expression: "window.location.href = '/api/endpoint'") {
+    value
+  }
+
+  # Wait for programmatic navigation
+  programmaticNavigation: waitForNavigation(
+    timeout: 20000
+    waitUntil: domcontentloaded
+  ) {
+    status
+    url
+    time
+  }
+
+  # AJAX navigation
+  click(selector: ".ajax-link") {
+    selector
+  }
+
+  # Wait for AJAX navigation
+  ajaxNavigation: waitForNavigation(
+    timeout: 15000
+    waitUntil: networkidle
+  ) {
+    status
+    url
+    time
+  }
+
+  # Search navigation
+  type(selector: "input[type='search']", text: "product search") {
+    time
+  }
+
+  click(selector: "button.search-submit") {
+    selector
+  }
+
+  # Wait for search results navigation
+  searchNavigation: waitForNavigation(
+    timeout: 20000
+    waitUntil: load
+  ) {
+    status
+    url
+    time
+  }
+
+  # Pagination navigation
+  click(selector: "a.page-link[href='?page=2']") {
+    selector
+  }
+
+  # Wait for pagination navigation
+  paginationNavigation: waitForNavigation(
+    timeout: 15000
+    waitUntil: domcontentloaded
+  ) {
+    status
+    url
+    time
+  }
+
+  # Filter navigation
+  click(selector: "input[type='checkbox'][data-filter='category']") {
+    selector
+  }
+
+  # Wait for filter navigation
+  filterNavigation: waitForNavigation(
+    timeout: 12000
+    waitUntil: networkidle
+  ) {
+    status
+    url
+    time
+  }
+
+  # Language navigation
+  click(selector: "a[href='?lang=es']") {
+    selector
+  }
+
+  # Wait for language change navigation
+  languageNavigation: waitForNavigation(
+    timeout: 18000
+    waitUntil: load
+  ) {
+    status
+    url
+    headers
+    time
+  }
+
+  # Profile navigation
+  click(selector: "a[href='/profile/edit']") {
+    selector
+  }
+
+  # Wait for profile page navigation
+  profileNavigation: waitForNavigation(
+    timeout: 22000
+    waitUntil: load
+  ) {
+    status
+    url
+    time
+  }
+
+  # Admin navigation
+  click(selector: "a[href='/admin/dashboard']") {
+    selector
+  }
+
+  # Wait for admin navigation
+  adminNavigation: waitForNavigation(
+    timeout: 35000
+    waitUntil: load
+  ) {
+    status
+    url
+    headers
+    time
+  }
+
+  # Payment navigation
+  click(selector: "button.payment-submit") {
+    selector
+  }
+
+  # Wait for payment processing navigation
+  paymentNavigation: waitForNavigation(
+    timeout: 50000
+    waitUntil: networkidle
+  ) {
+    status
+    url
+    time
+  }
+
+  # Checkout navigation
+  click(selector: "button.proceed-checkout") {
+    selector
+  }
+
+  # Wait for checkout navigation
+  checkoutNavigation: waitForNavigation(
+    timeout: 35000
+    waitUntil: load
+  ) {
+    status
+    url
+    time
+  }
+
+  # Social login navigation
+  click(selector: "button.google-login") {
+    selector
+  }
+
+  # Wait for OAuth navigation
+  oauthNavigation: waitForNavigation(
+    timeout: 45000
+    waitUntil: load
+  ) {
+    status
+    url
+    headers
+    time
+  }
+
+  # Back navigation
+  evaluate(expression: "history.back()") {
+    value
+  }
+
+  # Wait for back navigation
+  backNavigation: waitForNavigation(
+    timeout: 10000
+    waitUntil: domcontentloaded
+  ) {
+    status
+    url
+    time
+  }
+
+  # Forward navigation
+  evaluate(expression: "history.forward()") {
+    value
+  }
+
+  # Wait for forward navigation
+  forwardNavigation: waitForNavigation(
+    timeout: 10000
+    waitUntil: domcontentloaded
+  ) {
+    status
+    url
+    time
+  }
+
+  # Refresh navigation
+  evaluate(expression: "location.reload()") {
+    value
+  }
+
+  # Wait for refresh navigation
+  refreshNavigation: waitForNavigation(
+    timeout: 25000
+    waitUntil: load
+  ) {
+    status
+    url
+    time
+  }
+
+  # Final navigation with all parameters
+  finalNavigation: waitForNavigation(
+    timeout: 30000
+    waitUntil: load
+  ) {
+    status
+    url
+    headers
+    time
+  }
+
+  # Navigation status check
+  navigationStatus: evaluate(expression: `
+    return {
+      currentUrl: window.location.href,
+      readyState: document.readyState,
+      timestamp: Date.now(),
+      title: document.title,
+      navigationTiming: performance.navigation.type
+    };
+  `) {
+    value
+  }
+} 

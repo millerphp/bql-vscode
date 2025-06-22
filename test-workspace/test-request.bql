@@ -1,0 +1,572 @@
+mutation RequestExamples {
+  # Navigate to trigger requests
+  goto(url: "https://example.com/", waitUntil: load) {
+    status
+    url
+  }
+
+  # Get all document requests
+  documentRequests: request(type: [document]) {
+    url
+    type
+    method
+    headers {
+      name
+      value
+    }
+  }
+
+  # Get all AJAX GET requests (AND condition)
+  ajaxGetRequests: request(
+    type: [xhr]
+    method: [GET]
+    operator: and
+  ) {
+    url
+    type
+    method
+    headers {
+      name
+      value
+    }
+  }
+
+  # Monitor API requests
+  apiRequests: request(
+    url: ["*/api/*", "*/v1/*", "*/v2/*", "*/graphql*"]
+    operator: or
+  ) {
+    url
+    type
+    method
+    headers {
+      name
+      value
+    }
+  }
+
+  # Track image requests
+  imageRequests: request(type: [image]) {
+    url
+    type
+    method
+  }
+
+  # Monitor script loading
+  scriptRequests: request(
+    type: [script]
+    method: [GET]
+    operator: and
+  ) {
+    url
+    type
+    method
+    headers {
+      name
+      value
+    }
+  }
+
+  # Track CSS requests
+  stylesheetRequests: request(type: [stylesheet]) {
+    url
+    type
+    method
+  }
+
+  # Monitor POST requests
+  postRequests: request(method: [POST]) {
+    url
+    type
+    method
+    headers {
+      name
+      value
+    }
+  }
+
+  # Track external API calls
+  externalAPIs: request(
+    type: [xhr, fetch]
+    url: ["https://*", "http://*"]
+    operator: and
+  ) {
+    url
+    type
+    method
+    headers {
+      name
+      value
+    }
+  }
+
+  # Monitor third-party requests
+  thirdPartyRequests: request(
+    url: [
+      "*google-analytics*",
+      "*facebook*",
+      "*twitter*",
+      "*linkedin*",
+      "*doubleclick*"
+    ]
+    operator: or
+  ) {
+    url
+    type
+    method
+  }
+
+  # Track font requests
+  fontRequests: request(type: [font]) {
+    url
+    type
+    method
+  }
+
+  # Navigate to a different page for more testing
+  goto(url: "https://httpbin.org/json") {
+    status
+    url
+  }
+
+  # Monitor JSON API requests
+  jsonRequests: request(
+    type: [xhr, fetch]
+    url: ["*/json*"]
+    operator: and
+  ) {
+    url
+    type
+    method
+    headers {
+      name
+      value
+    }
+  }
+
+  # Track WebSocket connections
+  websocketRequests: request(type: [websocket]) {
+    url
+    type
+    method
+    headers {
+      name
+      value
+    }
+  }
+
+  # Monitor media requests
+  mediaRequests: request(type: [media]) {
+    url
+    type
+    method
+  }
+
+  # Monitor specific endpoints
+  specificEndpoints: request(
+    url: ["*/login*", "*/auth*", "*/token*"]
+    method: [POST, PUT]
+    operator: and
+  ) {
+    url
+    type
+    method
+    headers {
+      name
+      value
+    }
+  }
+
+  # Track CDN requests
+  cdnRequests: request(
+    url: ["*cdn*", "*assets*", "*static*"]
+    operator: or
+  ) {
+    url
+    type
+    method
+  }
+
+  # Monitor PUT requests
+  putRequests: request(method: [PUT]) {
+    url
+    type
+    method
+    headers {
+      name
+      value
+    }
+  }
+
+  # Track DELETE requests
+  deleteRequests: request(method: [DELETE]) {
+    url
+    type
+    method
+    headers {
+      name
+      value
+    }
+  }
+
+  # Monitor PATCH requests
+  patchRequests: request(method: [PATCH]) {
+    url
+    type
+    method
+    headers {
+      name
+      value
+    }
+  }
+
+  # Track analytics requests
+  analyticsRequests: request(
+    url: [
+      "*google-analytics*",
+      "*gtag*",
+      "*gtm*",
+      "*segment*",
+      "*mixpanel*",
+      "*amplitude*"
+    ]
+    operator: or
+  ) {
+    url
+    type
+    method
+  }
+
+  # Monitor authentication requests
+  authRequests: request(
+    url: ["*/auth/*", "*/login*", "*/oauth*", "*/sso*"]
+    method: [POST, GET]
+    operator: or
+  ) {
+    url
+    type
+    method
+    headers {
+      name
+      value
+    }
+  }
+
+  # Track payment requests
+  paymentRequests: request(
+    url: [
+      "*stripe*",
+      "*paypal*",
+      "*square*",
+      "*braintree*",
+      "*checkout*"
+    ]
+    operator: or
+  ) {
+    url
+    type
+    method
+    headers {
+      name
+      value
+    }
+  }
+
+  # Monitor social media requests
+  socialRequests: request(
+    url: [
+      "*facebook.com*",
+      "*twitter.com*",
+      "*instagram.com*",
+      "*linkedin.com*",
+      "*youtube.com*"
+    ]
+    operator: or
+  ) {
+    url
+    type
+    method
+  }
+
+  # Track error tracking requests
+  errorTrackingRequests: request(
+    url: [
+      "*sentry*",
+      "*bugsnag*",
+      "*rollbar*",
+      "*airbrake*"
+    ]
+    operator: or
+  ) {
+    url
+    type
+    method
+  }
+
+  # Monitor chat widget requests
+  chatRequests: request(
+    url: [
+      "*intercom*",
+      "*zendesk*",
+      "*drift*",
+      "*livechat*",
+      "*crisp*"
+    ]
+    operator: or
+  ) {
+    url
+    type
+    method
+  }
+
+  # Track A/B testing requests
+  abTestRequests: request(
+    url: [
+      "*optimizely*",
+      "*vwo*",
+      "*launchdarkly*",
+      "*split.io*"
+    ]
+    operator: or
+  ) {
+    url
+    type
+    method
+  }
+
+  # Monitor video requests
+  videoRequests: request(
+    url: [
+      "*.mp4",
+      "*.avi",
+      "*.mov",
+      "*.webm",
+      "*youtube*",
+      "*vimeo*"
+    ]
+    operator: or
+  ) {
+    url
+    type
+    method
+  }
+
+  # Track image optimization requests
+  imageOptimizationRequests: request(
+    url: [
+      "*cloudinary*",
+      "*imgix*",
+      "*fastly*",
+      "*imagekit*"
+    ]
+    operator: or
+  ) {
+    url
+    type
+    method
+  }
+
+  # Monitor search requests
+  searchRequests: request(
+    url: [
+      "*/search*",
+      "*/query*",
+      "*elasticsearch*",
+      "*algolia*"
+    ]
+    operator: or
+  ) {
+    url
+    type
+    method
+    headers {
+      name
+      value
+    }
+  }
+
+  # Track notification requests
+  notificationRequests: request(
+    url: [
+      "*pusher*",
+      "*firebase*",
+      "*onesignal*",
+      "*notification*"
+    ]
+    operator: or
+  ) {
+    url
+    type
+    method
+  }
+
+  # Monitor email service requests
+  emailRequests: request(
+    url: [
+      "*mailchimp*",
+      "*sendgrid*",
+      "*mandrill*",
+      "*mailgun*"
+    ]
+    operator: or
+  ) {
+    url
+    type
+    method
+    headers {
+      name
+      value
+    }
+  }
+
+  # Track backup/sync requests
+  syncRequests: request(
+    url: [
+      "*dropbox*",
+      "*googledrive*",
+      "*onedrive*",
+      "*icloud*"
+    ]
+    operator: or
+  ) {
+    url
+    type
+    method
+  }
+
+  # Monitor development tool requests
+  devToolRequests: request(
+    url: [
+      "*localhost*",
+      "*127.0.0.1*",
+      "*dev.*",
+      "*staging.*",
+      "*test.*"
+    ]
+    operator: or
+  ) {
+    url
+    type
+    method
+  }
+
+  # Track security scan requests
+  securityRequests: request(
+    url: [
+      "*security*",
+      "*captcha*",
+      "*recaptcha*",
+      "*hcaptcha*"
+    ]
+    operator: or
+  ) {
+    url
+    type
+    method
+    headers {
+      name
+      value
+    }
+  }
+
+  # Monitor performance monitoring requests
+  performanceRequests: request(
+    url: [
+      "*newrelic*",
+      "*datadog*",
+      "*splunk*",
+      "*pingdom*"
+    ]
+    operator: or
+  ) {
+    url
+    type
+    method
+  }
+
+  # Track documentation requests
+  docRequests: request(
+    url: [
+      "*/docs/*",
+      "*/documentation/*",
+      "*readme*",
+      "*help*"
+    ]
+    operator: or
+  ) {
+    url
+    type
+    method
+  }
+
+  # Monitor without waiting (get existing requests)
+  existingRequests: request(
+    wait: false
+    timeout: 1000
+  ) {
+    url
+    type
+    method
+  }
+
+  # Track specific file types
+  fileTypeRequests: request(
+    url: [
+      "*.pdf",
+      "*.doc*",
+      "*.xls*",
+      "*.zip",
+      "*.tar.gz"
+    ]
+    operator: or
+  ) {
+    url
+    type
+    method
+  }
+
+  # Monitor GraphQL requests
+  graphqlRequests: request(
+    url: ["*/graphql*", "*/gql*"]
+    method: [POST]
+    operator: and
+  ) {
+    url
+    type
+    method
+    headers {
+      name
+      value
+    }
+  }
+
+  # Track REST API requests
+  restAPIRequests: request(
+    url: ["*/api/v*", "*/rest/*"]
+    method: [GET, POST, PUT, DELETE]
+    operator: or
+  ) {
+    url
+    type
+    method
+    headers {
+      name
+      value
+    }
+  }
+
+  # Final comprehensive monitoring
+  allRequests: request(
+    timeout: 5000
+    wait: true
+    operator: or
+  ) {
+    url
+    type
+    method
+    headers {
+      name
+      value
+    }
+  }
+} 

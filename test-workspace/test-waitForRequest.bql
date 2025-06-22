@@ -1,0 +1,455 @@
+mutation WaitForRequestExamples {
+  # Navigate to page that makes API calls
+  goto(url: "https://browserless.io") {
+    status
+    url
+  }
+
+  # Basic request waiting - any request
+  basicRequest: waitForRequest {
+    method
+    url
+    time
+  }
+
+  # Wait for any GET request
+  anyGetRequest: waitForRequest(method: GET) {
+    method
+    url
+    time
+  }
+
+  # Wait for POST request
+  postRequest: waitForRequest(method: POST) {
+    method
+    url
+    headers
+    postData
+    time
+  }
+
+  # Wait for specific API endpoint
+  apiRequest: waitForRequest(
+    method: POST
+    url: "**/api/users**"
+  ) {
+    method
+    url
+    headers
+    postData
+    time
+  }
+
+  # Wait with custom timeout
+  timeoutRequest: waitForRequest(
+    method: GET
+    url: "**/analytics**"
+    timeout: 45000
+  ) {
+    method
+    url
+    time
+  }
+
+  # Wait for image requests
+  imageRequest: waitForRequest(url: "**/*.{jpg,png,gif}") {
+    method
+    url
+    time
+  }
+
+  # Wait for JavaScript files
+  scriptRequest: waitForRequest(url: "**/*.js") {
+    method
+    url
+    headers
+    time
+  }
+
+  # Wait for CSS stylesheets
+  cssRequest: waitForRequest(url: "**/*.css") {
+    method
+    url
+    time
+  }
+
+  # Wait for third-party requests
+  thirdPartyRequest: waitForRequest(url: "https://cdn.example.com/**") {
+    method
+    url
+    headers
+    time
+  }
+
+  # Form submission monitoring
+  goto(url: "https://login.example.com") {
+    status
+  }
+
+  type(selector: "input[name='username']", text: "testuser") {
+    time
+  }
+
+  type(selector: "input[name='password']", text: "password123") {
+    time
+  }
+
+  click(selector: "button[type='submit']") {
+    selector
+  }
+
+  # Wait for login request
+  loginRequest: waitForRequest(
+    method: POST
+    url: "**/login**"
+  ) {
+    method
+    url
+    headers
+    postData
+    time
+  }
+
+  # AJAX request monitoring
+  goto(url: "https://spa-app.example.com") {
+    status
+  }
+
+  click(selector: "button.load-data") {
+    selector
+  }
+
+  # Wait for AJAX call
+  ajaxRequest: waitForRequest(
+    method: GET
+    url: "**/api/data**"
+  ) {
+    method
+    url
+    headers
+    time
+  }
+
+  # GraphQL request monitoring
+  graphqlRequest: waitForRequest(
+    method: POST
+    url: "**/graphql"
+  ) {
+    method
+    url
+    headers
+    postData
+    time
+  }
+
+  # Analytics tracking requests
+  analyticsRequest: waitForRequest(url: "**/analytics/**") {
+    method
+    url
+    headers
+    postData
+    time
+  }
+
+  # Search functionality monitoring
+  goto(url: "https://search.example.com") {
+    status
+  }
+
+  type(selector: "input[type='search']", text: "search query") {
+    time
+  }
+
+  click(selector: "button[type='submit']") {
+    selector
+  }
+
+  # Wait for search API request
+  searchRequest: waitForRequest(
+    method: GET
+    url: "**/search**"
+  ) {
+    method
+    url
+    time
+  }
+
+  # E-commerce API monitoring
+  goto(url: "https://shop.example.com") {
+    status
+  }
+
+  click(selector: "button.add-to-cart") {
+    selector
+  }
+
+  # Wait for cart API request
+  cartRequest: waitForRequest(
+    method: POST
+    url: "**/cart**"
+  ) {
+    method
+    url
+    headers
+    postData
+    time
+  }
+
+  # Payment processing monitoring
+  goto(url: "https://checkout.example.com") {
+    status
+  }
+
+  type(selector: "input[name='card_number']", text: "4111111111111111") {
+    time
+  }
+
+  click(selector: "button.process-payment") {
+    selector
+  }
+
+  # Wait for payment request
+  paymentRequest: waitForRequest(
+    method: POST
+    url: "**/payment**"
+    timeout: 60000
+  ) {
+    method
+    url
+    headers
+    postData
+    time
+  }
+
+  # API pagination monitoring
+  click(selector: "a.next-page") {
+    selector
+  }
+
+  paginationRequest: waitForRequest(
+    method: GET
+    url: "**?page=**"
+  ) {
+    method
+    url
+    time
+  }
+
+  # File upload monitoring
+  goto(url: "https://upload.example.com") {
+    status
+  }
+
+  type(selector: "input[type='file']", text: "/path/to/file.jpg") {
+    time
+  }
+
+  click(selector: "button[type='submit']") {
+    selector
+  }
+
+  # Wait for upload request
+  uploadRequest: waitForRequest(
+    method: POST
+    url: "**/upload**"
+    timeout: 120000
+  ) {
+    method
+    url
+    headers
+    postData
+    time
+  }
+
+  # Real-time updates monitoring
+  goto(url: "https://chat.example.com") {
+    status
+  }
+
+  type(selector: "input[name='message']", text: "Hello, world!") {
+    time
+  }
+
+  click(selector: "button.send-message") {
+    selector
+  }
+
+  # Wait for message send request
+  messageRequest: waitForRequest(
+    method: POST
+    url: "**/messages**"
+  ) {
+    method
+    url
+    headers
+    postData
+    time
+  }
+
+  # WebSocket upgrade monitoring
+  websocketRequest: waitForRequest(
+    method: GET
+    url: "**/websocket**"
+  ) {
+    method
+    url
+    headers
+    time
+  }
+
+  # Social media API monitoring
+  goto(url: "https://social.example.com") {
+    status
+  }
+
+  click(selector: "button.share-post") {
+    selector
+  }
+
+  socialRequest: waitForRequest(
+    method: POST
+    url: "**/posts**"
+  ) {
+    method
+    url
+    headers
+    postData
+    time
+  }
+
+  # Authentication token refresh
+  authRefreshRequest: waitForRequest(
+    method: POST
+    url: "**/refresh-token**"
+  ) {
+    method
+    url
+    headers
+    postData
+    time
+  }
+
+  # CDN resource monitoring
+  cdnRequest: waitForRequest(url: "https://cdn.example.com/**") {
+    method
+    url
+    time
+  }
+
+  # Font loading monitoring
+  fontRequest: waitForRequest(url: "**/*.{woff,woff2,ttf}") {
+    method
+    url
+    time
+  }
+
+  # Video/media monitoring
+  mediaRequest: waitForRequest(url: "**/*.{mp4,webm,mp3}") {
+    method
+    url
+    time
+  }
+
+  # API versioning monitoring
+  versionedApiRequest: waitForRequest(url: "**/v1/api/**") {
+    method
+    url
+    headers
+    time
+  }
+
+  # Microservice communication
+  microserviceRequest: waitForRequest(
+    method: GET
+    url: "**/service/**"
+  ) {
+    method
+    url
+    headers
+    time
+  }
+
+  # Webhook monitoring
+  webhookRequest: waitForRequest(
+    method: POST
+    url: "**/webhook**"
+  ) {
+    method
+    url
+    headers
+    postData
+    time
+  }
+
+  # Health check monitoring
+  healthCheckRequest: waitForRequest(url: "**/health**") {
+    method
+    url
+    time
+  }
+
+  # Metrics/monitoring requests
+  metricsRequest: waitForRequest(url: "**/metrics**") {
+    method
+    url
+    time
+  }
+
+  # Configuration API monitoring
+  configRequest: waitForRequest(
+    method: GET
+    url: "**/config**"
+  ) {
+    method
+    url
+    headers
+    time
+  }
+
+  # Session management monitoring
+  sessionRequest: waitForRequest(
+    method: POST
+    url: "**/session**"
+  ) {
+    method
+    url
+    headers
+    postData
+    time
+  }
+
+  # Cache validation monitoring
+  cacheRequest: waitForRequest(
+    method: GET
+    url: "**/cache/**"
+  ) {
+    method
+    url
+    headers
+    time
+  }
+
+  # Final comprehensive request monitoring
+  finalRequest: waitForRequest(
+    method: GET
+    timeout: 30000
+  ) {
+    method
+    url
+    headers
+    time
+  }
+
+  # Request monitoring status check
+  requestStatus: evaluate(expression: `
+    return {
+      currentUrl: window.location.href,
+      timestamp: Date.now(),
+      userAgent: navigator.userAgent,
+      onlineStatus: navigator.onLine,
+      requestCount: performance.getEntriesByType('navigation').length
+    };
+  `) {
+    value
+  }
+} 

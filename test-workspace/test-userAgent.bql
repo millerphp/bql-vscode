@@ -1,0 +1,376 @@
+mutation UserAgentExamples {
+  # Basic User-Agent setting
+  basicUserAgent: userAgent(userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15") {
+    userAgent
+    time
+  }
+
+  # Navigate with basic User-Agent
+  goto(url: "https://example.com") {
+    status
+    url
+  }
+
+  # Mobile iPhone User-Agent
+  iPhoneAgent: userAgent(userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1") {
+    userAgent
+    time
+  }
+
+  # Test mobile navigation
+  goto(url: "https://mobile.example.com") {
+    status
+    url
+  }
+
+  # Android mobile User-Agent
+  androidAgent: userAgent(userAgent: "Mozilla/5.0 (Linux; Android 12; SM-G991B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36") {
+    userAgent
+    time
+  }
+
+  # Test Android-specific features
+  goto(url: "https://android.example.com") {
+    status
+    url
+  }
+
+  # iPad tablet User-Agent
+  iPadAgent: userAgent(userAgent: "Mozilla/5.0 (iPad; CPU OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1") {
+    userAgent
+    time
+  }
+
+  # Test tablet layout
+  goto(url: "https://tablet.example.com") {
+    status
+    url
+  }
+
+  # Desktop Chrome Windows User-Agent
+  chromeWindowsAgent: userAgent(userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36") {
+    userAgent
+    time
+  }
+
+  # Test desktop features
+  goto(url: "https://desktop.example.com") {
+    status
+    url
+  }
+
+  # Desktop Chrome macOS User-Agent
+  chromeMacAgent: userAgent(userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36") {
+    userAgent
+    time
+  }
+
+  # Desktop Firefox User-Agent
+  firefoxAgent: userAgent(userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:120.0) Gecko/20100101 Firefox/120.0") {
+    userAgent
+    time
+  }
+
+  # Desktop Safari User-Agent
+  safariAgent: userAgent(userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15") {
+    userAgent
+    time
+  }
+
+  # Custom bot User-Agent
+  customBot: userAgent(userAgent: "CustomBot/1.0 (+https://example.com/bot)") {
+    userAgent
+    time
+  }
+
+  # Test bot detection
+  goto(url: "https://api.example.com") {
+    status
+    url
+  }
+
+  # SEO crawler User-Agent
+  seoBot: userAgent(userAgent: "SEOBot/1.0 (SEO Analysis; +https://example.com/seo-bot)") {
+    userAgent
+    time
+  }
+
+  # Monitoring bot User-Agent
+  monitorBot: userAgent(userAgent: "MonitorBot/1.0 (Site Monitoring; +https://example.com/monitor)") {
+    userAgent
+    time
+  }
+
+  # Testing bot User-Agent
+  testBot: userAgent(userAgent: "TestBot/1.0 (Automated Testing; +https://example.com/testing)") {
+    userAgent
+    time
+  }
+
+  # Legacy Internet Explorer User-Agent
+  ieAgent: userAgent(userAgent: "Mozilla/5.0 (compatible; MSIE 11.0; Windows NT 6.1; WOW64; Trident/7.0)") {
+    userAgent
+    time
+  }
+
+  # Test legacy compatibility
+  goto(url: "https://legacy.example.com") {
+    status
+    url
+  }
+
+  # Edge User-Agent
+  edgeAgent: userAgent(userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0") {
+    userAgent
+    time
+  }
+
+  # Opera User-Agent
+  operaAgent: userAgent(userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 OPR/106.0.0.0") {
+    userAgent
+    time
+  }
+
+  # Smart TV User-Agent
+  smartTVAgent: userAgent(userAgent: "Mozilla/5.0 (SMART-TV; Linux; Tizen 6.0) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/4.0 Chrome/76.0.3809.146 TV Safari/537.36") {
+    userAgent
+    time
+  }
+
+  # Gaming console User-Agent
+  playstationAgent: userAgent(userAgent: "Mozilla/5.0 (PlayStation 5; compatible) AppleWebKit/537.73 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36") {
+    userAgent
+    time
+  }
+
+  # Mobile app webview User-Agent
+  webviewAgent: userAgent(userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MyApp/1.0") {
+    userAgent
+    time
+  }
+
+  # Facebook bot User-Agent
+  facebookBot: userAgent(userAgent: "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)") {
+    userAgent
+    time
+  }
+
+  # Twitter bot User-Agent
+  twitterBot: userAgent(userAgent: "Twitterbot/1.0") {
+    userAgent
+    time
+  }
+
+  # Google bot User-Agent
+  googleBot: userAgent(userAgent: "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)") {
+    userAgent
+    time
+  }
+
+  # LinkedIn bot User-Agent
+  linkedinBot: userAgent(userAgent: "LinkedInBot/1.0 (compatible; Mozilla/5.0; Apache-HttpClient +http://www.linkedin.com)") {
+    userAgent
+    time
+  }
+
+  # WhatsApp bot User-Agent
+  whatsappBot: userAgent(userAgent: "WhatsApp/2.0") {
+    userAgent
+    time
+  }
+
+  # Curl User-Agent
+  curlAgent: userAgent(userAgent: "curl/7.68.0") {
+    userAgent
+    time
+  }
+
+  # Wget User-Agent
+  wgetAgent: userAgent(userAgent: "Wget/1.20.3 (linux-gnu)") {
+    userAgent
+    time
+  }
+
+  # API client User-Agent
+  apiClient: userAgent(userAgent: "APIClient/1.0 (https://example.com/api-docs)") {
+    userAgent
+    time
+  }
+
+  # Load testing User-Agent
+  loadTestAgent: userAgent(userAgent: "LoadTest/1.0 (Performance Testing; +https://example.com/load-test)") {
+    userAgent
+    time
+  }
+
+  # Security scanner User-Agent
+  securityAgent: userAgent(userAgent: "SecurityScanner/1.0 (Vulnerability Assessment; +https://example.com/security)") {
+    userAgent
+    time
+  }
+
+  # Feature phone User-Agent
+  featurePhone: userAgent(userAgent: "Nokia6230i/1.0 (2.22) Profile/MIDP-2.0 Configuration/CLDC-1.1") {
+    userAgent
+    time
+  }
+
+  # Kindle User-Agent
+  kindleAgent: userAgent(userAgent: "Mozilla/5.0 (X11; U; Linux armv6l; en-US) AppleWebKit/537.36 (KHTML, like Gecko) Silk/120.0.0.0 like Chrome/120.0.0.0 Safari/537.36 Kindle/3.0") {
+    userAgent
+    time
+  }
+
+  # Android Chrome mobile with version variations
+  androidChrome100: userAgent(userAgent: "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Mobile Safari/537.36") {
+    userAgent
+    time
+  }
+
+  # iPhone Safari with different iOS versions
+  iPhone13Safari: userAgent(userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1") {
+    userAgent
+    time
+  }
+
+  # iPad Pro User-Agent
+  iPadPro: userAgent(userAgent: "Mozilla/5.0 (iPad; CPU OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1") {
+    userAgent
+    time
+  }
+
+  # Samsung Internet Browser
+  samsungInternet: userAgent(userAgent: "Mozilla/5.0 (Linux; Android 12; SM-G991B) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/19.0 Chrome/102.0.5005.125 Mobile Safari/537.36") {
+    userAgent
+    time
+  }
+
+  # UC Browser
+  ucBrowser: userAgent(userAgent: "Mozilla/5.0 (Linux; U; Android 12; en-US; SM-G991B) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/57.0.2987.108 UCBrowser/13.4.0.1306 Mobile Safari/537.36") {
+    userAgent
+    time
+  }
+
+  # Vivaldi Browser
+  vivaldiAgent: userAgent(userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Vivaldi/6.5.3206.39") {
+    userAgent
+    time
+  }
+
+  # Brave Browser
+  braveAgent: userAgent(userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36") {
+    userAgent
+    time
+  }
+
+  # DuckDuckGo Browser
+  duckduckgoAgent: userAgent(userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 DuckDuckGo/7 Safari/605.1.15") {
+    userAgent
+    time
+  }
+
+  # User-Agent verification with JavaScript
+  verifyUserAgent: evaluate(expression: "navigator.userAgent") {
+    value
+  }
+
+  # Test responsive design with mobile User-Agent
+  mobileTest: userAgent(userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15") {
+    userAgent
+    time
+  }
+
+  goto(url: "https://responsive.example.com") {
+    status
+  }
+
+  # Check mobile viewport
+  mobileViewport: evaluate(expression: "window.innerWidth") {
+    value
+  }
+
+  # Switch to desktop and test again
+  desktopTest: userAgent(userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36") {
+    userAgent
+    time
+  }
+
+  goto(url: "https://responsive.example.com") {
+    status
+  }
+
+  # Check desktop viewport
+  desktopViewport: evaluate(expression: "window.innerWidth") {
+    value
+  }
+
+  # A/B testing with different User-Agents
+  testVariantA: userAgent(userAgent: "TestVariant-A/1.0 (A/B Testing)") {
+    userAgent
+    time
+  }
+
+  goto(url: "https://abtest.example.com") {
+    status
+  }
+
+  variantAContent: text(selector: ".content") {
+    text
+  }
+
+  testVariantB: userAgent(userAgent: "TestVariant-B/1.0 (A/B Testing)") {
+    userAgent
+    time
+  }
+
+  goto(url: "https://abtest.example.com") {
+    status
+  }
+
+  variantBContent: text(selector: ".content") {
+    text
+  }
+
+  # Geographic testing with User-Agent
+  usAgent: userAgent(userAgent: "Mozilla/5.0 (compatible; USBot/1.0; +https://us.example.com)") {
+    userAgent
+    time
+  }
+
+  euAgent: userAgent(userAgent: "Mozilla/5.0 (compatible; EUBot/1.0; +https://eu.example.com)") {
+    userAgent
+    time
+  }
+
+  # Performance testing User-Agent
+  perfTestAgent: userAgent(userAgent: "PerfTest/1.0 (Performance Monitoring; +https://example.com/perf)") {
+    userAgent
+    time
+  }
+
+  # Accessibility testing User-Agent
+  accessibilityAgent: userAgent(userAgent: "AccessibilityBot/1.0 (WCAG Testing; +https://example.com/a11y)") {
+    userAgent
+    time
+  }
+
+  # Final User-Agent reset to default
+  resetAgent: userAgent(userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36") {
+    userAgent
+    time
+  }
+
+  # Final verification
+  finalVerification: evaluate(expression: `
+    return {
+      userAgent: navigator.userAgent,
+      platform: navigator.platform,
+      vendor: navigator.vendor,
+      language: navigator.language,
+      cookieEnabled: navigator.cookieEnabled,
+      onLine: navigator.onLine
+    };
+  `) {
+    value
+  }
+} 

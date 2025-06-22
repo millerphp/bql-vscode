@@ -1,0 +1,479 @@
+mutation VerifyExamples {
+  # Basic verification challenge
+  basicVerify: verify(type: cloudflare) {
+    found
+    solved
+    time
+  }
+
+  # Navigate to protected page
+  goto(url: "https://protected.domain") {
+    status
+    url
+  }
+
+  # Cloudflare verification challenge
+  cloudflareVerify: verify(type: cloudflare) {
+    found
+    solved
+    time
+  }
+
+  # Verification with custom timeout
+  timeoutVerify: verify(
+    type: cloudflare
+    timeout: 45000
+  ) {
+    found
+    solved
+    time
+  }
+
+  # Quick verification check without waiting
+  noWaitVerify: verify(
+    type: cloudflare
+    wait: false
+  ) {
+    found
+    solved
+    time
+  }
+
+  # Verification with extended timeout
+  extendedVerify: verify(
+    type: cloudflare
+    timeout: 60000
+    wait: true
+  ) {
+    found
+    solved
+    time
+  }
+
+  # Navigate to authentication page
+  goto(url: "https://auth.example.com/login") {
+    status
+  }
+
+  # Authentication verification workflow
+  authVerify: verify(type: cloudflare) {
+    found
+    solved
+    time
+  }
+
+  # Fill login form after verification
+  type(selector: "input[name='username']", text: "testuser") {
+    time
+  }
+
+  type(selector: "input[name='password']", text: "password123") {
+    time
+  }
+
+  click(selector: "button[type='submit']") {
+    selector
+    time
+  }
+
+  # Verification for protected API endpoint
+  goto(url: "https://api.example.com/protected") {
+    status
+  }
+
+  apiVerify: verify(
+    type: cloudflare
+    timeout: 30000
+  ) {
+    found
+    solved
+    time
+  }
+
+  # Verification in e-commerce checkout
+  goto(url: "https://shop.example.com/checkout") {
+    status
+  }
+
+  checkoutVerify: verify(type: cloudflare) {
+    found
+    solved
+    time
+  }
+
+  # Form submission with verification
+  goto(url: "https://contact.example.com") {
+    status
+  }
+
+  type(selector: "input[name='email']", text: "user@example.com") {
+    time
+  }
+
+  type(selector: "textarea[name='message']", text: "Contact inquiry") {
+    time
+  }
+
+  # Verify before form submission
+  formVerify: verify(type: cloudflare) {
+    found
+    solved
+    time
+  }
+
+  click(selector: "button[type='submit']") {
+    selector
+    time
+  }
+
+  # Multiple verification attempts
+  firstAttempt: verify(
+    type: cloudflare
+    timeout: 15000
+  ) {
+    found
+    solved
+    time
+  }
+
+  # Retry with longer timeout if needed
+  retryAttempt: verify(
+    type: cloudflare
+    timeout: 45000
+    wait: true
+  ) {
+    found
+    solved
+    time
+  }
+
+  # Verification for content access
+  goto(url: "https://premium.example.com/content") {
+    status
+  }
+
+  contentVerify: verify(
+    type: cloudflare
+    timeout: 20000
+  ) {
+    found
+    solved
+    time
+  }
+
+  # Access premium content after verification
+  premiumContent: text(selector: ".premium-content") {
+    text
+  }
+
+  # Verification for file download
+  goto(url: "https://downloads.example.com/file.zip") {
+    status
+  }
+
+  downloadVerify: verify(type: cloudflare) {
+    found
+    solved
+    time
+  }
+
+  # Verification in registration workflow
+  goto(url: "https://signup.example.com") {
+    status
+  }
+
+  type(selector: "input[name='email']", text: "newuser@example.com") {
+    time
+  }
+
+  type(selector: "input[name='password']", text: "SecurePass123!") {
+    time
+  }
+
+  # Verify during registration
+  registrationVerify: verify(
+    type: cloudflare
+    timeout: 30000
+  ) {
+    found
+    solved
+    time
+  }
+
+  click(selector: "button[type='submit']") {
+    selector
+    time
+  }
+
+  # Verification for search functionality
+  goto(url: "https://search.example.com") {
+    status
+  }
+
+  type(selector: "input[type='search']", text: "search query") {
+    time
+  }
+
+  # Verify before search
+  searchVerify: verify(type: cloudflare) {
+    found
+    solved
+    time
+  }
+
+  click(selector: "button[type='submit']") {
+    selector
+    time
+  }
+
+  # Verification for admin access
+  goto(url: "https://admin.example.com") {
+    status
+  }
+
+  adminVerify: verify(
+    type: cloudflare
+    timeout: 60000
+  ) {
+    found
+    solved
+    time
+  }
+
+  # Verification with immediate check
+  immediateVerify: verify(
+    type: cloudflare
+    wait: false
+    timeout: 5000
+  ) {
+    found
+    solved
+    time
+  }
+
+  # Verification for comment submission
+  goto(url: "https://blog.example.com/post/123") {
+    status
+  }
+
+  type(selector: "textarea[name='comment']", text: "Great article!") {
+    time
+  }
+
+  # Verify before comment submission
+  commentVerify: verify(type: cloudflare) {
+    found
+    solved
+    time
+  }
+
+  click(selector: "button.submit-comment") {
+    selector
+    time
+  }
+
+  # Verification for newsletter signup
+  goto(url: "https://newsletter.example.com") {
+    status
+  }
+
+  type(selector: "input[name='email']", text: "subscriber@example.com") {
+    time
+  }
+
+  newsletterVerify: verify(
+    type: cloudflare
+    timeout: 25000
+  ) {
+    found
+    solved
+    time
+  }
+
+  # Verification for survey submission
+  goto(url: "https://survey.example.com") {
+    status
+  }
+
+  click(selector: "input[value='option1']") {
+    selector
+    time
+  }
+
+  surveyVerify: verify(type: cloudflare) {
+    found
+    solved
+    time
+  }
+
+  # Verification for social media login
+  goto(url: "https://social.example.com/oauth") {
+    status
+  }
+
+  socialVerify: verify(
+    type: cloudflare
+    timeout: 40000
+  ) {
+    found
+    solved
+    time
+  }
+
+  # Verification for payment processing
+  goto(url: "https://payment.example.com") {
+    status
+  }
+
+  type(selector: "input[name='card_number']", text: "4111111111111111") {
+    time
+  }
+
+  paymentVerify: verify(type: cloudflare) {
+    found
+    solved
+    time
+  }
+
+  # Verification for password reset
+  goto(url: "https://reset.example.com") {
+    status
+  }
+
+  type(selector: "input[name='email']", text: "forgot@example.com") {
+    time
+  }
+
+  resetVerify: verify(
+    type: cloudflare
+    timeout: 30000
+  ) {
+    found
+    solved
+    time
+  }
+
+  # Verification for support ticket
+  goto(url: "https://support.example.com/ticket") {
+    status
+  }
+
+  type(selector: "input[name='subject']", text: "Technical Issue") {
+    time
+  }
+
+  type(selector: "textarea[name='description']", text: "Detailed issue description") {
+    time
+  }
+
+  supportVerify: verify(type: cloudflare) {
+    found
+    solved
+    time
+  }
+
+  # Verification for webhook endpoint
+  goto(url: "https://webhook.example.com/endpoint") {
+    status
+  }
+
+  webhookVerify: verify(
+    type: cloudflare
+    wait: false
+  ) {
+    found
+    solved
+    time
+  }
+
+  # Verification for API key generation
+  goto(url: "https://developer.example.com/keys") {
+    status
+  }
+
+  apiKeyVerify: verify(
+    type: cloudflare
+    timeout: 45000
+  ) {
+    found
+    solved
+    time
+  }
+
+  # Verification for profile update
+  goto(url: "https://profile.example.com/edit") {
+    status
+  }
+
+  type(selector: "input[name='name']", text: "Updated Name") {
+    time
+  }
+
+  profileVerify: verify(type: cloudflare) {
+    found
+    solved
+    time
+  }
+
+  # Verification for security settings
+  goto(url: "https://security.example.com/settings") {
+    status
+  }
+
+  securityVerify: verify(
+    type: cloudflare
+    timeout: 35000
+  ) {
+    found
+    solved
+    time
+  }
+
+  # Verification for data export
+  goto(url: "https://data.example.com/export") {
+    status
+  }
+
+  exportVerify: verify(type: cloudflare) {
+    found
+    solved
+    time
+  }
+
+  # Verification for account deletion
+  goto(url: "https://account.example.com/delete") {
+    status
+  }
+
+  deleteVerify: verify(
+    type: cloudflare
+    timeout: 50000
+  ) {
+    found
+    solved
+    time
+  }
+
+  # Final verification with all parameters
+  finalVerify: verify(
+    type: cloudflare
+    timeout: 30000
+    wait: true
+  ) {
+    found
+    solved
+    time
+  }
+
+  # Verification status check
+  verifyStatus: evaluate(expression: `
+    return {
+      userAgent: navigator.userAgent,
+      timestamp: Date.now(),
+      location: window.location.href,
+      readyState: document.readyState
+    };
+  `) {
+    value
+  }
+} 

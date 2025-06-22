@@ -1,0 +1,144 @@
+# BrowserQL Type Operation Test File
+# Tests for text input functionality
+
+# Basic text input
+mutation BasicTyping {
+  type(selector: "input[type='text']", text: "Hello, World!") {
+    time
+  }
+}
+
+# Email field typing
+mutation EmailFieldTyping {
+  type(
+    selector: "input[type='email']"
+    text: "user@example.com"
+  ) {
+    time
+  }
+}
+
+# Password field typing
+mutation PasswordFieldTyping {
+  type(
+    selector: "input[type='password']"
+    text: "SecurePassword123!"
+  ) {
+    time
+  }
+}
+
+# Fast typing with minimal delay
+mutation FastTyping {
+  type(
+    selector: "input"
+    text: "fast typing"
+    delay: [10, 30]
+  ) {
+    time
+  }
+}
+
+# Slow typing with longer delays
+mutation SlowTyping {
+  type(
+    selector: "input"
+    text: "slow deliberate typing"
+    delay: [100, 300]
+  ) {
+    time
+  }
+}
+
+# Type only if visible
+mutation VisibleTyping {
+  type(
+    selector: "input.visible-field"
+    text: "visible field text"
+    visible: true
+    timeout: 10000
+  ) {
+    time
+  }
+}
+
+# Type without scrolling
+mutation NoScrollTyping {
+  type(
+    selector: "input.no-scroll"
+    text: "no scroll typing"
+    scroll: false
+  ) {
+    time
+  }
+}
+
+# Login form typing
+mutation LoginFormTyping {
+  goto(url: "https://example.com/login") {
+    status
+  }
+
+  usernameInput: type(
+    selector: "input[name='username']"
+    text: "testuser123"
+    delay: [50, 150]
+  ) {
+    time
+  }
+
+  passwordInput: type(
+    selector: "input[name='password']"
+    text: "SecurePass123!"
+    delay: [40, 120]
+  ) {
+    time
+  }
+}
+
+# Contact form typing
+mutation ContactFormTyping {
+  goto(url: "https://example.com/contact") {
+    status
+  }
+
+  contactName: type(
+    selector: "input[name='name']"
+    text: "Contact Person"
+    delay: [60, 180]
+  ) {
+    time
+  }
+
+  contactEmail: type(
+    selector: "input[name='email']"
+    text: "contact@example.com"
+    delay: [45, 135]
+  ) {
+    time
+  }
+
+  contactMessage: type(
+    selector: "textarea[name='message']"
+    text: "I would like to inquire about your services."
+    delay: [35, 105]
+  ) {
+    time
+  }
+}
+
+# Complete type operation with all options
+mutation CompleteTypeOperation {
+  completeInput: type(
+    selector: "input[name='complete']"
+    text: "complete example"
+    delay: [50, 200]
+    timeout: 30000
+    visible: false
+    scroll: true
+    wait: true
+    interactable: true
+  ) {
+    time
+  }
+} 

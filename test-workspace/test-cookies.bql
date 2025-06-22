@@ -1,0 +1,116 @@
+mutation CookieOperationsTest {
+  # Navigate to a test page first
+  goto(url: "https://example.com") {
+    status
+    time
+    url
+  }
+
+  # Get existing cookies from the page (no arguments)
+  getCurrentCookies: cookies {
+    cookies {
+      name
+      value
+      domain
+      path
+      secure
+      httpOnly
+      sameSite
+      expires
+    }
+    time
+  }
+
+  # Set a simple authentication cookie
+  setAuthCookie: cookies(cookies: [
+    {
+      name: "auth_token"
+      value: "jwt_abc123xyz"
+      url: "https://example.com"
+      secure: true
+      httpOnly: true
+      sameSite: Strict
+    }
+  ]) {
+    cookies {
+      name
+      value
+      secure
+      httpOnly
+      sameSite
+    }
+    time
+  }
+
+  # Set multiple cookies with different configurations
+  setMultipleCookies: cookies(cookies: [
+    {
+      name: "user_preferences"
+      value: "theme=dark;lang=en;notifications=true"
+      domain: ".example.com"
+      path: "/"
+      secure: false
+      httpOnly: false
+      sameSite: Lax
+    },
+    {
+      name: "session_id"
+      value: "sess_xyz789abc"
+      secure: true
+      httpOnly: true
+      sameSite: None
+    },
+    {
+      name: "tracking_consent"
+      value: "accepted"
+      domain: ".example.com"
+      path: "/"
+      secure: true
+      httpOnly: false
+      sameSite: Strict
+      expires: 1735689600.0
+    }
+  ]) {
+    cookies {
+      name
+      value
+      domain
+      path
+      secure
+      httpOnly
+      sameSite
+      expires
+    }
+    time
+  }
+
+  # Get cookies again after setting to verify changes
+  getUpdatedCookies: cookies {
+    cookies {
+      name
+      value
+      domain
+      path
+      secure
+      httpOnly
+      sameSite
+      expires
+    }
+    time
+  }
+
+  # Test conditional cookie retrieval with directives
+  getConditionalCookies: cookies {
+    cookies {
+      name @include(if: true)
+      value @include(if: true)
+      domain @skip(if: false)
+      path @skip(if: false)
+      secure @include(if: true)
+      httpOnly @skip(if: true)
+      sameSite @include(if: false)
+      expires @skip(if: false)
+    }
+    time @include(if: true)
+  }
+} 
