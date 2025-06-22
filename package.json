@@ -33,6 +33,7 @@
     "color": "#1e1e1e",
     "theme": "dark"
   },
+  "icon": "icon.png",
   "engines": {
     "vscode": "^1.85.0"
   },
