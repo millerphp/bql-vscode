@@ -3,19 +3,19 @@
   "displayName": "BrowserQL",
   "description": "Advanced BrowserQL language support with intelligent autocomplete, syntax highlighting, hover documentation, and 400+ professional code snippets for web automation",
   "version": "1.0.0",
-  "publisher": "browserless",
+  "publisher": "ChristopherMiller",
   "author": {
-    "name": "Browserless",
-    "url": "https://browserless.io"
+    "name": "Christopher Miller",
+    "url": "https://christophermiller.tech"
   },
   "license": "MIT",
   "homepage": "https://docs.browserless.io/bql-schema",
   "repository": {
     "type": "git",
-    "url": "https://github.com/browserless/bql-vscode-plugin.git"
+    "url": "https://github.com/millerphp/bql-vscode"
   },
   "bugs": {
-    "url": "https://github.com/browserless/bql-vscode-plugin/issues"
+    "url": "https://github.com/millerphp/bql-vscode/issues"
   },
   "keywords": [
     "browserql",
