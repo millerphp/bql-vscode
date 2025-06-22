@@ -37,6 +37,14 @@
             }
         },
         {
+            "name": "BrowserQL Field Aliases",
+            "scope": "entity.alias.browserql",
+            "settings": {
+                "foreground": "#C586C0",
+                "fontStyle": "bold"
+            }
+        },
+        {
             "name": "BrowserQL Constants",
             "scope": "constant.language.browserql",
             "settings": {

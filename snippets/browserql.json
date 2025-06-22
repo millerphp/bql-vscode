@@ -6552,5 +6552,66 @@
       "}"
     ],
     "description": "Complete query template with both browser and version"
+  },
+  "Field Alias - Named Operation": {
+    "prefix": ["alias", "named"],
+    "body": [
+      "${1:operationName}: ${2:goto}(${3:url: \\\"https://example.com\\\"}) {",
+      "\\t${4:status}",
+      "\\t${5:url}",
+      "}$0"
+    ],
+    "description": "Create a named operation using field alias"
+  },
+  "Field Alias - Multiple Named Operations": {
+    "prefix": ["alias-multiple", "named-multiple"],
+    "body": [
+      "# Multiple named operations",
+      "${1:homepage}: goto(url: \\\"${2:https://example.com}\\\") {",
+      "\\tstatus",
+      "\\turl",
+      "}",
+      "",
+      "${3:loginClick}: click(selector: \\\"${4:.login-btn}\\\") {",
+      "\\tselector",
+      "\\tsuccess",
+      "}",
+      "",
+      "${5:userInfo}: text(selector: \\\"${6:.user-name}\\\") {",
+      "\\ttext",
+      "}$0"
+    ],
+    "description": "Multiple operations with descriptive aliases"
+  },
+  "Field Alias - Workflow Example": {
+    "prefix": ["alias-workflow", "named-workflow"],
+    "body": [
+      "mutation ${1:WorkflowName} {",
+      "\\t# Step 1: Navigate",
+      "\\t${2:navigate}: goto(url: \\\"${3:https://example.com}\\\") {",
+      "\\t\\tstatus",
+      "\\t\\turl",
+      "\\t}",
+      "",
+      "\\t# Step 2: Interact",
+      "\\t${4:interaction}: click(selector: \\\"${5:.target-element}\\\") {",
+      "\\t\\tselector",
+      "\\t\\tsuccess",
+      "\\t}",
+      "",
+      "\\t# Step 3: Extract Data",
+      "\\t${6:data}: text(selector: \\\"${7:.result}\\\") {",
+      "\\t\\ttext",
+      "\\t}",
+      "",
+      "\\t# Step 4: Capture Evidence",
+      "\\t${8:evidence}: screenshot(format: PNG) {",
+      "\\t\\tdata",
+      "\\t\\twidth",
+      "\\t\\theight",
+      "\\t}",
+      "}$0"
+    ],
+    "description": "Complete workflow with named operations for clarity"
   }
 } 

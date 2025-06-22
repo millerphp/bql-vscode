@@ -2,7 +2,7 @@
   "name": "browserql-vscode",
   "displayName": "BrowserQL",
   "description": "Advanced BrowserQL language support with intelligent autocomplete, syntax highlighting, hover documentation, and 400+ professional code snippets for web automation",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "ChristopherMiller",
   "author": {
     "name": "Christopher Miller",

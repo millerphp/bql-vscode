@@ -10,6 +10,9 @@
             "include": "#keywords"
         },
         {
+            "include": "#field-aliases"
+        },
+        {
             "include": "#operations"
         },
         {
@@ -48,6 +51,14 @@
                 {
                     "name": "keyword.control.browserql",
                     "match": "\\b(mutation|query|fragment|on|type|interface|union|scalar|enum|input|extend|directive|schema)\\b"
+                }
+            ]
+        },
+        "field-aliases": {
+            "patterns": [
+                {
+                    "name": "entity.alias.browserql",
+                    "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)(?=\\s*:(?!:))"
                 }
             ]
         },

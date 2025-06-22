@@ -1,0 +1,53 @@
+mutation FieldAliasExamples {
+  # Basic field alias
+  homepage: goto(url: "https://example.com") {
+    status
+    url
+  }
+
+  # Multiple named operations
+  loginButton: click(selector: ".login-btn") {
+    selector
+    success
+  }
+
+  userInfo: text(selector: ".user-name") {
+    text
+  }
+
+  # Named operations with complex parameters
+  searchForm: type(
+    selector: "input[type='search']"
+    text: "test query"
+  ) {
+    selector
+    text
+    time
+  }
+
+  # Named screenshot
+  evidence: screenshot(format: PNG, quality: 90) {
+    data
+    width
+    height
+  }
+
+  # Named evaluation
+  pageAnalysis: evaluate(expression: `
+    return {
+      title: document.title,
+      url: window.location.href,
+      timestamp: Date.now()
+    };
+  `) {
+    value
+  }
+}
+
+query NamedQueries {
+  # Named browser query
+  browserInfo: browser
+
+  # Named version query
+  serverInfo: version
+}
